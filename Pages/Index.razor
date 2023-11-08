@@ -1,0 +1,128 @@
+﻿@page "/"
+@inject HttpClient Http
+@using Portofolio.Models;
+
+@if (resume == null)
+{
+	<p>Loading... Please wait.</p>
+}
+else
+{
+	<div class="profile-container pb-5">
+
+		<div class="header-container bg-dark text-white text-center pt-5 pb-4">
+
+			<div class="profile-pic-container pb-3">
+				<img class="profile-pic" src="Imagens/FotoCV.jpg" />
+			</div>
+
+			<div class="header-text">
+
+				<div class="profile-name">
+					<pre class="mb-1">@resume.Name</pre>
+				</div>
+
+				<div class="profile-title">
+					<pre>@resume.Role </pre>
+				</div>
+
+				<div class="profile-contacts d-flex flex-wrap align-items-center justify-content-center">
+
+					<div class="profile-phone d-flex">
+						<i class="bi bi-telephone-fill"></i>
+						<pre> @resume.Number </pre>
+					</div>
+
+					<div class="profile-email d-flex">
+						<i class="bi bi-envelope-fill"></i>
+						<pre>@resume.Email</pre>
+					</div>
+
+				</div>
+
+				
+
+				<div class="profile-other">
+
+					<div class="profile-age d-flex justify-content-center">
+						<i class="bi bi-person-fill"></i>
+						<!--Escrever algo-->
+					</div>
+
+					<div class="profile-location d-flex justify-content-center">
+						<i class="bi bi-geo-alt-fill"></i>
+						<pre>@resume.Adress</pre>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="body-container m-auto d-flex flex-wrap justify-content-center">
+
+			<div class="body-left">
+
+				<div class="education-container">
+					<div class="education-title text-center">
+						<i class="bi bi-mortarboard-fill"></i>
+						<strong>Education</strong>
+					</div>
+					<div class="education-items">
+						@foreach (var item in resume.Educations)
+						{
+							<strong>@item.Course</strong>
+							<pre>@item.School</pre>
+							
+							<pre><i>@item.Start - @item.End</i></pre>
+							<br />
+					
+						}
+					</div>
+
+
+				</div>
+
+				<div class="skills-container">
+					<div class="skills-title text-center">
+						<i class="bi bi-puzzle-fill"></i>
+						<strong>Skills</strong>
+					</div>
+					<div class="skills-items">
+						@foreach (var skill in resume.Skills)
+						{
+							<strong>@skill.Name</strong>
+							<p>@skill.Description</p>
+
+						}
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<div class="body-right">
+
+				
+
+				
+
+			</div>
+
+
+		</div>
+	</div>
+}
+
+
+
+@code {
+	private ResumeModel? resume;
+	protected override async Task OnInitializedAsync()
+	{
+		resume = await Http.GetFromJsonAsync<ResumeModel>("data/resume.json");
+	}
+
+}
