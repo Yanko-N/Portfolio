@@ -1,0 +1,37 @@
+{
+  "Name": "Vitor Novo",
+  "Role": "Software Developer",
+  "Number": "+351 910 521 815",
+  "Email": "vitorjmnovo@gmail.com",
+  "Adress": "Ponte de Lima, Portugal",
+  "Links": [],
+
+  "Educations": [
+    {
+      "Course": "Socioeconomic Sciences Course",
+      "School": "Ponte de Lima Secondary School",
+      "Start": "2017-09-01",
+      "End": "2020-07-16"
+    },
+    {
+      "Course": "Software Engineering",
+      "School": "University of Trás-os-Montes and Alto Douro",
+      "Start": "2020-09-01",
+      "End": "2023-11-08"
+    }
+  ],
+
+  "Skills": [
+    {
+      "Name": "C",
+      "Description": "Programming Language"
+    },
+    {
+      "Name": "C++",
+      "Description": "Programming Language"
+    }
+  ]
+
+ 
+}
+
