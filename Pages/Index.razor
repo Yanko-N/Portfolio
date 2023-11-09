@@ -76,12 +76,19 @@ else
                                 @foreach (var item in resume.Educations)
                                 {
                                     <li class="list-group-item mb-3">
-                                        <h5 class="mb-1">@item.Course</h5>
-                                        <p class="mb-0">@item.School</p>
-                                        <small class="text-muted">
-                                            <i class="bi bi-calendar"></i>
-                                            @item.Start - @(item.End == null ? "Now" : item.End)
-                                        </small>
+                                        <div>
+                                            <h5 class="mb-1">@item.Course</h5>
+                                            <p class="mb-0">@item.School</p>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="text-muted">
+                                                    <i class="bi bi-calendar"></i>
+                                                    @item.Start to @(item.End == null ? "Now" : item.End)
+                                                </div>
+                                            </li>
+                                        </ul>
+
                                     </li>
                                 }
                             </ul>
@@ -99,10 +106,15 @@ else
                                     <li class="list-group-item mb-3">
                                         <h5 class="mb-1">@work.Name</h5>
                                         <p class="mb-0">@work.Description</p>
-                                        <p class="mb-0">
-                                            <i class="bi bi-calendar"></i>
-                                            @(work.Start == null ? "" : work.Start) to @(work.End == null ? "" : work.End)
-                                        </p>
+                                        <ul>
+                                            <li>
+                                                <div class="text-muted">
+                                                    <i class="bi bi-calendar"></i>
+                                                    @work.Start to @(work.End == null ? "Now" : work.End)
+                                                </div>
+                                            </li>
+                                        </ul>
+
                                     </li>
                                 }
                             </ul>
@@ -112,15 +124,22 @@ else
                         <div class="skills-container mt-4">
                             <h4 class="skills-title text-center">
                                 <i class="bi bi-puzzle-fill"></i>
-                               Languages
+                                Languages
                             </h4>
                             <ul class="list-group">
                                 @foreach (var language in resume.Languages)
                                 {
                                     <li class="list-group-item mb-3">
                                         <h5 class="mb-1">@language.Name</h5>
-                                        <p class="mb-0">@language.Skill_Level</p>
-                                        
+                                        <ul>
+                                            <li>
+                                                <div class="text-muted">
+                                                    <p class="mb-0">@language.Skill_Level</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+
                                     </li>
                                 }
                             </ul>
@@ -142,7 +161,19 @@ else
                             {
                                 <li class="list-group-item mb-3">
                                     <h5 class="mb-1">@skill.Name</h5>
-                                    <p class="mb-0">@skill.Description</p>
+                                    @if(!String.IsNullOrWhiteSpace(skill.Description))
+                                    {
+                                        <ul>
+                                        <li>
+                                            <div class="text-muted">
+                                                <p class="mb-0">@skill.Description</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    }
+                                    
+
+
                                 </li>
                             }
                         </ul>
