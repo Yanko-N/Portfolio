@@ -12,19 +12,26 @@ else
     <div class="container">
         <div class="row">
             <div class="col-12 bg-dark text-white py-5 text-center">
+
+                <!-- Left Column - Profile Information -->
                 <div class="profile-pic-container">
+
+                    <!-- Profile Picture -->
                     <img class="profile-pic img-fluid rounded-circle" src="Imagens/FotoCV.jpg" alt="@resume.Name" width="120" />
                 </div>
                 <div class="header-text mt-3">
+
+                    <!-- Profile Details -->
                     <h2 class="profile-name">@resume.Name</h2>
                     <h4 class="profile-title">@resume.Role</h4>
                     <div class="profile-contacts d-flex flex-wrap align-items-center justify-content-center mt-3">
                         <div class="profile-contacts-group d-flex">
-                            <div class="profile-phone d-flex mr-3">
+                            <div class="d-flex mr-3">
                                 <i class="bi bi-telephone-fill"></i>
                                 <p class="m-0">@resume.Number</p>
                             </div>
-                            <div class="profile-email d-flex ml-3">
+                            <pre> | </pre>
+                            <div class="d-flex ml-3">
                                 <i class="bi bi-envelope-fill"></i>
                                 <a href="mailto:@resume.Email" class="m-0 email-link">
                                     <span>@resume.Email</span>
@@ -33,15 +40,24 @@ else
                         </div>
                     </div>
                     <div class="profile-socials d-flex align-items-center justify-content-center mt-3">
+                        <!-- Social Links -->
                         @foreach (var item in resume.Links)
                         {
                             <a href="@item" class="text-decoration-none mx-2" target="_blank"><i class="bi bi-link"></i></a>
                         }
                     </div>
                     <div class="profile-location mt-3">
+                        <!-- Location -->
                         <i class="bi bi-geo-alt-fill"></i>
                         <p class="m-0">@resume.Adress</p>
                     </div>
+                </div>
+            </div>
+            <!-- Right Column - Description About Me -->
+            <div class="col-12 mt-5">
+                <div class="description-container text-center">
+                    <h3>About Me</h3>
+                    <p>@resume.Description</p>
                 </div>
             </div>
         </div>
@@ -87,6 +103,24 @@ else
                                             <i class="bi bi-calendar"></i>
                                             @(work.Start == null ? "" : work.Start) to @(work.End == null ? "" : work.End)
                                         </p>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!--Languages Container -->
+                        <div class="skills-container mt-4">
+                            <h4 class="skills-title text-center">
+                                <i class="bi bi-puzzle-fill"></i>
+                               Languages
+                            </h4>
+                            <ul class="list-group">
+                                @foreach (var language in resume.Languages)
+                                {
+                                    <li class="list-group-item mb-3">
+                                        <h5 class="mb-1">@language.Name</h5>
+                                        <p class="mb-0">@language.Skill_Level</p>
+                                        
                                     </li>
                                 }
                             </ul>

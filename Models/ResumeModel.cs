@@ -3,6 +3,7 @@
 	public class ResumeModel
 	{
 		public string Name { get; set; }
+		public string Description { get; set; }
 		public string Role { get; set; }
 		public string Number { get; set; }
 		public string Email { get; set; }
