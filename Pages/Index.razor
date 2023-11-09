@@ -2,127 +2,131 @@
 @inject HttpClient Http
 @using Portofolio.Models;
 
+
 @if (resume == null)
 {
-	<p>Loading... Please wait.</p>
+    <p>Loading... Please wait.</p>
 }
 else
 {
-	<div class="profile-container pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 bg-dark text-white py-5 text-center">
+                <div class="profile-pic-container">
+                    <img class="profile-pic img-fluid rounded-circle" src="Imagens/FotoCV.jpg" alt="@resume.Name" width="120" />
+                </div>
+                <div class="header-text mt-3">
+                    <h2 class="profile-name">@resume.Name</h2>
+                    <h4 class="profile-title">@resume.Role</h4>
+                    <div class="profile-contacts d-flex flex-wrap align-items-center justify-content-center mt-3">
+                        <div class="profile-contacts-group d-flex">
+                            <div class="profile-phone d-flex mr-3">
+                                <i class="bi bi-telephone-fill"></i>
+                                <p class="m-0">@resume.Number</p>
+                            </div>
+                            <div class="profile-email d-flex ml-3">
+                                <i class="bi bi-envelope-fill"></i>
+                                <a href="mailto:@resume.Email" class="m-0 email-link">
+                                    <span>@resume.Email</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-socials d-flex align-items-center justify-content-center mt-3">
+                        @foreach (var item in resume.Links)
+                        {
+                            <a href="@item" class="text-decoration-none mx-2" target="_blank"><i class="bi bi-link"></i></a>
+                        }
+                    </div>
+                    <div class="profile-location mt-3">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <p class="m-0">@resume.Adress</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="header-container bg-dark text-white text-center pt-5 pb-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="body-container d-flex flex-wrap justify-content-center">
+                    <div class="body-left">
+                        <!-- Education Container -->
+                        <div class="education-container mt-4">
+                            <h4 class="education-title text-center">
+                                <i class="bi bi-mortarboard-fill"></i>
+                                Education
+                            </h4>
+                            <ul class="list-group">
+                                @foreach (var item in resume.Educations)
+                                {
+                                    <li class="list-group-item mb-3">
+                                        <h5 class="mb-1">@item.Course</h5>
+                                        <p class="mb-0">@item.School</p>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar"></i>
+                                            @item.Start - @(item.End == null ? "Now" : item.End)
+                                        </small>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
 
-			<div class="profile-pic-container pb-3">
-				<img class="profile-pic" src="Imagens/FotoCV.jpg" />
-			</div>
+                        <!-- Work History Container -->
+                        <div class="skills-container mt-4">
+                            <h4 class="skills-title text-center">
+                                <i class="bi bi-puzzle-fill"></i>
+                                Work History
+                            </h4>
+                            <ul class="list-group">
+                                @foreach (var work in resume.Works)
+                                {
+                                    <li class="list-group-item mb-3">
+                                        <h5 class="mb-1">@work.Name</h5>
+                                        <p class="mb-0">@work.Description</p>
+                                        <p class="mb-0">
+                                            <i class="bi bi-calendar"></i>
+                                            @(work.Start == null ? "" : work.Start) to @(work.End == null ? "" : work.End)
+                                        </p>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			<div class="header-text">
+            <div class="col-lg-4">
+                <div class="body-right">
+                    <!-- Skills Container -->
+                    <div class="skills-container mt-4">
+                        <h4 class="skills-title text-center">
+                            <i class="bi bi-puzzle-fill"></i>
+                            Skills
+                        </h4>
+                        <ul class="list-group">
+                            @foreach (var skill in resume.Skills)
+                            {
+                                <li class="list-group-item mb-3">
+                                    <h5 class="mb-1">@skill.Name</h5>
+                                    <p class="mb-0">@skill.Description</p>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				<div class="profile-name">
-					<pre class="mb-1">@resume.Name</pre>
-				</div>
-
-				<div class="profile-title">
-					<pre>@resume.Role </pre>
-				</div>
-
-				<div class="profile-contacts d-flex flex-wrap align-items-center justify-content-center">
-
-					<div class="profile-phone d-flex">
-						<i class="bi bi-telephone-fill"></i>
-						<pre> @resume.Number </pre>
-					</div>
-
-					<div class="profile-email d-flex">
-						<i class="bi bi-envelope-fill"></i>
-						<pre>@resume.Email</pre>
-					</div>
-
-				</div>
-
-				
-
-				<div class="profile-other">
-
-					<div class="profile-age d-flex justify-content-center">
-						<i class="bi bi-person-fill"></i>
-						<!--Escrever algo-->
-					</div>
-
-					<div class="profile-location d-flex justify-content-center">
-						<i class="bi bi-geo-alt-fill"></i>
-						<pre>@resume.Adress</pre>
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-
-
-		<div class="body-container m-auto d-flex flex-wrap justify-content-center">
-
-			<div class="body-left">
-
-				<div class="education-container">
-					<div class="education-title text-center">
-						<i class="bi bi-mortarboard-fill"></i>
-						<strong>Education</strong>
-					</div>
-					<div class="education-items">
-						@foreach (var item in resume.Educations)
-						{
-							<strong>@item.Course</strong>
-							<pre>@item.School</pre>
-							
-							<pre><i>@item.Start - @item.End</i></pre>
-							<br />
-					
-						}
-					</div>
-
-
-				</div>
-
-				<div class="skills-container">
-					<div class="skills-title text-center">
-						<i class="bi bi-puzzle-fill"></i>
-						<strong>Skills</strong>
-					</div>
-					<div class="skills-items">
-						@foreach (var skill in resume.Skills)
-						{
-							<strong>@skill.Name</strong>
-							<p>@skill.Description</p>
-
-						}
-					</div>
-
-				</div>
-
-			</div>
-
-
-			<div class="body-right">
-
-				
-
-				
-
-			</div>
-
-
-		</div>
-	</div>
 }
 
 
 
 @code {
-	private ResumeModel? resume;
-	protected override async Task OnInitializedAsync()
-	{
-		resume = await Http.GetFromJsonAsync<ResumeModel>("data/resume.json");
-	}
+    private ResumeModel? resume;
+    protected override async Task OnInitializedAsync()
+    {
+        resume = await Http.GetFromJsonAsync<ResumeModel>("data/resume.json");
+    }
 
 }

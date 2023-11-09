@@ -1,7 +1,7 @@
 {
   "Name": "Vitor Novo",
   "Role": "Software Developer",
-  "Number": "+351 910 521 815",
+  "Number": "(+351) 910 521 815",
   "Email": "vitorjmnovo@gmail.com",
   "Adress": "Ponte de Lima, Portugal",
   "Links": [],
@@ -24,14 +24,56 @@
   "Skills": [
     {
       "Name": "C",
-      "Description": "Programming Language"
+      "Description": ""
     },
     {
       "Name": "C++",
-      "Description": "Programming Language"
+      "Description": ""
+    },
+    {
+      "Name": "Java",
+      "Description": ""
+    },
+    {
+      "Name": "C#",
+      "Description": "I use .Net Core Framework to Web Apps and \n WPF for StandAlone app"
+    },
+    {
+      "Name": "Python",
+      "Description": "I used Spider for DataScience"
+    },
+    {
+      "Name": "JavaScript",
+      "Description": "Used for building a game with Three.js"
+    },
+    {
+      "Name": "SQL",
+      "Description": "Database Programming Language"
+    },
+    {
+      "Name": "Unity",
+      "Description": "Game Development Engine"
+    }
+  ],
+  "Works": [
+    {
+      "Name": "Waiter",
+      "Description": "Seasonal waiter in a Restaurant",
+      "Start": "2018-04-16",
+      "End": "2023-11-08"
+    }
+  ],
+  "Languages": [
+    {
+      "Name": "English",
+      "Skill_Level": "B2"
+    },
+    {
+      "Name": "Portuguese",
+      "Skill_Level": "Native"
     }
   ]
 
- 
+
 }
 
