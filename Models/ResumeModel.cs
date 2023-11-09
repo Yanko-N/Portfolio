@@ -1,4 +1,6 @@
-﻿namespace Portofolio.Models
+﻿using Portfolio.Models;
+
+namespace Portofolio.Models
 {
 	public class ResumeModel
 	{
@@ -8,7 +10,7 @@
 		public string Number { get; set; }
 		public string Email { get; set; }
 		public string Adress { get; set; }
-		public List<string> Links { get; set; }
+		public List<Link> Links { get; set; }
 
 		public List<Education> Educations { get; set; }
 		public List<Skill> Skills { get; set; }
