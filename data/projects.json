@@ -5,6 +5,12 @@
       "Description": "Projeto final do Curso de Engenharia Informática",
       "FotoPath": "GeoCachingUtad.jpg",
       "Url": "https://github.com/Yanko-N/GeoCachingUtad"
+    },
+    {
+      "Name": "Jogo das Minas",
+      "Description": "Jogo das Minas Programado em C++",
+      "FotoPath":"jogoDasMinasFoto.PNG",
+      "Url":"https://github.com/Yanko-N/JogoDasMinas"
     }
   ]
 }
