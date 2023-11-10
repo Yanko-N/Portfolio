@@ -1,6 +1,6 @@
 ﻿using Portfolio.Models;
 
-namespace Portofolio.Models
+namespace Portfolio.Models
 {
 	public class ResumeModel
 	{

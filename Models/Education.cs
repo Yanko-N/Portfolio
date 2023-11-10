@@ -1,4 +1,4 @@
-﻿namespace Portofolio.Models
+﻿namespace Portfolio.Models
 {
     public class Education
     {

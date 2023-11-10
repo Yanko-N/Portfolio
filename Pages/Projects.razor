@@ -1,11 +1,36 @@
 ﻿@page "/Projects"
-@using Portofolio.Models;
+@inject HttpClient Http
+@using Portfolio.Models;
 
 <h3>Projects</h3>
 
-
-Under Work still
+@if (projects != null)
+{
+    <div class="row">
+        @foreach (var project in projects.Projects)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" width="200" height=200>
+                    <div class="card-body">
+                        <h5 class="card-title">@project.Name</h5>
+                        <p class="card-text">@project.Description</p>
+                        <a href="@project.Url" class="btn btn-primary" target="_blank">Visit Project</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Projects are still under work.</p>
+}
 
 @code {
-
+    private ProjectsModel? projects;
+    protected override async Task OnInitializedAsync()
+    {
+        projects = await Http.GetFromJsonAsync<ProjectsModel>("data/projects.json");
+    }
 }
