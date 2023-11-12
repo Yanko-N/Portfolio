@@ -4,7 +4,6 @@
   "Number": "(+351) 910 521 815",
   "Email": "vitorjmnovo@gmail.com",
   "Adress": "Ponte de Lima, Portugal",
-  "Links": [],
   "Description": "Hello! I'm Vitor Novo, an enthusiast of Software Engineering at 20 years old, currently in the 3rd year of my Bachelor's Degree at the University of Trás-os-Montes and Alto Douro. My passion mainly lies in Back End development, where I can bring systems and applications to life through logic and programming. I have a keen interest and enthusiasm for game development, which has led me to create several games and experiences using the Unity platform (C#). My journey so far has been focused on honing my skills in various languages, with a focus on C, C++, and C#. Although I also have knowledge in Java, Python, and even some familiarity with JavaScript. I'm excited to continue expanding my knowledge and contributing to challenging and impactful projects.",
   "Links": [
     {
@@ -32,7 +31,7 @@
       "Course": "Software Engineering",
       "School": "University of Trás-os-Montes and Alto Douro",
       "Start": "2020-09-01",
-      "End": "2023-11-08"
+      "End": "Final Semester"
     }
   ],
 
@@ -48,22 +47,22 @@
     {
       "Name": "Java",
       "Description": ""
-    },
-    {
-      "Name": "C#",
-      "Description": "I use .Net Core Framework to Web Apps and \n WPF for StandAlone app"
-    },
+    }
     {
       "Name": "Python",
-      "Description": "I used Spider for DataScience"
+      "Description": ""
     },
     {
       "Name": "JavaScript",
-      "Description": "Used for building a game with Three.js"
+      "Description": ""
+    },
+    {
+      "Name": "C#",
+      "Description": ".Net Core Framework ; WPF "
     },
     {
       "Name": "SQL",
-      "Description": "Database Programming Language"
+      "Description": ""
     },
     {
       "Name": "Unity",
