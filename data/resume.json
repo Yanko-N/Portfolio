@@ -12,13 +12,12 @@
     },
     {
       "Url": "https://github.com/Yanko-N",
-      "Platform": "Git Hub"
+      "Platform": "GitHub"
     },
     {
       "Url": "https://vitornovo.itch.io/",
       "Platform": "Itch.io"
     }
-    
   ],
   "Educations": [
     {
@@ -34,35 +33,34 @@
       "End": "Final Semester"
     }
   ],
-
   "Skills": [
     {
       "Name": "C",
-      "Description": ""
+      "Description": "General-purpose programming language"
     },
     {
       "Name": "C++",
-      "Description": ""
+      "Description": "Object-oriented programming language"
     },
     {
       "Name": "Java",
-      "Description": ""
+      "Description": "Versatile programming language"
     },
     {
       "Name": "Python",
-      "Description": ""
+      "Description": "High-level programming language"
     },
     {
       "Name": "JavaScript",
-      "Description": ""
+      "Description": "Web scripting language"
     },
     {
       "Name": "C#",
-      "Description": ".Net Core Framework ; WPF "
+      "Description": ".Net Core Framework; WPF"
     },
     {
       "Name": "SQL",
-      "Description": ""
+      "Description": "Structured Query Language"
     },
     {
       "Name": "Unity",
@@ -87,7 +85,4 @@
       "Skill_Level": "Native"
     }
   ]
-
-
 }
-
