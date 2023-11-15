@@ -9,26 +9,32 @@
     {
       "Name": "Jogo das Minas",
       "Description": "Jogo das Minas Programado em C++",
-      "FotoPath":"jogoDasMinasFoto.PNG",
-      "Url":"https://github.com/Yanko-N/JogoDasMinas"
+      "FotoPath": "jogoDasMinasFoto.PNG",
+      "Url": "https://github.com/Yanko-N/JogoDasMinas"
     },
     {
       "Name": "Lista de Compras App ",
-      "Description" : "Aplicação criada a partir de WPF com XML para guardar dados",
-      "FotoPath" : "ListaCompras.PNG",
-      "Url" : "https://github.com/Yanko-N/ListaDeComprasApp"
+      "Description": "Aplicação criada a partir de WPF com XML para guardar dados",
+      "FotoPath": "ListaCompras.PNG",
+      "Url": "https://github.com/Yanko-N/ListaDeComprasApp"
     },
     {
       "Name": "Speak2GPT ",
-      "Description" : "Aplicação criada em Python, reconhecimento de voz e comunicação com IA (ChatGPT)",
-      "FotoPath" : "Speak2GPT.PNG",
-      "Url" : "https://github.com/Yanko-N/Speak2GPT"
+      "Description": "Aplicação criada em Python, reconhecimento de voz e comunicação com IA (ChatGPT)",
+      "FotoPath": "Speak2GPT.PNG",
+      "Url": "https://github.com/Yanko-N/Speak2GPT"
     },
     {
       "Name": "Rocket Travel ",
-      "Description" : "Jogo Web feito a partir de JavaScript com a biblioteca da Three.js",
-      "FotoPath" : "rocketImg.PNG",
-      "Url" : "https://github.com/Yanko-N/Three.js_Rocket-Game_ComputacaoGr-fica"
+      "Description": "Jogo Web feito a partir de JavaScript com a biblioteca da Three.js",
+      "FotoPath": "rocketImg.PNG",
+      "Url": "https://github.com/Yanko-N/Three.js_Rocket-Game_ComputacaoGr-fica"
+    },
+    {
+      "Name": "Wholesalers ",
+      "Description": "Aplicação Client-Server using sockect and GRPC",
+      "FotoPath": "WholesalersImg.PNG",
+      "Url": "https://github.com/Yanko-N/Wholesalers"
     }
   ]
 }
