@@ -8,19 +8,19 @@
     },
     {
       "Name": "GeoCaching Utad",
-      "Description": "Final Project of my Bachalors Informatics Engineering degree.Gps based game with focus on exploring the UTAD campus, finding GeoCaches and simultaneous finding playing a Memory Game for clues ",
+      "Description": "Final Project of my Bachalors Informatics Engineering degree.Gps based game with focus on exploring the UTAD campus, finding GeoCaches and simultaneous finding and  playing a Memory Game for clues ",
       "FotoPath": "GeoCachingUtad.jpg",
       "Url": "https://github.com/Yanko-N/GeoCachingUtad"
     },
     {
       "Name": "Golf-Simulator",
-      "Description": "A game made in Windows Form, with purpose of learning fisic,colisions implementations",
+      "Description": "A game made in Windows Form, with purpose of learning and implementing  fisic,colisions and graphics drawer",
       "FotoPath": "golfGame.PNG",
       "Url": "https://github.com/Yanko-N/GolfGame_PhysicsSimulator"
     },
     {
       "Name": "3D Engine",
-      "Description": "3D renderer made with OLC library, with purpose of learning 3D objects processing and rendering ",
+      "Description": "3D renderer made with OLC library, with purpose of learning and implementing a 3D objects processing and rendering software",
       "FotoPath": "olc3DEngine.PNG",
       "Url": "https://github.com/Yanko-N/3DEngine"
     },
