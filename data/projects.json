@@ -2,49 +2,61 @@
   "Projects": [
     {
       "Name": "Aquarium Simulator",
-      "Description": "Projeto do Net Logo que simula a vida de aquario com doenças,tubaroes, etc",
+      "Description": "Net Logo project that simulates life in an aquarium, having predator's, virus and cleaning agents.This work was important because it teached me how IA agents work",
       "FotoPath": "aquariumPhoto.png",
       "Url": "https://github.com/Yanko-N/Aquarium-Simulator"
     },
     {
       "Name": "GeoCaching Utad",
-      "Description": "Projeto final do Curso de Engenharia Informática,feito no Unity é um jogo GeoCache com miniJogo de cartas da Memoria ",
+      "Description": "Final Project of my Bachalors Informatics Engineering degree.Gps based game with focus on exploring the UTAD campus, finding GeoCaches and simultaneous finding playing a Memory Game for clues ",
       "FotoPath": "GeoCachingUtad.jpg",
       "Url": "https://github.com/Yanko-N/GeoCachingUtad"
     },
     {
-      "Name": "Jogo de Golfe-Simulador de Fisica",
-      "Description": "Jogo de Golf que simula atrito, forças e acelarações feito em Windows Forms ",
+      "Name": "Golf-Simulator",
+      "Description": "A game made in Windows Form, with purpose of learning fisic,colisions implementations",
       "FotoPath": "golfGame.PNG",
       "Url": "https://github.com/Yanko-N/GolfGame_PhysicsSimulator"
     },
     {
-      "Name": "Jogo das Minas",
-      "Description": "Jogo das Minas Programado em C++",
+      "Name": "3D Engine",
+      "Description": "3D renderer made with OLC library, with purpose of learning 3D objects processing and rendering ",
+      "FotoPath": "olc3DEngine.PNG",
+      "Url": "https://github.com/Yanko-N/3DEngine"
+    },
+    {
+      "Name": "Minesweeper",
+      "Description": "A game programmed in C++, for implementing recursive methods and improve programming skills",
       "FotoPath": "jogoDasMinasFoto.PNG",
       "Url": "https://github.com/Yanko-N/JogoDasMinas"
     },
     {
-      "Name": "Lista de Compras App ",
-      "Description": "Aplicação criada a partir de WPF com XML para guardar dados, usado o .Net",
+      "Name": "Fit where you are confortable",
+      "Description": "Game developed in Unity with C# for the GameJam  Pencil, Chisel, Code ! ",
+      "FotoPath": "fitWhereYouAreConfortable.png",
+      "Url": "https://vitornovo.itch.io/fit-where-you-are-confortable"
+    },
+    {
+      "Name": "Buying List App",
+      "Description": "Aplication created for creating and saving a buying list for shooping, developed in WPF",
       "FotoPath": "ListaCompras.PNG",
       "Url": "https://github.com/Yanko-N/ListaDeComprasApp"
     },
     {
-      "Name": "Speak2GPT ",
-      "Description": "Aplicação criada em Python, reconhecimento de voz e comunicação com ChatGPT",
+      "Name": "Speak2GPT",
+      "Description": "Aplication created in Python, for disable persons to comunicate with Chat GPT via Voice Recognition and text to speech",
       "FotoPath": "Speak2GPT.PNG",
       "Url": "https://github.com/Yanko-N/Speak2GPT"
     },
     {
-      "Name": "Rocket Travel ",
-      "Description": "Jogo Web feito a partir de JavaScript com a biblioteca da Three.js",
+      "Name": "Rocket Travel",
+      "Description": "Web Game developed with javaScript and Three.js library",
       "FotoPath": "rocketImg.PNG",
       "Url": "https://github.com/Yanko-N/Three.js_Rocket-Game_ComputacaoGr-fica"
     },
     {
-      "Name": "Wholesalers ",
-      "Description": "Aplicação Client-Server using sockect and GRPC",
+      "Name": "Wholesalers",
+      "Description": "Aplication with server-side and client side with rabbitMQ,sockets and GRPC communication",
       "FotoPath": "WholesalersImg.PNG",
       "Url": "https://github.com/Yanko-N/Wholesalers"
     }
