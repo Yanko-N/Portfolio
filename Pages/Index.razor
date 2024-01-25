@@ -92,7 +92,7 @@ else
                                             <li>
                                                 <div class="text-muted">
                                                     <i class="bi bi-calendar"></i>
-                                                    @item.Start to @(item.End == null ? "Now" : item.End)
+                                                    @item.Start - @(item.End == null ? "Now" : item.End)
                                                 </div>
                                             </li>
                                         </ul>
@@ -118,7 +118,7 @@ else
                                             <li>
                                                 <div class="text-muted">
                                                     <i class="bi bi-calendar"></i>
-                                                    @work.Start to @(work.End == null ? "Now" : work.End)
+                                                    @work.Start - @(work.End == null ? "Now" : work.End)
                                                 </div>
                                             </li>
                                         </ul>
