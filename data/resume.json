@@ -4,7 +4,7 @@
   "Number": "(+351) 910 521 815",
   "Email": "vitorjmnovo@gmail.com",
   "Adress": "Ponte de Lima, Portugal",
-  "Description": "Hello! I'm Vitor Novo, an enthusiast of Software Engineering who has successfully completed my Bachelor (Bologna 1st cycle degree) in Informatics Engineering at the University of Trás-os-Montes and Alto Douro. My passion lies in Back End development, where I bring systems and applications to life through logic and programming. I am particularly enthusiastic about game development, and I've created several games and experiences using the Unity platform (C#). My journey so far has been focused on honing my skills in various languages, with a primary focus on C, C++, and C#. I also possess knowledge in Java, Python, and some familiarity with JavaScript. I am excited to continue expanding my knowledge and contributing to challenging and impactful projects.",
+  "Description": "Hello! I'm Vitor Novo, a Software Engineering enthusiast, my passion lies in Back End development, where I bring systems and applications to life through logic and programming. I am particularly enthusiastic about game development and software creation. I enjoy tackling new challenges and expanding my skill so I’am excited to continue expanding my knowledge and contributing to challenging and impactful projects. My main hoobies are skateboarding and game creation.",
   "Links": [
     {
       "Url": "https://www.linkedin.com/in/vitornovo02",
@@ -23,28 +23,28 @@
     {
       "Course": "Socioeconomic Sciences Course",
       "School": "Ponte de Lima Secondary School",
-      "Start": "2017-09-01",
-      "End": "2020-07-16"
+      "Start": "2017",
+      "End": "2020"
     },
     {
       "Course": "Informatics Engineering",
       "School": "University of Trás-os-Montes and Alto Douro",
-      "Start": "2020-09-01",
-      "End": "2024-01-12"
+      "Start": "2020",
+      "End": "2024"
     }
   ],
   "Skills": [
     {
       "Name": "C",
-      "Description": "General-purpose programming language"
+      "Description": ""
     },
     {
       "Name": "C++",
-      "Description": "Object-oriented programming language"
+      "Description": ""
     },
     {
       "Name": "Java",
-      "Description": "Versatile programming language"
+      "Description": ""
     },
     {
       "Name": "Python",
@@ -52,7 +52,7 @@
     },
     {
       "Name": "JavaScript",
-      "Description": "Web scripting language"
+      "Description": ""
     },
     {
       "Name": "C#",
@@ -64,7 +64,7 @@
     },
     {
       "Name": "Unity",
-      "Description": "Game Development Engine"
+      "Description": ""
     },
     {
       "Name": "Git",
@@ -74,9 +74,9 @@
   "Works": [
     {
       "Name": "Waiter",
-      "Description": "Seasonal waiter in a Restaurant",
-      "Start": "2018-04-16",
-      "End": "2023-11-08"
+      "Description": "Seasonal waiter in a Restaurant, even if it was a non engineering work, I gained valuable skills that I can bring to the table, including proficiency in multitasking and facilitating clear and responsive communication.",
+      "Start": "2018",
+      "End": "2023"
     }
   ],
   "Languages": [
