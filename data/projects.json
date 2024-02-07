@@ -4,61 +4,88 @@
       "Name": "Aquarium Simulator",
       "Description": "Net Logo project that simulates life in an aquarium, having predator's, virus and cleaning agents.This work was important because it teached me how IA agents work",
       "FotoPath": "aquariumPhoto.png",
-      "Url": "https://github.com/Yanko-N/Aquarium-Simulator"
+      "Url": "https://github.com/Yanko-N/Aquarium-Simulator",
+      "Type": "Simulators"
     },
     {
       "Name": "GeoCaching Utad",
-      "Description": "Final Project of my Bachalors Informatics Engineering degree.Gps based game with focus on exploring the UTAD campus, finding GeoCaches and simultaneous finding and  playing a Memory Game for clues ",
+      "Description": "Final Project of my Bachalors Informatics Engineering degree.A Unity-developed game, it is a location-based experience featuring a mini-game for discovering clues related to geocaches. ",
       "FotoPath": "GeoCachingUtad.jpg",
-      "Url": "https://github.com/Yanko-N/GeoCachingUtad"
+      "Url": "https://github.com/Yanko-N/GeoCachingUtad",
+      "Type": "Games"
+
     },
     {
       "Name": "Golf-Simulator",
       "Description": "A game made in Windows Form, with purpose of learning and implementing  fisic,colisions and graphics drawer",
       "FotoPath": "golfGame.PNG",
-      "Url": "https://github.com/Yanko-N/GolfGame_PhysicsSimulator"
+      "Url": "https://github.com/Yanko-N/GolfGame_PhysicsSimulator",
+      "Type": "Simulators"
+
     },
     {
       "Name": "3D Engine",
       "Description": "3D renderer made with OLC library, with purpose of learning and implementing a 3D objects processing and rendering software",
       "FotoPath": "olc3DEngine.PNG",
-      "Url": "https://github.com/Yanko-N/3DEngine"
+      "Url": "https://github.com/Yanko-N/3DEngine",
+      "Type": "Applications"
+
     },
     {
       "Name": "Minesweeper",
       "Description": "A game programmed in C++, for implementing recursive methods and improve programming skills",
       "FotoPath": "jogoDasMinasFoto.PNG",
-      "Url": "https://github.com/Yanko-N/JogoDasMinas"
+      "Url": "https://github.com/Yanko-N/JogoDasMinas",
+      "Type": "Games"
+
     },
     {
       "Name": "Fit where you are confortable",
       "Description": "Game developed in Unity with C# for the GameJam  Pencil, Chisel, Code ! ",
       "FotoPath": "fitWhereYouAreConfortable.png",
-      "Url": "https://vitornovo.itch.io/fit-where-you-are-confortable"
+      "Url": "https://vitornovo.itch.io/fit-where-you-are-confortable",
+      "Type": "Games"
+
     },
     {
       "Name": "Buying List App",
       "Description": "Aplication created for creating and saving a buying list for shooping, developed in WPF",
       "FotoPath": "ListaCompras.PNG",
-      "Url": "https://github.com/Yanko-N/ListaDeComprasApp"
+      "Url": "https://github.com/Yanko-N/ListaDeComprasApp",
+      "Type": "Applications"
+
     },
     {
       "Name": "Speak2GPT",
-      "Description": "Aplication created in Python, for disable persons to comunicate with Chat GPT via Voice Recognition and text to speech",
+      "Description": "An application created with Python, featuring voice recognition and text-to-speech functionalities. The objective is to assist disabled individuals in communicating with ChatGPT.",
       "FotoPath": "Speak2GPT.PNG",
-      "Url": "https://github.com/Yanko-N/Speak2GPT"
+      "Url": "https://github.com/Yanko-N/Speak2GPT",
+      "Type": "Applications"
+
     },
     {
       "Name": "Rocket Travel",
       "Description": "Web Game developed with javaScript and Three.js library",
       "FotoPath": "rocketImg.PNG",
-      "Url": "https://github.com/Yanko-N/Three.js_Rocket-Game_ComputacaoGr-fica"
+      "Url": "https://github.com/Yanko-N/Three.js_Rocket-Game_ComputacaoGr-fica",
+      "Type": "Games"
+
     },
     {
       "Name": "Wholesalers",
-      "Description": "Aplication with server-side and client side with rabbitMQ,sockets and GRPC communication",
+      "Description": "A console application developed in C# that functions as a server and client-side system for organizing and processing requests for ownership of broadband locations. Utilizing GRPC, Sockets, and RabbitMQ, it efficiently handles requests and responses.",
       "FotoPath": "WholesalersImg.PNG",
-      "Url": "https://github.com/Yanko-N/Wholesalers"
+      "Url": "https://github.com/Yanko-N/Wholesalers",
+      "Type": "Applications"
+
+    },
+    {
+      "Name": "Shora Crew Website",
+      "Description": "Shora Clothing is a e-commerce website. Created with .Net Core it features inventory control, reservations, and real-time instant messaging through SignalR. The dynamic index page, powered by Ajax and JavaScript, alongside dedicated pages for management of :reservations, cloth, categories and a customizable front page.",
+      "FotoPath": "shoraWebsiteFoto.PNG",
+      "Url": "https://github.com/Yanko-N/ShoraWebsite",
+      "Type": "Websites"
+
     }
   ]
 }

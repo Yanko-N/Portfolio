@@ -21,54 +21,56 @@
   ],
   "Educations": [
     {
-      "Course": "Socioeconomic Sciences Course",
-      "School": "Ponte de Lima Secondary School",
-      "Start": "2017",
-      "End": "2020"
-    },
-    {
       "Course": "Informatics Engineering",
       "School": "University of Trás-os-Montes and Alto Douro",
       "Start": "2020",
       "End": "2024"
+    },
+    {
+      "Course": "Socioeconomic Sciences Course",
+      "School": "Ponte de Lima Secondary School",
+      "Start": "2017",
+      "End": "2020"
     }
+
   ],
   "Skills": [
     {
-      "Name": "C",
-      "Description": ""
+      "Name": "C#",
+      "Description": "Proficient in utilizing the .NET Core framework, Windows Presentation Foundation (WPF) and WinForms applications. C# is my primary programming language"
     },
     {
       "Name": "C++",
-      "Description": ""
+      "Description": "Acquired hands-on experience in the realm of 3D rendering and basic game development, contributing to a deeper understanding of graphics programming"
+    },
+    {
+      "Name": "C",
+      "Description": "Some projects made revolving around the implementation of various data structures and algorithms"
     },
     {
       "Name": "Java",
-      "Description": ""
+      "Description": "Engaged in hands-on exploration by developing small-scale projects, including the implementation of authentication systems utilizing file-based methods."
     },
     {
       "Name": "Python",
-      "Description": "High-level programming language"
+      "Description": "Utilized Python both in application development and data science projects, showcasing versatility and proficiency of this language"
     },
     {
       "Name": "JavaScript",
-      "Description": ""
+      "Description": "Developed an interactive game using Three.js, and used it for interactivity in website development for an engaging user experience."
     },
-    {
-      "Name": "C#",
-      "Description": ".Net Core Framework; WPF"
-    },
+
     {
       "Name": "SQL",
-      "Description": "Structured Query Language"
+      "Description": "Used SQL for database design and implementation, incorporating it into various projects"
     },
     {
       "Name": "Unity",
-      "Description": ""
+      "Description": "Engaged in game development projects, initiating the journey for experiential learning and skill enhancement. Created interactive and engaging games, fostering hands-on experiences in game design, programming, and problem-solving."
     },
     {
       "Name": "Git",
-      "Description": "Version control, commits and resolving conflicts "
+      "Description": "Utilized version control and merging techniques for efficient project management, implementing strategies like maintaining production and development branches, committing changes, and resolving conflicts."
     }
   ],
   "Works": [
