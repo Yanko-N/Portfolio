@@ -73,7 +73,7 @@
     },
     {
       "Name": "Wholesalers",
-      "Description": "A console application developed in C# that functions as a server and client-side system for organizing and processing requests for ownership of broadband locations. Utilizing GRPC, Sockets, and RabbitMQ, it efficiently handles requests and responses.",
+      "Description": "A console application developed in C# that functions as a server and client-side system for organizing and processing requests for ownership of broadband locations. Utilizing GRPC, Sockets, and RabbitMQ, it handles requests and responses.",
       "FotoPath": "WholesalersImg.PNG",
       "Url": "https://github.com/Yanko-N/Wholesalers",
       "Type": "Applications"
@@ -81,7 +81,7 @@
     },
     {
       "Name": "Shora Crew Website",
-      "Description": "Shora Clothing is a e-commerce website. Created with .Net Core it features inventory control, reservations, and real-time instant messaging through SignalR. The dynamic index page, powered by Ajax and JavaScript, alongside dedicated pages for management of :reservations, cloth, categories and a customizable front page.",
+      "Description": "Shora Clothing is a e-commerce website. Created with .Net Core it features inventory control, and real-time instant messaging through SignalR. Alongside dedicated pages for management of: reservations, cloth, categories and a customizable front page.",
       "FotoPath": "shoraWebsiteFoto.PNG",
       "Url": "https://github.com/Yanko-N/ShoraWebsite",
       "Type": "Websites"
