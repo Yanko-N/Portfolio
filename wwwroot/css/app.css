@@ -1,5 +1,4 @@
-﻿body {
-}
+﻿
 .oval {
    
     border-radius: 5%;
@@ -26,4 +25,3 @@
         background: inherit;
         border-radius: 5% / 50%;
     }
-  
