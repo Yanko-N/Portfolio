@@ -2,35 +2,201 @@
 @inject HttpClient Http
 @using Portfolio.Models;
 
-<h3>Projects</h3>
-
 @if (projects != null)
 {
-    <div class="row">
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="display-6">Aplications</h1>
+            @foreach (var project in applications)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@project.Url" target="_blank" class="text-decoration-none text-dark">
+                        <div class="card" style="max-height:500px; min-height:500px;">
+
+
+                            <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" style="max-height:200px; min-height:200px; ">
+
+                            <div class="container-fluid text-center">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class=" flex-column">
+
+                                            <h3 class="card-title">@project.Name</h3>
+                                            <p class="card-text lead">@project.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+
+
+
+                </div>
+            }
+        </div>
+        <div class="row">
+            <h1 class="display-6">Games</h1>
+            @foreach (var project in games)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@project.Url" target="_blank" class="text-decoration-none text-dark">
+                        <div class="card" style="max-height:500px; min-height:500px;">
+
+
+                            <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" style="max-height:200px; min-height:200px; ">
+
+                            <div class="container-fluid text-center">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class=" flex-column">
+
+                                            <h3 class="card-title">@project.Name</h3>
+                                            <p class="card-text lead">@project.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+
+
+
+                </div>
+            }
+        </div>
+        <div class="row">
+            <h1 class="display-6">Websites</h1>
+            @foreach (var project in websites)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@project.Url" target="_blank" class="text-decoration-none text-dark">
+                        <div class="card" style="max-height:500px; min-height:500px;">
+
+
+                            <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" style="max-height:200px; min-height:200px; ">
+
+                            <div class="container-fluid text-center">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class=" flex-column">
+
+                                            <h3 class="card-title">@project.Name</h3>
+                                            <p class="card-text lead">@project.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+
+
+
+                </div>
+            }
+        </div>
+        <div class="row">
+            <h1 class="display-6">Simulators</h1>
+            @foreach (var project in simulators)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@project.Url" target="_blank" class="text-decoration-none text-dark">
+                        <div class="card" style="max-height:500px; min-height:500px;">
+
+
+                            <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" style="max-height:200px; min-height:200px; ">
+
+                            <div class="container-fluid text-center">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class=" flex-column">
+
+                                            <h3 class="card-title">@project.Name</h3>
+                                            <p class="card-text lead">@project.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+
+
+
+                </div>
+            }
+        </div>
+    </div>
+
+    @* <div class="row">
         @foreach (var project in projects.Projects)
         {
             <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" width="200" height=200>
-                    <div class="card-body">
-                        <h5 class="card-title">@project.Name</h5>
-                        <p class="card-text">@project.Description</p>
-                        <a href="@project.Url" class="btn btn-primary" target="_blank">Visit Project</a>
+                <a href="@project.Url" target="_blank" class="text-decoration-none text-dark">
+                    <div class="card" style="max-height:600px; min-height:600px;">
+
+
+                        <img src="Imagens/@project.FotoPath" class="card-img-top" alt="@project.Name" style="max-height:250px; min-height:250px; ">
+
+                        <div class="container-fluid text-center">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class=" flex-column">
+
+                                        <h3 class="card-title">@project.Name</h3>
+                                        <p class="card-text flex-grow-1 lead">@project.Description</p>
+
+                                        <div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
+                </a>
+
+
+
             </div>
         }
-    </div>
+    </div> *@
 }
 else
 {
-    <p>Projects are still under work.</p>
+    <p>No projects found.</p>
 }
 
 @code {
     private ProjectsModel? projects;
+    private List<Projeto>? simulators;
+    private List<Projeto>? games;
+    private List<Projeto>? applications;
+    private List<Projeto>? websites;
+
+
     protected override async Task OnInitializedAsync()
     {
         projects = await Http.GetFromJsonAsync<ProjectsModel>("data/projects.json");
+        simulators = projects.Projects.Where(p => p.Type == "Simulators").ToList();
+        games = projects.Projects.Where(p => p.Type == "Games").ToList();
+        applications = projects.Projects.Where(p => p.Type == "Applications").ToList();
+        websites = projects.Projects.Where(p => p.Type == "Websites").ToList();
+
     }
 }
