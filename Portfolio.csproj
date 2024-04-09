@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\cv\**" />
+    <Content Remove="wwwroot\cv\**" />
+    <EmbeddedResource Remove="wwwroot\cv\**" />
+    <None Remove="wwwroot\cv\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Pages\Index.razor" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+    <None Include="wwwroot\cv\vitornovo_cv_en.pdf" />
   </ItemGroup>
 
   <ItemGroup>
