@@ -37,15 +37,15 @@
   "Skills": [
     {
       "Name": "C#",
-      "Description": "Proficient in utilizing the .NET Core framework, Windows Presentation Foundation (WPF) and WinForms applications. C# is my primary programming language."
+      "Description": "Proficient in utilizing the .NET Core framework, Windows Presentation Foundation (WPF) and WinForms applications. C# is my primary programming language"
     },
     {
       "Name": "C++",
-      "Description": "Acquired hands-on experience in the realm of 3D rendering and basic game development."
+      "Description": "Acquired hands-on experience in the realm of 3D rendering and basic game development, contributing to a deeper understanding of graphics programming"
     },
     {
       "Name": "C",
-      "Description": "Some projects made revolving around the implementation of various data structures and algorithms."
+      "Description": "Some projects made revolving around the implementation of various data structures and algorithms"
     },
     {
       "Name": "Java",
@@ -53,7 +53,7 @@
     },
     {
       "Name": "Python",
-      "Description": "Utilized Python both in application development and data science projects, showcasing the versatility of this language"
+      "Description": "Utilized Python both in application development and data science projects, showcasing versatility and proficiency of this language"
     },
     {
       "Name": "JavaScript",
