@@ -5,7 +5,7 @@
 
 @if (resume == null)
 {
-    <p>Loading... Please wait.</p>
+    <p>A carregar por favor espere um momento.</p>
 }
 else
 {
@@ -40,7 +40,7 @@ else
                     </p>
                 </div>
                 <div class="row">
-                    
+
                     <a href="mailto:@resume.Email" class="m-3 link-light">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -50,7 +50,7 @@ else
                     </a>
                 </div>
 
-                
+
 
 
 
@@ -107,7 +107,7 @@ else
                                                 <div class="text-muted">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
                                                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                                                    </svg>                                                   
+                                                    </svg>
                                                     @item.Start - @(item.End == null ? "Now" : item.End)
                                                 </div>
                                             </li>
@@ -189,9 +189,9 @@ else
                             {
                                 <li class="list-group-item">
                                     <h5 class="mb-1 lead" style="color:black">
-                                        
+
                                         <strong>@skill.Name</strong>
-                                        </h5>
+                                    </h5>
                                     @if (!String.IsNullOrWhiteSpace(skill.Description))
                                     {
 
