@@ -16,7 +16,7 @@
   <ItemGroup>
     <None Include="Pages\Index.razor" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-    <None Include="wwwroot\cv\vitornovo_cv_en.pdf" />
+    <None Include="wwwroot\cv\vitornovo_cv.pdf" />
   </ItemGroup>
 
   <ItemGroup>
