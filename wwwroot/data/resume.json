@@ -4,7 +4,10 @@
   "Number": "(+351) 910 521 815",
   "Email": "vitorjmnovo@gmail.com",
   "Adress": "Ponte de Lima, Portugal",
-  "Description": "Hello! I'm Vitor Novo, an Software Engineering enthusiast, my passion lies in Back End development, where I bring systems and applications to life through logic and programming. I am particularly enthusiastic about game development and software creation. I enjoy tackling new challenges and expanding my skill so I’am excited to continue expanding my knowledge and contributing to challenging and impactful projects. My main hoobies are skateboarding and game creation.",
+  "Description": "I'm a software developer passionate about backend development and systems architecture. With strong
+ experience in .NET technologies, I enjoy solving technical challenges, building scalable APIs, and working
+ autonomously on full development cycles. I'm driven by learning, performance, optimization, and delivering
+ robust code for real-world applications.",
   "Links": [
     {
       "Url": "https://www.linkedin.com/in/vitornovo02",
@@ -37,7 +40,7 @@
   "Skills": [
     {
       "Name": "C#",
-      "Description": "Proficient in utilizing the .NET Core framework, Windows Presentation Foundation (WPF) and WinForms applications. C# is my primary programming language"
+      "Description": "Proficient in utilizing the .NET Core environment, Windows Presentation Foundation (WPF), WinForms applications, MAUI .NET for crossPlatform, REST API's with ASP .NET Core and used ML.Net for IA integration. C# is my favourite programming language for all round development"
     },
     {
       "Name": "C++",
@@ -79,6 +82,12 @@
       "Description": "Seasonal waiter in a Restaurant, even if it was a non engineering work, I gained valuable skills that I can bring to the table, including proficiency in multitasking and facilitating clear and responsive communication.",
       "Start": "2018",
       "End": "2023"
+    },
+     {
+      "Name": "Software Programmer - Full Stack Developer",
+      "Description": "I started as a intern (9 months via Estágio Ativar +) but working in a smaller company quickly started doing all work needed, with hands-on experience in building cross-platform applications using .NET MAUI and designing robust REST APIs with ASP.NET Core. I’ve led the development and maintenance of scalable back-end services, tackled complex bugs in legacy systems, and significantly improved system performance. My approach emphasizes clean architecture using patterns like CQRS, DDD, Mediator, and Dependency Injection. I also integrate machine learning with ML.NET for advanced product classification and predictive analytics.",
+      "Start": "2024",
+      "End": "Present"
     }
   ],
   "Languages": [
