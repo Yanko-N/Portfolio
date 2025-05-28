@@ -37,7 +37,7 @@
   "Skills": [
     {
       "Name": "C#",
-      "Description": "Proficient in utilizing the .NET Core environment, Windows Presentation Foundation (WPF), WinForms applications, MAUI .NET for crossPlatform, REST API's with ASP .NET Core and used ML.Net for IA integration. C# is my favourite programming language for all round development"
+      "Description": "Proficient in utilizing the .NET Core environment, Windows Presentation Foundation (WPF), WinForms applications, MAUI .NET for crossPlatform, REST API's with ASP .NET Core and used ML.Net for AI integration. C# is my favourite programming language for all round development"
     },
     {
       "Name": "C++",
@@ -80,9 +80,9 @@
       "Start": "2018",
       "End": "2023"
     },
-     {
+    {
       "Name": "Software Programmer - Full Stack Developer",
-      "Description": "I started as a intern (9 months via Estágio Ativar +) but working in a smaller company quickly started doing all work needed, with hands-on experience in building cross-platform applications using .NET MAUI and designing robust REST APIs with ASP.NET Core. I’ve led the development and maintenance of scalable back-end services, tackled complex bugs in legacy systems, and significantly improved system performance. My approach emphasizes clean architecture using patterns like CQRS, DDD, Mediator, and Dependency Injection. I also integrate machine learning with ML.NET for advanced product classification and predictive analytics.",
+      "Description": "I started as an intern (9 months via Estágio Ativar +), but in a smaller company environment, I quickly took on full development responsibilities, started doing all work needed, with hands-on experience in building cross-platform applications using .NET MAUI and designing robust REST APIs with ASP.NET Core. I’ve led the development and maintenance of scalable back-end services, tackled complex bugs in legacy systems, and significantly improved system performance. My approach emphasizes clean architecture using patterns like CQRS, DDD, Mediator, and Dependency Injection. I also integrate machine learning with ML.NET for advanced product classification and predictive analytics.",
       "Start": "2024",
       "End": "Present"
     }
