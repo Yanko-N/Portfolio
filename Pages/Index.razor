@@ -78,7 +78,7 @@ else
         <div class="row text-center my-5">
 
             <h3 class="display-3">About Me</h3>
-            <p class="lead ">@resume.Description</p>
+            <p class="lead ">@((MarkupString)resume.Description)</p>
         </div>
         <div class="row mt-5">
             <hr />
@@ -128,7 +128,7 @@ else
                                 {
                                     <li class="list-group-item">
                                         <h5 class="mb-1 lead" style="color:black"><strong>@work.Name</strong></h5>
-                                        <p class="mb-0 lead" style="color:black">@work.Description</p>
+                                        <p class="mb-0 lead" style="color:black">@((MarkupString)work.Description)</p>
                                         <ul>
                                             <li>
                                                 <div class="text-muted">
@@ -196,7 +196,7 @@ else
                                     {
 
                                         <div class="text-muted">
-                                            <p class="mb-0">@skill.Description</p>
+                                            <p class="mb-0">@((MarkupString)skill.Description)</p>
                                         </div>
 
                                     }
