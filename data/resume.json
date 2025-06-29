@@ -82,7 +82,7 @@
     },
     {
       "Name": "Software Programmer - Full Stack Developer",
-      "Description": "I started as an intern (9 months via Estágio Ativar +), but in a smaller company environment, I quickly took on full development responsibilities, started doing all work needed, with hands-on experience in building cross-platform applications using .NET MAUI and designing robust REST APIs with ASP.NET Core. I’ve led the development and maintenance of scalable back-end services, tackled complex bugs in legacy systems, and significantly improved system performance. My approach emphasizes clean architecture using patterns like CQRS, DDD, Mediator, and Dependency Injection. I also integrate machine learning with ML.NET for advanced product classification and predictive analytics.",
+      "Description": "<ul style=\"list-style:none; padding-left:0;\">\r\n <li>Developed cross-platform applications using .NET MAUI<\/li>\r\n  <li>Designed and built REST APIs with ASP.NET Core<\/li>\r\n  <li>Created and maintained back-end services<\/li>\r\n  <li>Diagnosed and resolved complex bugs and legacy issues, improving system stability and performance<\/li>\r\n  <li>Applied architectural patterns like CQRS, DDD, Mediator pattern, and Dependency Injection to improve codebase maintainability.<\/li>\r\n  <li>Integrated ML.NET models for product classification and predictive analytics.<\/li>\r\n<\/ul>\r\n",
       "Start": "2024",
       "End": "Present"
     }
