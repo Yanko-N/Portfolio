@@ -1,0 +1,91 @@
+[
+  {
+    "Id": 1,
+    "Name": "Aquarium Simulator",
+    "Description": "Net Logo project simulating life in an aquarium.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/Aquarium-Simulator",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 2,
+    "Name": "GeoCaching Utad",
+    "Description": "Location-based Unity game for geocache clues.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/GeoCachingUtad",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 3,
+    "Name": "Golf-Simulator",
+    "Description": "Windows Forms physics/collisions/graphics.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/GolfGame_PhysicsSimulator",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 4,
+    "Name": "3D Engine",
+    "Description": "3D renderer with OLC library.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/3DEngine",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 5,
+    "Name": "Minesweeper",
+    "Description": "C++ game for recursion practice.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/JogoDasMinas",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 6,
+    "Name": "Fit where you are confortable",
+    "Description": "Unity + C# GameJam entry.",
+    "DemoUrl": "https://vitornovo.itch.io/fit-where-you-are-confortable",
+    "ProjectCategoryId": 4,
+    "SourceCodeUrl": ""
+  },
+  {
+    "Id": 7,
+    "Name": "Buying List App",
+    "Description": "WPF shopping list app.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/ListaDeComprasApp",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 8,
+    "Name": "Speak2GPT",
+    "Description": "Python app with STT/TTS for ChatGPT.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/Speak2GPT",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 9,
+    "Name": "Rocket Travel",
+    "Description": "JS + Three.js web game.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/Three.js_Rocket-Game_ComputacaoGr-fica",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 10,
+    "Name": "Wholesalers",
+    "Description": "C# console app (gRPC/Sockets/RabbitMQ).",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/Wholesalers",
+    "ProjectCategoryId": 4
+  },
+  {
+    "Id": 11,
+    "Name": "Shora Crew Website",
+    "Description": ".NET Core e‑commerce with SignalR.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "https://github.com/Yanko-N/ShoraWebsite",
+    "ProjectCategoryId": 4
+  }
+]
+

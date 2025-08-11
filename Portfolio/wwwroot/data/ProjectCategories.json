@@ -1,0 +1,28 @@
+[
+  {
+    "Id": "1",
+    "Name": "Web Development",
+    "Description": "Projects related to web applications and services."
+  },
+  {
+    "Id": "2",
+    "Name": "Mobile Development",
+    "Description": "Projects focused on mobile applications for iOS and Android."
+  },
+  {
+    "Id": "3",
+    "Name": "Desktop Applications",
+    "Description": "Projects for desktop software development."
+  },
+  {
+    "Id": "4",
+    "Name": "Game Development",
+    "Description": "Projects involving game design and development."
+  },
+  {
+    "Id": "5",
+    "Name": "Data Science",
+    "Description": "Projects related to data analysis, machine learning, and AI."
+  }
+]
+

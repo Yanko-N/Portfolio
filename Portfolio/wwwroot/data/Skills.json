@@ -1,0 +1,75 @@
+[
+  {
+    "Id": 1,
+    "Icon": "",
+    "Description": ".NET (WPF, WinForms, MAUI), REST APIs, ML.Net.",
+    "Name": "C#",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 2,
+    "Icon": "",
+    "Description": "3D rendering and basic game dev.",
+    "Name": "C++",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 3,
+    "Icon": "",
+    "Description": "Data structures and algorithms.",
+    "Name": "C",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 4,
+    "Icon": "",
+    "Description": "Small projects; file‑based auth.",
+    "Name": "Java",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 5,
+    "Icon": "",
+    "Description": "Apps and data science.",
+    "Name": "Python",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 6,
+    "Icon": "",
+    "Description": "Three.js game; web interactivity.",
+    "Name": "JavaScript",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 7,
+    "Icon": "",
+    "Description": "DB design & implementation.",
+    "Name": "SQL",
+    "Motivation": null,
+    "CategoryId": 1
+  },
+  {
+    "Id": 8,
+    "Icon": "",
+    "Description": "Game development projects.",
+    "Name": "Unity",
+    "Motivation": null,
+    "CategoryId": 2
+  },
+  {
+    "Id": 9,
+    "Icon": "",
+    "Description": "Version control & merging.",
+    "Name": "Git",
+    "Motivation": null,
+    "CategoryId": 3
+  }
+]
+

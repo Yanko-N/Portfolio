@@ -1,0 +1,39 @@
+[
+  {
+    "ProjectId": 2,
+    "SkillId": 8
+  },
+  {
+    "ProjectId": 3,
+    "SkillId": 1
+  },
+  {
+    "ProjectId": 5,
+    "SkillId": 2
+  },
+  {
+    "ProjectId": 6,
+    "SkillId": 1
+  },
+  {
+    "ProjectId": 6,
+    "SkillId": 8
+  },
+  {
+    "ProjectId": 7,
+    "SkillId": 1
+  },
+  {
+    "ProjectId": 8,
+    "SkillId": 5
+  },
+  {
+    "ProjectId": 9,
+    "SkillId": 6
+  },
+  {
+    "ProjectId": 10,
+    "SkillId": 1
+  }
+]
+

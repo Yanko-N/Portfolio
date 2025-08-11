@@ -1,0 +1,18 @@
+[
+    {
+      "Id": 1,
+      "Name": "Skateboarding",
+      "Description": "Enjoys street and park skateboarding, focusing on creative tricks and continuous skill improvement.",
+      "ImageId": null,
+      "Image": null,
+      "Icon": "mdi:skateboard"
+    },
+    {
+      "Id": 2,
+      "Name": "Gaming",
+      "Description": "Passionate about both casual and competitive gaming, with a focus on immersive storytelling and strategic gameplay.",
+      "ImageId": null,
+      "Image": null,
+      "Icon": "mdi:gamepad-variant"
+    }
+  ]

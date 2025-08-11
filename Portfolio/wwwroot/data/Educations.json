@@ -1,0 +1,17 @@
+ [
+    {
+      "Id": 1,
+      "SchoolId": 1,
+      "CourseId": 1,
+      "StartDate": "2020-01-01",
+      "EndDate": "2024-01-01"
+    },
+    {
+      "Id": 2,
+      "SchoolId": 2,
+      "CourseId": 2,
+      "StartDate": "2017-01-01",
+      "EndDate": "2020-01-01"
+    }
+  ]
+
