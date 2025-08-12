@@ -1,0 +1,106 @@
+﻿@using MudBlazor
+@using Domain.Extensions
+@using static Application.Contracts.DTOs.Response
+
+<MudPaper Class="hero-card mb-4" Elevation="1" Outlined="true">
+    <div class="hero-dots"></div>
+    <div class="container-fluid p-4 p-md-5">
+        <div class="row align-items-center g-3">
+            <div class="col-12 col-md-2 d-flex justify-content-center justify-content-md-center mb-3 mb-md-0">
+                @if (!string.IsNullOrWhiteSpace(ProfileImageSrc))
+                {
+                    <img src="@ProfileImageSrc"
+                         alt="@Info.ProfileImage.AltText"
+                         class="rounded-circle border"
+                         style="width: 150px; height: 150px; object-fit: cover;" />
+                }
+                else
+                {
+                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border"
+                         style="width: 150px; height: 150px;">
+                        <span class="text-white fw-bold fs-4">@Initials</span>
+                    </div>
+                }
+            </div>
+
+            <div class="col-12 col-md-10">
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.h4" Class="text-capitalize text-center text-md-start">
+                        @Info?.Name
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2" Color="Color.Secondary" Class="text-center text-md-start">
+                        @Info?.WorkTitle
+                    </MudText>
+
+
+
+                    <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+                        @if (Socials is not null)
+                        {
+                            @foreach (var s in Socials)
+                            {
+                                <MudIconButton Icon="@s.Icon"
+                                               Link="@s.Url" Target="_blank" Rel="noopener"
+                                               Color="Color.Default" Size="Size.Medium"
+                                               Class="hero-social" />
+                            }
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(Info?.EndPointCV))
+                        {
+                            <MudButton StartIcon="@Icons.Material.Filled.Description"
+                                       Color="Color.Primary" Variant="Variant.Filled"
+                                       Href="@Info!.EndPointCV" Target="_blank" Rel="noopener">
+                                download my resume
+                            </MudButton>
+                        }
+                    </div>
+                </MudStack>
+            </div>
+        </div>
+    </div>
+</MudPaper>
+
+<style> 
+    .hero-card {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .hero-dots {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: .08;
+        background-image: radial-gradient(currentColor 1px, transparent 1px);
+        background-size: 14px 14px;
+        mask-image: linear-gradient(90deg, transparent 0, rgba(0,0,0,.6) 15%, rgba(0,0,0,.6) 70%, transparent 100%);
+    }
+
+    .hero-social {
+        border-radius: 10px;
+    }
+
+</style>
+
+@code {
+    [Parameter] public PersonalInfoDto? Info { get; set; }
+    [Parameter] public IEnumerable<SocialDto>? Socials { get; set; }
+
+    private string ProfileImageSrc =>
+        Info?.ProfileImage?.Path ?? Info?.ProfileImage?.Url ?? string.Empty;
+
+    private string Initials
+        => string.Join("", (Info?.Name ?? "")
+               .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+               .Take(2)
+               .Select(p => char.ToUpperInvariant(p[0])));
+
+    protected override Task OnParametersSetAsync()
+    {
+        StateHasChanged();
+        return base.OnParametersSetAsync();
+    }
+}

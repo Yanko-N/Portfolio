@@ -1,7 +1,7 @@
 {
-  "schema": "portfolio-v1",
-  "version": "2025.08.11-02",
-  "generatedAt": "2025-08-11T10:00:00Z",
+  "schema": "portfolio-v2",
+  "version": "2025.08.12-01",
+  "generatedAt": "2025-08-12T10:00:00Z",
   "files": {
     "personalInfo": {
       "path": "/data/PersonalInfos.json"
@@ -11,7 +11,7 @@
       "path": "/data/PersonalInfoImages.json"
     },
 
-    "socialLinks": {
+    "socialsLinks": {
       "path": "/data/SocialLinks.json"
     },
     "languages": {

@@ -17,7 +17,9 @@ namespace Portfolio
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<IManifestClient, ManifestClient>();
+
             builder.Services.AddTransient<IPersonalInfoService, PersonalInfoJsonRepository>();
+            builder.Services.AddTransient<ISocialsService, SocialsInfoJsonRepository>();
 
             builder.Services.AddMudServices();
             await builder.Build().RunAsync();

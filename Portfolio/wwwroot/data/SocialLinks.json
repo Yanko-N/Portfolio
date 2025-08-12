@@ -3,19 +3,19 @@
     "Id": 1,
     "Name": "LinkedIn",
     "Url": "https://www.linkedin.com/in/vitornovo02",
-    "Icon": "mdi:linkedin"
+    "Icon": "linkedin"
   },
   {
     "Id": 2,
     "Name": "GitHub",
     "Url": "https://github.com/Yanko-N",
-    "Icon": "mdi:github"
+    "Icon": "github"
   },
   {
     "Id": 3,
     "Name": "Itch.io",
     "Url": "https://vitornovo.itch.io/",
-    "Icon": "mdi:gamepad-variant"
+    "Icon": "videogame"
   }
 ]
 

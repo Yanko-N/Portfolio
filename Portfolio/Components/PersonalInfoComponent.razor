@@ -1,9 +1,8 @@
-﻿@using Application.Interfaces.Services
-@using static Application.Contracts.DTOs.Response
+﻿@using static Application.Contracts.DTOs.Response
+
 @inherits LayoutComponentBase
 
-@inject IPersonalInfoService PersonalInfoService
-@inject ISnackbar Snackbar
+
 
 @if (IsLoading)
 {
@@ -16,72 +15,11 @@ else if (!string.IsNullOrWhiteSpace(Error))
 {
     <ErrorComponent ErrorTitle="Failed to load personal info"
                     ErrorMessage="@Error"
-                    OnRetry="LoadAsync" />
+                    OnRetry="OnRetry" />
 }
 else if (Info != null)
 {
-  <MudCard Class="mb-6" Elevation="1" Outlined="true">
-        <MudGrid AlignItems="Center">
-            <MudItem xs="12" md="3" Class="d-flex justify-center p-6">
-                @if (Info.ProfileImage != null && !string.IsNullOrWhiteSpace(Info.ProfileImage.Path))
-                {
-                    <MudAvatar
-                               Size="Size.Large"
-                               Variant="Variant.Outlined"
-                               Class="mud-elevation-2" >
-                        <MudImage Alt="@Info.ProfileImage.AltText" Src="@profileImagePath" />
-                    </MudAvatar>
-                }
-                else
-                {
-                    <MudAvatar Size="Size.Large" Variant="Variant.Outlined" Color="Color.Secondary">
-                        No
-                    </MudAvatar>
-                }
-            </MudItem>
-
-            <MudItem xs="12" md="9">
-                <MudCardContent>
-                    <MudText Typo="Typo.h5" Class="mb-1">@Info.Name</MudText>
-                    <MudText Typo="Typo.subtitle2" Color="Color.Secondary">@Info.WorkTitle</MudText>
-                    <MudText Class="mt-3">@Info.Description</MudText>
-
-                    <MudList Dense="true" Class="mt-3" T="string">
-                        @if (!string.IsNullOrWhiteSpace(Info.Email))
-                        {
-                            <MudListItem>
-                                <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" Class="me-2" />
-                                <MudText><a href="mailto:@Info.Email">@Info.Email</a></MudText>
-                            </MudListItem>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Info.CellphoneNumber))
-                        {
-                            <MudListItem>
-                                <MudIcon Icon="@Icons.Material.Filled.Phone" Color="Color.Primary" Class="me-2" />
-                                <MudText>@Info.CellphoneNumber</MudText>
-                            </MudListItem>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Info.Address))
-                        {
-                            <MudListItem>
-                                <MudIcon Icon="@Icons.Material.Filled.LocationOn" Color="Color.Primary" Class="me-2" />
-                                <MudText>@Info.Address</MudText>
-                            </MudListItem>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Info.EndPointCV))
-                        {
-                            <MudListItem>
-                                <MudIcon Icon="@Icons.Material.Filled.Description" Color="Color.Primary" Class="me-2" />
-                                <MudText>
-                                    <MudLink Href="@Info.EndPointCV" Target="_blank" Rel="noopener">Download CV</MudLink>
-                                </MudText>
-                            </MudListItem>
-                        }
-                    </MudList>
-                </MudCardContent>
-            </MudItem>
-        </MudGrid>
-    </MudCard>
+    <HeroProfileCard Info="Info" Socials="Socials"/> 
 }
 else
 {
@@ -91,51 +29,13 @@ else
 }
 @code {
 
-    public PersonalInfoDto? Info { get; set; }
-    public bool IsLoading { get; set; } = true;
-    public string? Error { get; set; }
+    [Parameter,EditorRequired] public PersonalInfoDto? Info { get; set; }
+    [Parameter,EditorRequired] public IEnumerable<SocialDto>? Socials { get; set; }
+
+    [Parameter,EditorRequired] public bool IsLoading { get; set; } = true;
+    [Parameter,EditorRequired] public string? Error { get; set; }
+
+    [Parameter,EditorRequired] public EventCallback OnRetry { get; set; }
 
     public string profileImagePath => Info?.ProfileImage?.Path ?? Info?.ProfileImage.Url ?? string.Empty;
-
-    protected override Task OnInitializedAsync() => LoadAsync();
-
-    protected async Task LoadAsync()
-    {
-        try
-        {
-            var result = await PersonalInfoService.GetPersonalInfoAsync();
-
-            if (result is null)
-            {
-                Error = "Service returned no result.";
-                return;
-            }
-
-            if (result.IsSuccess)
-            {
-                Info = result.Value;
-            }
-            else
-            {
-                Error = string.IsNullOrWhiteSpace(result.ErrorMessage) ? "Unknown error." : result.ErrorMessage;
-                Snackbar.Add(Error, Severity.Error, cfg => cfg.RequireInteraction = false);
-            }
-        }
-        catch (Exception ex)
-        {
-            Error = ex.Message;
-            Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error, cfg =>
-            {
-                cfg.RequireInteraction = false;
-                cfg.ShowCloseIcon = true;
-            });
-        }
-        finally
-        {
-            IsLoading = false;
-            StateHasChanged();
-        }
-    }
-
-
 }

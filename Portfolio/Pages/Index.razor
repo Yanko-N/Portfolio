@@ -1,8 +1,89 @@
-﻿@page "/"
+﻿@using Application.Interfaces.Services
+@using static Application.Contracts.DTOs.Response
+@using Application.Classes
+@attribute [Route(ApplicationConstants.Routes.Index)]
+@inject IPersonalInfoService PersonalInfoService
+@inject ISnackbar Snackbar
+@inject ISocialsService SocialsService
 
-<Portfolio.Components.PersonalInfoComponent/>
+<Portfolio.Components.PersonalInfoComponent Error="@Error"
+    Socials="@Socials" Info="@Info" IsLoading="@IsLoading" OnRetry="@LoadPersonalInfoAndSocialsAsync"/>
 
 
-@code{
- 
+@code
+{
+
+    public bool IsLoading { get; set; } = true;
+    public string? Error { get; set; }
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+
+    private PersonalInfoDto? Info { get; set; }
+    private IEnumerable<SocialDto>? Socials { get; set; }
+    private bool _isBusy = false;
+
+    protected async Task LoadAsync()
+    {
+        try
+        {
+            IsLoading = true;
+
+            await LoadPersonalInfoAndSocialsAsync();
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+            Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error, cfg =>
+            {
+                cfg.RequireInteraction = false;
+                cfg.ShowCloseIcon = true;
+            });
+        }
+        finally
+        {
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    protected async Task LoadPersonalInfoAndSocialsAsync()
+    {
+        if (_isBusy)
+        {
+            return;
+        }
+
+        _isBusy = true;
+        var resultPersonalInfo = await PersonalInfoService.GetPersonalInfoAsync();
+
+        if (resultPersonalInfo == null)
+        {
+            Error = "Service returned no result.";
+            return;
+        }
+
+        if (resultPersonalInfo.IsSuccess)
+        {
+            Info = resultPersonalInfo.Value;
+        }
+        else
+        {
+            Error = string.IsNullOrWhiteSpace(resultPersonalInfo.ErrorMessage) ? "Failed to load personal info." : resultPersonalInfo.ErrorMessage;
+            Snackbar.Add(Error, Severity.Error, cfg => cfg.RequireInteraction = false);
+        }
+
+        var resultSocials = await SocialsService.GetSocialsAsync();
+
+        if (resultSocials.IsSuccess)
+        {
+            Socials = resultSocials.Value;
+        }
+        else
+        {
+            Error = string.IsNullOrWhiteSpace(resultSocials.ErrorMessage) ? "Failed to load socials." : resultSocials.ErrorMessage;
+        }
+
+        _isBusy = false;
+    }
 }

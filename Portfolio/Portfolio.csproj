@@ -74,7 +74,7 @@
     <Content Update="wwwroot\data\Skills.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\data\Socials.json">
+    <Content Update="wwwroot\data\SocialLinks.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\data\Works.json">
