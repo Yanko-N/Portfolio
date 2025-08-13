@@ -2,11 +2,14 @@
 @using static Application.Contracts.DTOs.Response
 @using Application.Classes
 @attribute [Route(ApplicationConstants.Routes.Index)]
+
 @inject IPersonalInfoService PersonalInfoService
 @inject ISnackbar Snackbar
 @inject ISocialsService SocialsService
 @inject IHobbiesService HobbiesService
 @inject ISkillsService SkillsService
+@inject IWorkService WorkService
+@inject IEducationService EducationService
 
 <Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
     Socials="@Socials" Info="@Info" IsLoading="@IsLoading" OnRetry="@LoadPersonalInfoAndSocialsAsync"/>
@@ -15,16 +18,26 @@
 
 <Portfolio.Components.SkillsComponent Skills="@Skills" Error="@ErrorSkills" IsLoading="@IsLoading" OnRetry="@LoadSkillsAsync" ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
 
+<Portfolio.Components.WorkExperience Works="@Works" Error="@ErrorWork" IsLoading="@IsLoading" OnRetry="@LoadWorkAsync" ViewAllUrl="@ApplicationConstants.Routes.WorkPage" />
 
+<Portfolio.Components.EducationExperienceComponent Educations="@Educations" Error="@ErrorEducation" IsLoading="@IsLoading" OnRetry="@LoadEducationAsync" ViewAllUrl="@ApplicationConstants.Routes.EducationPage" />
 
 
 @code
 {
 
     public bool IsLoading { get; set; } = true;
+
+    #region ##### Error Messages #####
+
     public string? ErrorPersonalInfo { get; set; }
     public string? ErrorHobbies { get; set; }
     public string? ErrorSkills { get; set; }
+    public string? ErrorWork { get; set; }
+    public string? ErrorEducation { get; set; }
+
+    #endregion
+
 
     protected override Task OnInitializedAsync() => LoadAsync();
 
@@ -33,12 +46,19 @@
     private IEnumerable<SocialDto>? Socials { get; set; }
     private IEnumerable<HobbyDto>? Hobbies { get; set; }
     private IEnumerable<SkillDto>? Skills { get; set; }
+    private IEnumerable<WorkDto>? Works { get; set; }
+    private IEnumerable<EducationDto>? Educations { get; set; }
+    #region ##### Busy Booleans #####
 
     private bool _isBusyPersonalInfo = false;
     private bool _isBusyHobbies = false;
     private bool _isBusySkills = false;
+    private bool _isBusyWork = false;
+    private bool _isBusyEducation = false;
+    #endregion
 
-    
+
+
 
     protected async Task LoadAsync()
     {
@@ -46,9 +66,15 @@
         {
             IsLoading = true;
 
-            LoadPersonalInfoAndSocialsAsync();
-            LoadHobbiesAsync();
-            LoadSkillsAsync();
+            List<Task> tasks = new List<Task>();
+
+            tasks.Add(LoadPersonalInfoAndSocialsAsync());
+            tasks.Add(LoadHobbiesAsync());
+            tasks.Add(LoadSkillsAsync());
+            tasks.Add(LoadWorkAsync());
+            tasks.Add(LoadEducationAsync());
+
+            await Task.WhenAll(tasks);
         }
         catch (Exception ex)
         {
@@ -163,6 +189,66 @@
             Snackbar.Add(ErrorSkills, Severity.Error, cfg => cfg.RequireInteraction = false);
         }
         _isBusySkills = false;
+        StateHasChanged();
+
+    }
+
+    protected async Task LoadWorkAsync()
+    {
+        if (_isBusyWork)
+        {
+            return;
+        }
+
+        _isBusyWork = true;
+        var resultWorks = await WorkService.GetWorksAsync();
+
+        if (resultWorks == null)
+        {
+            ErrorWork = "Work Service returned no result.";
+            return;
+        }
+
+        if (resultWorks.IsSuccess)
+        {
+            Works = resultWorks.Value;
+        }
+        else
+        {
+            ErrorWork = string.IsNullOrWhiteSpace(resultWorks.ErrorMessage) ? "Failed to load work info." : resultWorks.ErrorMessage;
+            Snackbar.Add(ErrorWork, Severity.Error, cfg => cfg.RequireInteraction = false);
+        }
+        _isBusyWork = false;
+        StateHasChanged();
+
+    }
+
+    protected async Task LoadEducationAsync()
+    {
+        if (_isBusyEducation)
+        {
+            return;
+        }
+
+        _isBusyEducation = true;
+        var resultEducation = await EducationService.GetEducationsAsync();
+
+        if (resultEducation == null)
+        {
+            ErrorWork = "Education Service returned no result.";
+            return;
+        }
+
+        if (resultEducation.IsSuccess)
+        {
+            Educations = resultEducation.Value;
+        }
+        else
+        {
+            ErrorWork = string.IsNullOrWhiteSpace(resultEducation.ErrorMessage) ? "Failed to load education info." : resultEducation.ErrorMessage;
+            Snackbar.Add(ErrorWork, Severity.Error, cfg => cfg.RequireInteraction = false);
+        }
+        _isBusyEducation = false;
         StateHasChanged();
 
     }

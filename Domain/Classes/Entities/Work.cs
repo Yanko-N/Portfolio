@@ -15,7 +15,7 @@ namespace Domain.Classes.Entities
         {
             if (enterprise == null)
             {
-                    throw new ArgumentException("EnterpriseId must be positive.");
+                throw new ArgumentException("EnterpriseId must be positive.");
             }
 
             if (string.IsNullOrWhiteSpace(title)) 

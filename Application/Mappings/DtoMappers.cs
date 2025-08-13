@@ -38,7 +38,7 @@ public static class DtoMappers
         new SchoolDto(x.Id, x.Name, x.Location);
 
     public static CourseDto ToDto(this Course x) =>
-        new CourseDto(x.Id, x.Name, x.Description, x.Url.AbsoluteUri);
+        new CourseDto(x.Id, x.Name, x.Description, x.Url.Value);
 
     public static EducationDto ToDto(this Education x) =>
         new EducationDto(x.Id, x.School.ToDto(), x.Course.ToDto(),
@@ -46,7 +46,7 @@ public static class DtoMappers
         );
 
     public static EnterpriseDto ToDto(this Enterprise x) => 
-        new EnterpriseDto( x.Id,x.Name,x.Url?.AbsolutePath,
+        new EnterpriseDto( x.Id,x.Name,x.Url?.Value,
             x.Image?.ToDto()
         );
 

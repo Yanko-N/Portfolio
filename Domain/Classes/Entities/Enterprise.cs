@@ -1,10 +1,12 @@
-﻿namespace Domain.Classes.Entities
+﻿using Domain.Classes.Values;
+
+namespace Domain.Classes.Entities
 {
     public sealed class Enterprise
     {
         public int Id { get; set; } 
         public string Name { get; set; }
-        public Uri Url { get; set; }
+        public Url Url { get; set; }
         public Image? Image { get; set; } 
 
         public Enterprise(int id, string name, string url, Image? image)
@@ -17,10 +19,10 @@
             {
                 throw new ArgumentException("Enterprise URL is required.", nameof(url));
             }
-            Uri uri;
+            Url uri;
             try
             {
-                uri = new Uri(url);
+                uri = new Url(url);
             }
             catch (Exception e)
             {

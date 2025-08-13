@@ -1,14 +1,14 @@
- [
-    {
-      "Id": 1,
-      "Name": "Informatics Engineering",
-      "Description": "",
-      "Url": ""
-    },
-    {
-      "Id": 2,
-      "Name": "Socioeconomic Sciences Course",
-      "Description": "",
-      "Url": ""
-    }
-  ]
+[
+  {
+    "Id": 1,
+    "Name": "Bachelor's degree in Informatics Engineering",
+    "Description": "Bachelor’s Degree in Informatics Engineering This undergraduate program built essential skills in programming, mathematics, and software engineering fundamentals, preparing students for modern software development careers. The comprehensive curriculum focused heavily on programming languages including C, C++, C#, MATLAB, and Python, with strong emphasis on software engineering principles, design patterns, and development methodologies, supported by extensive mathematical foundations including algebra, calculus, discrete mathematics, and statistical analysis. The program emphasized theoretical foundations and practical application through hands-on projects and coursework that developed core competencies in algorithmic thinking, system design principles, software architecture patterns, mathematical modeling and analysis, testing methodologies and quality assurance, and professional development practices, providing a solid foundation for advanced studies and software engineering careers with focus on fundamental principles and best practices.",
+    "Url": "https://www.utad.pt/estudar/cursos/engenharia-informatica/"
+  },
+  {
+    "Id": 2,
+    "Name": "Socioeconomic Sciences Course",
+    "Description": "Regular Course focusing on socioeconomics combines general academic subjects with studies in economics, geography,Philosofy and Mathematics, preparing students for higher education or careers in business,social fields or matematics related fields",
+    "Url": "https://www.aeplima.pt/aeplima/"
+  }
+]

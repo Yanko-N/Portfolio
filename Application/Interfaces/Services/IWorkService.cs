@@ -6,5 +6,6 @@ namespace Application.Interfaces.Services
     public interface IWorkService
     {
         Task<Result<IEnumerable<Response.WorkDto>>> GetWorksAsync(CancellationToken cancellationToken = default);
+        Task<Result<Response.WorkDto>> GetWorkAsync(int id, CancellationToken cancellationToken = default);
     }
 }

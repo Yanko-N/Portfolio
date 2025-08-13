@@ -36,8 +36,6 @@ namespace Domain.Classes.Entities
                 throw new ArgumentException("Invalid URL format.", nameof(url), e);
             }
 
-           
-
             Id = id;
             Name = name.Trim();
             Icon = icon.ResolveMudBlazorIcon();

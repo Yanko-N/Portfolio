@@ -7,28 +7,28 @@
 {
     <div class="text-center mt-5">
         <div class="spinner-border" role="status" aria-hidden="true"></div>
-        <p class="mt-2 mb-0">Loading work information…</p>
+        <p class="mt-2 mb-0">Loading education information…</p>
     </div>
 }
 else if (!string.IsNullOrWhiteSpace(Error))
 {
-    <ErrorComponent ErrorTitle="Failed to load work info"
+    <ErrorComponent ErrorTitle="Failed to load education info"
                     ErrorMessage="@Error"
                     OnRetry="OnRetry" />
 }
-else if (Works != null)
+else if (Educations != null)
 {
-    <Portfolio.Components.SpecifedComponents.HeroWorksCard Works="@Works" ViewAllUrl="@ViewAllUrl" />
+    <Portfolio.Components.SpecifedComponents.HeroEducationsCard Educations="@Educations" ViewAllUrl="@ViewAllUrl" />
 }
 else
 {
     <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-4">
-        No work information available.
+        No education information available.
     </MudAlert>
 }
 @code {
 
-    [Parameter, EditorRequired] public IEnumerable<WorkDto>? Works { get; set; }
+    [Parameter, EditorRequired] public IEnumerable<EducationDto>? Educations { get; set; }
     [Parameter, EditorRequired] public bool IsLoading { get; set; } = true;
     [Parameter, EditorRequired] public string? Error { get; set; }
     [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
