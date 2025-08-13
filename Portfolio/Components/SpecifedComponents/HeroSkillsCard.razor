@@ -1,0 +1,162 @@
+﻿@using MudBlazor
+@using static Application.Contracts.DTOs.Response
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<MudPaper Class="hero-card mb-4 p-3 p-md-4" Elevation="1" Outlined="true" Square="false">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-6 d-flex justify-content-start">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold text-uppercase">Skills</MudText>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                @if (SkillDtos?.Count() > MaxItemsToShow && !string.IsNullOrWhiteSpace(ViewAllUrl))
+                {
+                    <MudButton Variant="Variant.Text"
+                               Color="Color.Default"
+                               Class="px-1"
+                               EndIcon="@Icons.Material.Filled.ArrowForwardIos"
+                               OnClick="GoToSkillsPage">
+                        view all
+                    </MudButton>
+                }
+            </div>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="d-flex flex-wrap align-items-center gap-5">
+                    @foreach (var skill in SkillDtos?.Take(MaxItemsToShow))
+                    {
+                        <MudTooltip Placement="Placement.Top"
+                                    Style="max-width:none"
+                                    Class="skill-tooltip">
+                            <ChildContent>
+                                <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
+                                    @if (!string.IsNullOrWhiteSpace(skill.Icon))
+                                    {
+                                        <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
+                                    }
+                                    else
+                                    {
+                                        <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
+                                            @skill.Name
+                                        </MudText>
+                                    }
+                                </div>
+                            </ChildContent>
+
+                            <TooltipContent>
+                                <div class="skill-tooltip-body">
+                                    <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
+                                    <MudText Typo="Typo.caption">@skill.Description</MudText>
+                                    @if (!string.IsNullOrWhiteSpace(skill.Motivation))
+                                    {
+                                        <MudText Typo="Typo.caption">@skill.Motivation</MudText>
+                                    }
+                                </div>
+                            </TooltipContent>
+                        </MudTooltip>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</MudPaper>
+
+<style>
+    .skill-chip {
+        display: inline-flex;
+        height: auto;
+        padding: 5px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        cursor: default;
+        transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+        will-change: transform;
+    }
+
+        .skill-chip:hover,
+        .skill-chip:focus-visible {
+            transform: scale(1.08);
+            box-shadow: var(--mud-elevation-3, 0 3px 6px rgba(0,0,0,.2));
+            filter: brightness(1.08);
+            outline: none; 
+        }
+
+        .skill-chip:focus-visible {
+            box-shadow: 0 0 0 2px var(--mud-palette-background, #121212), 0 0 0 4px var(--mud-palette-primary, #6c63ff), var(--mud-elevation-3, 0 3px 6px rgba(0,0,0,.2));
+        }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .skill-chip
+
+        {
+            transition: none;
+        }
+
+        .skill-chip:hover,
+        .skill-chip:focus-visible {
+            transform: none;
+        }
+
+    }
+
+    .skill-tooltip .mud-tooltip-content {
+        max-width: none; 
+        white-space: normal;
+        overflow-wrap: anywhere; 
+    }
+
+    .skill-tooltip-body {
+        display: flex;
+        flex-direction: column;
+        gap: .2rem;
+    }
+
+</style>
+
+@code {
+
+    [Parameter, EditorRequired] public IEnumerable<SkillDto> SkillDtos { get; set; }
+    [Parameter] public int MaxItemsToShow { get; set; } = 12;
+    [Parameter] public string? ViewAllUrl { get; set; }
+
+    private bool _isBusy = false;
+
+    private string GetTooltipText(SkillDto skill)
+    {
+        var parts = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(skill.Name))
+        {
+            parts.Add($"Name: {skill.Name}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(skill.Description))
+        {
+            parts.Add($"Description: {skill.Description}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(skill.Motivation))
+        {
+            parts.Add($"Motivation: {skill.Motivation}");
+        }
+
+        return string.Join("\n", parts);
+    }
+
+    private void GoToSkillsPage()
+    {
+        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl))
+        {
+            return;
+        }
+        _isBusy = true;
+        NavigationManager.NavigateTo(ViewAllUrl);
+        _isBusy = false;
+    }
+}

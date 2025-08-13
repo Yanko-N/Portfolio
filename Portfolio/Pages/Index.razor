@@ -5,23 +5,40 @@
 @inject IPersonalInfoService PersonalInfoService
 @inject ISnackbar Snackbar
 @inject ISocialsService SocialsService
+@inject IHobbiesService HobbiesService
+@inject ISkillsService SkillsService
 
-<Portfolio.Components.PersonalInfoComponent Error="@Error"
+<Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
     Socials="@Socials" Info="@Info" IsLoading="@IsLoading" OnRetry="@LoadPersonalInfoAndSocialsAsync"/>
+
+<Portfolio.Components.HobbyComponent Hobbies="@Hobbies" Error="@ErrorHobbies" IsLoading="@IsLoading" OnRetry="@LoadHobbiesAsync" ViewAllUrl="@ApplicationConstants.Routes.HobbiesPage"/>
+
+<Portfolio.Components.SkillsComponent Skills="@Skills" Error="@ErrorSkills" IsLoading="@IsLoading" OnRetry="@LoadSkillsAsync" ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
+
+
 
 
 @code
 {
 
     public bool IsLoading { get; set; } = true;
-    public string? Error { get; set; }
+    public string? ErrorPersonalInfo { get; set; }
+    public string? ErrorHobbies { get; set; }
+    public string? ErrorSkills { get; set; }
 
     protected override Task OnInitializedAsync() => LoadAsync();
 
 
     private PersonalInfoDto? Info { get; set; }
     private IEnumerable<SocialDto>? Socials { get; set; }
-    private bool _isBusy = false;
+    private IEnumerable<HobbyDto>? Hobbies { get; set; }
+    private IEnumerable<SkillDto>? Skills { get; set; }
+
+    private bool _isBusyPersonalInfo = false;
+    private bool _isBusyHobbies = false;
+    private bool _isBusySkills = false;
+
+    
 
     protected async Task LoadAsync()
     {
@@ -29,11 +46,13 @@
         {
             IsLoading = true;
 
-            await LoadPersonalInfoAndSocialsAsync();
+            LoadPersonalInfoAndSocialsAsync();
+            LoadHobbiesAsync();
+            LoadSkillsAsync();
         }
         catch (Exception ex)
         {
-            Error = ex.Message;
+            ErrorPersonalInfo = ex.Message;
             Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error, cfg =>
             {
                 cfg.RequireInteraction = false;
@@ -49,17 +68,17 @@
 
     protected async Task LoadPersonalInfoAndSocialsAsync()
     {
-        if (_isBusy)
+        if (_isBusyPersonalInfo)
         {
             return;
         }
 
-        _isBusy = true;
+        _isBusyPersonalInfo = true;
         var resultPersonalInfo = await PersonalInfoService.GetPersonalInfoAsync();
 
         if (resultPersonalInfo == null)
         {
-            Error = "Service returned no result.";
+            ErrorPersonalInfo = "Personal Info Service returned no result.";
             return;
         }
 
@@ -69,8 +88,8 @@
         }
         else
         {
-            Error = string.IsNullOrWhiteSpace(resultPersonalInfo.ErrorMessage) ? "Failed to load personal info." : resultPersonalInfo.ErrorMessage;
-            Snackbar.Add(Error, Severity.Error, cfg => cfg.RequireInteraction = false);
+            ErrorPersonalInfo = string.IsNullOrWhiteSpace(resultPersonalInfo.ErrorMessage) ? "Failed to load personal info." : resultPersonalInfo.ErrorMessage;
+            Snackbar.Add(ErrorPersonalInfo, Severity.Error, cfg => cfg.RequireInteraction = false);
         }
 
         var resultSocials = await SocialsService.GetSocialsAsync();
@@ -81,9 +100,70 @@
         }
         else
         {
-            Error = string.IsNullOrWhiteSpace(resultSocials.ErrorMessage) ? "Failed to load socials." : resultSocials.ErrorMessage;
+            ErrorPersonalInfo = string.IsNullOrWhiteSpace(resultSocials.ErrorMessage) ? "Failed to load socials." : resultSocials.ErrorMessage;
         }
 
-        _isBusy = false;
+        _isBusyPersonalInfo = false;
+        StateHasChanged();
+    }
+
+    protected async Task LoadHobbiesAsync()
+    {
+        if (_isBusyHobbies)
+        {
+            return;
+        }
+
+        _isBusyHobbies = true;
+        var resultHobbiesService = await HobbiesService.GetHobbiesAsync();
+
+        if (resultHobbiesService == null)
+        {
+            ErrorHobbies = "Hobbies Service returned no result.";
+            return;
+        }
+
+        if (resultHobbiesService.IsSuccess)
+        {
+            Hobbies = resultHobbiesService.Value;
+        }
+        else
+        {
+            ErrorHobbies = string.IsNullOrWhiteSpace(resultHobbiesService.ErrorMessage) ? "Failed to load hobbies info." : resultHobbiesService.ErrorMessage;
+            Snackbar.Add(ErrorHobbies, Severity.Error, cfg => cfg.RequireInteraction = false);
+        }
+        _isBusyHobbies = false;
+        StateHasChanged();
+
+    }
+
+    protected async Task LoadSkillsAsync()
+    {
+        if (_isBusySkills)
+        {
+            return;
+        }
+
+        _isBusySkills = true;
+        var resultSkills = await SkillsService.GetSkillsAsync();
+
+        if (resultSkills == null)
+        {
+            ErrorSkills = "Skills Service returned no result.";
+            return;
+        }
+
+        if (resultSkills.IsSuccess)
+        {
+            Skills = resultSkills.Value;
+        }
+        else
+        {
+            ErrorSkills = string.IsNullOrWhiteSpace(resultSkills.ErrorMessage) ? "Failed to load skills info." : resultSkills.ErrorMessage;
+            Snackbar.Add(ErrorSkills, Severity.Error, cfg => cfg.RequireInteraction = false);
+        }
+        _isBusySkills = false;
+        StateHasChanged();
+
     }
 }

@@ -18,8 +18,12 @@ namespace Portfolio
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<IManifestClient, ManifestClient>();
 
+            //Repositories
             builder.Services.AddTransient<IPersonalInfoService, PersonalInfoJsonRepository>();
             builder.Services.AddTransient<ISocialsService, SocialsInfoJsonRepository>();
+            builder.Services.AddTransient<IHobbiesService, HobbiesInfoJsonRepository>();
+            builder.Services.AddTransient<ISkillsService, SkillsInfoJsonRepository>();
+            builder.Services.AddTransient<IWorkService,WorkInfoJsonRepository>();
 
             builder.Services.AddMudServices();
             await builder.Build().RunAsync();

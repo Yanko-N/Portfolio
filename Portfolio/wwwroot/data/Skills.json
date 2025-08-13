@@ -57,7 +57,7 @@
   },
   {
     "Id": 8,
-    "Icon": "",
+    "Icon": "videogame",
     "Description": "Game development projects.",
     "Name": "Unity",
     "Motivation": null,
@@ -65,7 +65,7 @@
   },
   {
     "Id": 9,
-    "Icon": "",
+    "Icon": "github",
     "Description": "Version control & merging.",
     "Name": "Git",
     "Motivation": null,

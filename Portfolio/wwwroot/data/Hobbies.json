@@ -1,18 +1,26 @@
 [
-    {
-      "Id": 1,
-      "Name": "Skateboarding",
-      "Description": "Enjoys street and park skateboarding, focusing on creative tricks and continuous skill improvement.",
-      "ImageId": null,
-      "Image": null,
-      "Icon": "mdi:skateboard"
-    },
-    {
-      "Id": 2,
-      "Name": "Gaming",
-      "Description": "Passionate about both casual and competitive gaming, with a focus on immersive storytelling and strategic gameplay.",
-      "ImageId": null,
-      "Image": null,
-      "Icon": "mdi:gamepad-variant"
-    }
-  ]
+  {
+    "Id": 1,
+    "Name": "Skateboarding",
+    "Description": "My safe space in life is skateboarding, focusing on having fun and enjoying life at high speeds and bowl skating",
+    "ImageId": null,
+    "Image": null,
+    "Icon": "skateboarding"
+  },
+  {
+    "Id": 2,
+    "Name": "Gaming",
+    "Description": "Passionate about gaming. Favorite games : Elden Ring & Dark Souls franchise.",
+    "ImageId": null,
+    "Image": null,
+    "Icon": "videogame"
+  },
+  {
+    "Id": 3,
+    "Name": "Hiking",
+    "Description": "I'm more fan of the sightseeing than the walking :D.",
+    "ImageId": null,
+    "Image": null,
+    "Icon": "hiking"
+  }
+]
