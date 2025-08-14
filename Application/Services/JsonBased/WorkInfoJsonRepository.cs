@@ -125,7 +125,7 @@ namespace Application.Services.JsonBased
                         }
                         catch
                         {
-                            //Invalid Hobby, skip it
+                            //Invalid skill, skip it
                             continue;
                         }
 
@@ -292,8 +292,8 @@ namespace Application.Services.JsonBased
                         continue;
                     }
 
-                    toBeReturn =workInDomain.ToDto();
-
+                    toBeReturn = workInDomain.ToDto();
+                    break;
                 }
 
                 if (toBeReturn == null)

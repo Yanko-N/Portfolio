@@ -297,6 +297,7 @@ namespace Application.Services.JsonBased
                     }
 
                     toBeReturned = domainEducation.ToDto();
+                    break;
                 }
 
                 if(toBeReturned == null)

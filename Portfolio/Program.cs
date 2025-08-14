@@ -25,6 +25,7 @@ namespace Portfolio
             builder.Services.AddTransient<ISkillsService, SkillsInfoJsonRepository>();
             builder.Services.AddTransient<IWorkService,WorkInfoJsonRepository>();
             builder.Services.AddTransient<IEducationService, EducationInfoJsonRepository>();
+            builder.Services.AddTransient<IProjectService, ProjectsInfoJsonRepository>();
 
             builder.Services.AddMudServices();
             await builder.Build().RunAsync();
