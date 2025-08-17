@@ -10,18 +10,68 @@
 @inject ISkillsService SkillsService
 @inject IWorkService WorkService
 @inject IEducationService EducationService
+@inject IProjectService ProjectService
 
-<Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
-    Socials="@Socials" Info="@Info" IsLoading="@IsLoading" OnRetry="@LoadPersonalInfoAndSocialsAsync"/>
+<div class="container py-3">
 
-<Portfolio.Components.HobbyComponent Hobbies="@Hobbies" Error="@ErrorHobbies" IsLoading="@IsLoading" OnRetry="@LoadHobbiesAsync" ViewAllUrl="@ApplicationConstants.Routes.HobbiesPage"/>
+    <!-- Row 1 -->
+    <div class="row g-3">
+        <div class="col-12 col-lg-8">
+            <Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
+                                                        Socials="@Socials"
+                                                        Info="@Info"
+                                                        IsLoading="@IsLoading"
+                                                        OnRetry="@LoadPersonalInfoAndSocialsAsync" />
+        </div>
 
-<Portfolio.Components.SkillsComponent Skills="@Skills" Error="@ErrorSkills" IsLoading="@IsLoading" OnRetry="@LoadSkillsAsync" ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
+        <div class="col-12 col-lg-4">
+            <Portfolio.Components.HobbyComponent Hobbies="@Hobbies"
+                                                    Error="@ErrorHobbies"
+                                                    IsLoading="@IsLoading"
+                                                    OnRetry="@LoadHobbiesAsync"
+                                                    ViewAllUrl="@ApplicationConstants.Routes.HobbiesPage" />
+        </div>
+    </div>
 
-<Portfolio.Components.WorkExperience Works="@Works" Error="@ErrorWork" IsLoading="@IsLoading" OnRetry="@LoadWorkAsync" ViewAllUrl="@ApplicationConstants.Routes.WorkPage" />
+    <!-- Row 2 -->
+    <div class="row g-3 mt-3">
+        <div class="col-12 col-lg-4">
+            <Portfolio.Components.SkillsComponent Skills="@Skills"
+                                                    Error="@ErrorSkills"
+                                                    IsLoading="@IsLoading"
+                                                    OnRetry="@LoadSkillsAsync"
+                                                    ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
+        </div>
 
-<Portfolio.Components.EducationExperienceComponent Educations="@Educations" Error="@ErrorEducation" IsLoading="@IsLoading" OnRetry="@LoadEducationAsync" ViewAllUrl="@ApplicationConstants.Routes.EducationPage" />
+        <div class="col-12 col-lg-8">
+            <Portfolio.Components.WorkExperience Works="@Works"
+                                                    Error="@ErrorWork"
+                                                    IsLoading="@IsLoading"
+                                                    OnRetry="@LoadWorkAsync"
+                                                    ViewAllUrl="@ApplicationConstants.Routes.WorkPage" />
+        </div>
+    </div>
 
+    <!-- Row 3 -->
+    <div class="row g-3 mt-3">
+        <div class="col-12 col-lg-4">
+                <Portfolio.Components.EducationExperienceComponent Educations="@Educations"
+                                                                   Error="@ErrorEducation"
+                                                                   IsLoading="@IsLoading"
+                                                                   OnRetry="@LoadEducationAsync"
+                                                                   ViewAllUrl="@ApplicationConstants.Routes.EducationPage" />
+        </div>
+
+        <div class="col-12 col-lg-8">
+                <Portfolio.Components.ProjectsInfoComponent Projects="@ProjectsDto"
+                                                            Error="@ErrorProject"
+                                                            IsLoading="@IsLoading"
+                                                            OnRetry="@LoadProjectsAsync"
+                                                            ViewAllUrl="@ApplicationConstants.Routes.ProjectsPage" />
+        </div>
+    </div>
+
+</div>
 
 @code
 {
@@ -35,19 +85,10 @@
     public string? ErrorSkills { get; set; }
     public string? ErrorWork { get; set; }
     public string? ErrorEducation { get; set; }
+    public string? ErrorProject { get; set; }
 
     #endregion
 
-
-    protected override Task OnInitializedAsync() => LoadAsync();
-
-
-    private PersonalInfoDto? Info { get; set; }
-    private IEnumerable<SocialDto>? Socials { get; set; }
-    private IEnumerable<HobbyDto>? Hobbies { get; set; }
-    private IEnumerable<SkillDto>? Skills { get; set; }
-    private IEnumerable<WorkDto>? Works { get; set; }
-    private IEnumerable<EducationDto>? Educations { get; set; }
     #region ##### Busy Booleans #####
 
     private bool _isBusyPersonalInfo = false;
@@ -55,10 +96,19 @@
     private bool _isBusySkills = false;
     private bool _isBusyWork = false;
     private bool _isBusyEducation = false;
+    private bool _isBusyProject = false;
+
     #endregion
 
+    private PersonalInfoDto? Info { get; set; }
+    private IEnumerable<SocialDto>? Socials { get; set; }
+    private IEnumerable<HobbyDto>? Hobbies { get; set; }
+    private IEnumerable<SkillDto>? Skills { get; set; }
+    private IEnumerable<WorkDto>? Works { get; set; }
+    private IEnumerable<EducationDto>? Educations { get; set; }
+    private IEnumerable<ProjectDto?> ProjectsDto { get; set; }
 
-
+    protected override Task OnInitializedAsync() => LoadAsync();
 
     protected async Task LoadAsync()
     {
@@ -73,6 +123,7 @@
             tasks.Add(LoadSkillsAsync());
             tasks.Add(LoadWorkAsync());
             tasks.Add(LoadEducationAsync());
+            tasks.Add(LoadProjectsAsync());
 
             await Task.WhenAll(tasks);
         }
@@ -160,7 +211,6 @@
         }
         _isBusyHobbies = false;
         StateHasChanged();
-
     }
 
     protected async Task LoadSkillsAsync()
@@ -190,7 +240,6 @@
         }
         _isBusySkills = false;
         StateHasChanged();
-
     }
 
     protected async Task LoadWorkAsync()
@@ -235,7 +284,7 @@
 
         if (resultEducation == null)
         {
-            ErrorWork = "Education Service returned no result.";
+            ErrorEducation = "Education Service returned no result.";
             return;
         }
 
@@ -245,10 +294,40 @@
         }
         else
         {
-            ErrorWork = string.IsNullOrWhiteSpace(resultEducation.ErrorMessage) ? "Failed to load education info." : resultEducation.ErrorMessage;
-            Snackbar.Add(ErrorWork, Severity.Error, cfg => cfg.RequireInteraction = false);
+            ErrorEducation = string.IsNullOrWhiteSpace(resultEducation.ErrorMessage) ? "Failed to load education info." : resultEducation.ErrorMessage;
+            Snackbar.Add(ErrorEducation, Severity.Error, cfg => cfg.RequireInteraction = false);
         }
         _isBusyEducation = false;
+        StateHasChanged();
+
+    }
+
+    protected async Task LoadProjectsAsync()
+    {
+        if (_isBusyProject)
+        {
+            return;
+        }
+
+        _isBusyProject = true;
+        var resultProjects = await ProjectService.GetProjectsAsync();
+
+        if (resultProjects == null)
+        {
+            ErrorProject = "Project Service returned no result.";
+            return;
+        }
+
+        if (resultProjects.IsSuccess)
+        {
+            ProjectsDto = resultProjects.Value;
+        }
+        else
+        {
+            ErrorProject = string.IsNullOrWhiteSpace(resultProjects.ErrorMessage) ? "Failed to load project info." : resultProjects.ErrorMessage;
+            Snackbar.Add(ErrorProject, Severity.Error, cfg => cfg.RequireInteraction = false);
+        }
+        _isBusyProject = false;
         StateHasChanged();
 
     }

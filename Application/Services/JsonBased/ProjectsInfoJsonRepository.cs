@@ -70,9 +70,9 @@ namespace Application.Services.JsonBased
 
                     var currentConnectedImages = persistenceProjectImagesList.Where(x => x.ProjectId == persistenceProject.Id);
 
-                    foreach (var persistenceImage in imageList)
+                    foreach (var persistenceProjectImage in currentConnectedImages)
                     {
-                        Persistence.Models.Image thisProjectImage = imagesList.FirstOrDefault(x => x.Id == persistenceProject.Id);
+                        Persistence.Models.Image thisProjectImage = imagesList.FirstOrDefault(x => x.Id == persistenceProjectImage.ImageId);
 
                         Image validatedImage = null;
 
@@ -226,13 +226,13 @@ namespace Application.Services.JsonBased
                 {
                     Project projectDomain = null;
 
-                    IEnumerable<Image> imageList = new List<Image>();
+                    List<Image> imageList = new List<Image>();
 
                     var currentConnectedImages = persistenceProjectImagesList.Where(x => x.ProjectId == persistenceProject.Id);
 
-                    foreach (var persistenceImage in imageList)
+                    foreach (var persistenceProjectImage in currentConnectedImages)
                     {
-                        Persistence.Models.Image thisProjectImage = imagesList.FirstOrDefault(x => x.Id == persistenceProject.Id);
+                        Persistence.Models.Image thisProjectImage = imagesList.FirstOrDefault(x => x.Id == persistenceProjectImage.ImageId);
 
                         Image validatedImage = null;
 
@@ -248,7 +248,7 @@ namespace Application.Services.JsonBased
                             }
                         }
 
-                        imageList.Append(validatedImage);
+                        imageList.Add(validatedImage);
                     }
 
                     var category = persistenceProjectCategoriesList.FirstOrDefault(x => x.Id == persistenceProject.ProjectCategoryId);
