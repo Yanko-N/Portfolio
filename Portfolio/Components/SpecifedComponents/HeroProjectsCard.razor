@@ -1,4 +1,5 @@
-﻿@using MudBlazor
+﻿@using Application.Classes
+@using MudBlazor
 @using Microsoft.JSInterop
 @using static Application.Contracts.DTOs.Response
 @inherits LayoutComponentBase
@@ -114,38 +115,49 @@
 
     private bool _isBusy;
 
+    private string BuildUrl(string? s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return string.Empty;
+
+        if (Uri.TryCreate(s, UriKind.Absolute, out var abs)) return abs.ToString();
+
+        var baseUri = NavigationManager.BaseUri.TrimEnd('/');
+        var rel = s.TrimStart('/');
+        return $"{baseUri}/{rel}";
+    }
+
+    private string Placeholder()
+        => $"{NavigationManager.BaseUri.TrimEnd('/')}/images/placeholders/project-thumb.svg";
+
     private string GetCover(ProjectDto p)
     {
-        var img = p.Images?.FirstOrDefault(i => !string.IsNullOrWhiteSpace(i.Url) || !string.IsNullOrWhiteSpace(i.Path));
+        var img = p.Images?.FirstOrDefault(i =>
+            !string.IsNullOrWhiteSpace(i.Url) || !string.IsNullOrWhiteSpace(i.Path));
 
-        return img?.Url ?? img?.Path ?? "images/placeholders/project-thumb.svg";
+        var url = BuildUrl(img?.Url);
+        if (!string.IsNullOrWhiteSpace(url)) return url;
+
+        var path = BuildUrl(img?.Path);
+        return !string.IsNullOrWhiteSpace(path) ? path : Placeholder();
     }
+
     private static string Truncate(string? text, int max)
-    {
-        if (string.IsNullOrEmpty(text)) 
-        {
-            return string.Empty;
-        }
-
-        return text.Length <= max ? text : text.Substring(0, max).TrimEnd() + "…";
-    }
+        => string.IsNullOrEmpty(text) ? string.Empty
+           : (text.Length <= max ? text : text[..max].TrimEnd() + "…");
 
     private string GetAlt(ProjectDto p) => p.Images?.FirstOrDefault()?.AltText ?? $"{p.Name} cover";
 
     private void GoToProjectsPage()
     {
-        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl))
-        {
-            return;
-        }
-
+        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl)) return;
         _isBusy = true;
         NavigationManager.NavigateTo(ViewAllUrl);
         _isBusy = false;
     }
 
-    private async Task OpenProjectInNewTab(int projId)
-    {
-        //Do nothing for now
-    }
+    private void OpenProjectInNewTab(int projectId)
+        => NavigationManager.NavigateTo(
+            ApplicationConstants.Routes.GetDetailRoute(Application.Enums.DetailsPageType.Project, projectId)
+        );
 }
+

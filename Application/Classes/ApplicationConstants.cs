@@ -1,4 +1,6 @@
-﻿namespace Application.Classes
+﻿using Application.Enums;
+
+namespace Application.Classes
 {
     public static class ApplicationConstants
     {
@@ -15,10 +17,24 @@
             public const string EducationDetail = "/Education/{id:int}";
             public const string ProjectsDetail = "/Projects/{id:int}";
             
-            public static string GetDetailRoute(string prefixRoute,int id)
+
+            public static string GetDetailRoute(DetailsPageType type, int id)
             {
-                return $"{prefixRoute}/{id}";
+                string GetDetailRoute(string prefixRoute, int id)
+                {
+                    return $"{prefixRoute}/{id}";
+                }
+
+                string prefixRoute = type switch
+                {
+                    DetailsPageType.Work => WorkPage,
+                    DetailsPageType.Education => EducationPage,
+                    DetailsPageType.Project => ProjectsPage,
+                    _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+                };
+                return GetDetailRoute(prefixRoute,id);
             }
+           
 
         }
     }

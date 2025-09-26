@@ -1,4 +1,5 @@
-﻿@using MudBlazor
+﻿@using Application.Classes
+@using MudBlazor
 @using Microsoft.JSInterop
 @using static Application.Contracts.DTOs.Response
 @inherits LayoutComponentBase
@@ -113,6 +114,6 @@
 
     private async Task OpenWorkInNewTab(int workId)
     {
-        //Do nothing for now
+        NavigationManager.NavigateTo(ApplicationConstants.Routes.GetDetailRoute(Application.Enums.DetailsPageType.Work, workId));
     }
 }

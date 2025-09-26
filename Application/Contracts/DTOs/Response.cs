@@ -37,13 +37,6 @@
             string Category
         );
 
-        public sealed record ImageDto(
-            int Id,
-            string? Url,
-            string Path,
-            string AltText
-        );
-
         public sealed record ProjectDto(
             int Id,
             string Name,
@@ -53,6 +46,22 @@
             string Category,
             IReadOnlyList<SkillDto> Skills,
             IReadOnlyList<ImageDto> Images
+        ); 
+        
+        public sealed record EducationDto(
+            int Id,
+            SchoolDto School,
+            CourseDto Course,
+            DateOnly StartDate,
+            DateOnly? EndDate,
+            IReadOnlyList<SkillDto> Skills
+        );
+
+        public sealed record ImageDto(
+            int Id,
+            string? Url,
+            string Path,
+            string AltText
         );
 
         public sealed record SchoolDto(
@@ -66,15 +75,6 @@
             string Name,
             string Description,
             string Url
-        );
-
-        public sealed record EducationDto(
-            int Id,
-            SchoolDto School,
-            CourseDto Course,
-            DateOnly StartDate,
-            DateOnly? EndDate,
-            IReadOnlyList<SkillDto> Skills
         );
 
         public sealed record EnterpriseDto(

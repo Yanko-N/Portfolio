@@ -1,0 +1,249 @@
+﻿@using Application.Classes
+@using Application.Interfaces.Services
+@using Portfolio.Components
+@using static Application.Contracts.DTOs.Response
+
+@attribute [Route(ApplicationConstants.Routes.WorkDetail)]
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IWorkService WorkService
+@inject IJSRuntime JS
+
+
+@if (IsLoading)
+{
+    <div class="text-center mt-5">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <p class="mt-2 mb-0">Loading projects information…</p>
+    </div>
+}
+else if (dto != null)
+{
+    <MudPaper Elevation="1" Class="container my-4 p-0">
+
+        </MudPaper>
+     <div class="row g-0">
+            <div class="col-12 col-lg-4 border-end">
+                <div class="p-4 sticky-sidebar">
+                    <div class="text-center mb-3">
+                        @if (!(dto.Enterprise?.Image?.Url == null))
+                        {
+                            <img src="@dto.Enterprise.Image.Url"
+                             alt="@dto.Enterprise.Image.AltText"
+                                 class="img-fluid rounded-3 shadow-sm enterprise-img" />
+                        }
+                        else
+                        {
+                            <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
+                            @((dto.Enterprise?.Name ?? dto.Title)[0])
+                            </MudAvatar>
+                        }
+                    </div>
+
+                <h5 class="mb-1">@dto.Title</h5>
+                    <div class="text-muted">
+                    <span>@dto.Enterprise?.Name</span>
+                    @if (!string.IsNullOrWhiteSpace(dto.Enterprise?.Url))
+                        {
+                        <span> · <a href="@dto.Enterprise!.Url" target="_blank" rel="noopener">Website</a></span>
+                        }
+                    </div>
+
+                    <div class="mt-2">
+                        <MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string">
+                            @FormatPeriod(dto.StartDate, dto.EndDate)
+                        </MudChip>
+                        @if (dto.EndDate == null)
+                        {
+                            <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small" Class="ms-1" T="string">
+                                Current
+                            </MudChip>
+                        }
+                    </div>
+
+                    <MudDivider Class="my-3" />
+
+                    <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.ArrowBack" OnClick="()=>GoBack()">
+                        Return
+                    </MudButton>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-8">
+                <div class="p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h3 class="m-0">@dto.Title</h3>
+                    </div>
+                    <div class="text-muted mb-3">
+                    @FormatDates(dto.StartDate, dto.EndDate)
+                    </div>
+
+                    <MudDivider Class="mb-3" />
+
+                    <div class="description-text">
+                    @(!string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : "No Description Avaiable.")
+                    </div>
+
+                    @if (dto.Skills?.Count > 0)
+                    {
+                        <MudDivider Class="my-4" />
+                        <h6 class="text-uppercase text-muted mb-2">Skills</h6>
+
+                        @foreach (var group in GroupedSkills())
+                        {
+                            <div class="mb-2">
+                                <div class="fw-semibold mb-1">
+                                    @group.Key
+                                </div>
+
+                                @foreach (var skill in group)
+                                {
+                                    <MudTooltip Placement="Placement.Top"
+                                                    Style="max-width:none"
+                                                    Class="skill-tooltip">
+                                        <ChildContent>
+                                            <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
+                                                @if (!string.IsNullOrWhiteSpace(skill.Icon))
+                                                {
+                                                    <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
+                                                }
+                                                else
+                                                {
+                                                    <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
+                                                        @skill.Name
+                                                    </MudText>
+                                                }
+                                            </div>
+                                        </ChildContent>
+
+                                        <TooltipContent>
+                                            <div class="skill-tooltip-body">
+                                                <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
+                                                <MudText Typo="Typo.caption">@skill.Description</MudText>
+                                            </div>
+                                        </TooltipContent>
+                                    </MudTooltip>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+}
+else
+{
+    <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-4">
+        @Error
+    </MudAlert>
+}
+
+@code {
+
+    [Parameter] public int? Id { get; set; }
+
+
+    public bool IsLoading { get; set; } = true;
+
+    public WorkDto? dto { get; set; }
+    public string? Error { get; set; }
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+    protected async Task LoadAsync()
+    {
+        try
+        {
+            IsLoading = true;
+
+            if(Id == null || Id <= 0)
+            {
+                Error = "Invalid work experience ID.";
+                return;
+            }
+
+            var result = await WorkService.GetWorkAsync((int)Id);
+
+            if(result.IsSuccess)
+            {
+                dto = result.Value;
+                return;
+            }
+
+            Error = result.ErrorMessage ?? "Failed to load work experience details.";
+
+            Snackbar.Add(Error, Severity.Error, cfg =>
+            {
+                cfg.RequireInteraction = false;
+                cfg.ShowCloseIcon = true;
+            });
+
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+            Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error, cfg =>
+            {
+                cfg.RequireInteraction = false;
+                cfg.ShowCloseIcon = true;
+            });
+        }
+        finally
+        {
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task GoBack()
+    {
+        try
+        {
+            var canGoBack = await JS.InvokeAsync<bool>("appNav.canGoBack");
+            if (canGoBack)
+            {
+                await JS.InvokeVoidAsync("appNav.goBack");
+                return;
+            }
+        }
+        catch
+        {
+            //ignore
+        }
+
+        NavigationManager.NavigateTo(ApplicationConstants.Routes.Index);
+    }
+
+    private static string FormatDates(DateOnly start, DateOnly? end)
+      => $"{start:MMMM yyyy} – {(end == null ? "Current" : end.Value.ToString("MMMM yyyy"))}";
+
+    private static string FormatPeriod(DateOnly start, DateOnly? end)
+    {
+        var realEnd = end ?? DateOnly.FromDateTime(DateTime.Today);
+        var (years, months) = DiffInYearsMonths(start, realEnd);
+
+        string dur =
+            years > 0 && months > 0 ? $"{years} year{(years > 1 ? "s" : "")} and {months} month{(months > 1 ? "s" : "")}" :
+            years > 0 ? $"{years} year{(years > 1 ? "s" : "")}" :
+            $"{months} month{(months == 1 ? "" : "s")}";
+
+        return $"{start:MMM yyyy} – {(end == null ? "Current" : realEnd.ToString("MMM yyyy"))} · {dur}";
+    }
+
+    private static (int years, int months) DiffInYearsMonths(DateOnly start, DateOnly end)
+    {
+        var totalMonths = (end.Year - start.Year) * 12 + (end.Month - start.Month);
+        if (end.Day < start.Day) totalMonths -= 1; 
+        if (totalMonths < 0) totalMonths = 0;
+
+        var years = totalMonths / 12;
+        var months = totalMonths % 12;
+        return (years, months);
+    }
+
+    private IEnumerable<IGrouping<string, SkillDto>> GroupedSkills()
+        => (dto?.Skills ?? Array.Empty<SkillDto>())
+            .GroupBy(s => string.IsNullOrWhiteSpace(s.Category) ? "Others" : s.Category)
+            .OrderBy(g => g.Key);
+
+}
