@@ -1,0 +1,119 @@
+﻿@using Application.Classes
+@using MudBlazor
+@using Microsoft.JSInterop
+@using static Application.Contracts.DTOs.Response
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+
+<MudPaper Class="mb-4 p-3 p-md-4 card h-100 p-3 "
+          Elevation="1"
+          Outlined="true"
+          Square="false">
+
+    <div class="container-fluid" >
+        <div class="row">
+            <div class="col-6 d-flex justify-content-start">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold text-uppercase">Work Experience</MudText>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                @if ((Works?.Count() ?? 0) > MaxItemsToShow && !string.IsNullOrWhiteSpace(ViewAllUrl))
+                {
+                    <MudButton Variant="Variant.Text"
+                               Color="Color.Default"
+                               Class="px-1"
+                               EndIcon="@Icons.Material.Filled.ArrowForwardIos"
+                               OnClick="GoToWorksPage">
+                        view all
+                    </MudButton>
+                }
+            </div>
+        </div>
+
+        <div class="row mt-2 gy-3">
+            @foreach (var work in Works)
+            {
+                <div class="col-12">
+                    <MudButton OnClick="() => OpenWorkInNewTab(work.Id)"
+                               Variant="Variant.Text"
+                               Color="Color.Default"
+                               Class="w-100 text-start py-3 px-2"
+                               Style="justify-content: flex-start;">
+                        <ChildContent>
+                            <div class="d-flex align-items-start gap-3 w-100">
+                                <div class="d-flex align-items-center justify-content-center"
+                                     style="width:40px;height:40px;border-radius:8px;flex-shrink:0;">
+                                    @if (!string.IsNullOrWhiteSpace(GetEnterpriseImageSrc(work.Enterprise?.Image)))
+                                    {
+                                        <MudImage Src="@GetEnterpriseImageSrc(work.Enterprise?.Image)"
+                                                  Alt="@work.Enterprise?.Image?.AltText"
+                                                  Style="width:40px;height:40px;object-fit:cover;border-radius:8px;" />
+                                    }
+                                    else
+                                    {
+                                        <MudIcon Icon="@Icons.Material.Filled.Work" Size="Size.Medium" Class="opacity-75" />
+                                    }
+                                </div>
+
+                                <div class="flex-grow-1">
+                                    <MudText Typo="Typo.subtitle2" Class="fw-bold">@work.Title</MudText>
+
+                                    <MudButton Color="Color.Primary" Variant="Variant.Text"
+                                               Href="@work.Enterprise.Url" Target="_blank" Rel="noopener">
+                                        <MudText Typo="Typo.caption">@work.Enterprise?.Name</MudText>
+                                    </MudButton>
+
+                                    @if (!string.IsNullOrWhiteSpace(FormatRange(work.StartDate, work.EndDate)))
+                                    {
+                                        <MudText Typo="Typo.body2" Class="mt-1">@FormatRange(work.StartDate, work.EndDate)</MudText>
+                                    }
+                                </div>
+                            </div>
+                        </ChildContent>
+                    </MudButton>
+                </div>
+            }
+        </div>
+
+    </div>
+</MudPaper>
+
+@code {
+    [Parameter, EditorRequired] public IEnumerable<WorkDto> Works { get; set; }
+    [Parameter] public int MaxItemsToShow { get; set; } = 4;
+    [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
+
+    private bool _isBusy;
+
+    private string GetEnterpriseImageSrc(ImageDto? image) =>
+        image == null ? string.Empty :
+        (!string.IsNullOrWhiteSpace(image.Path) ? image.Path : (image.Url ?? string.Empty));
+
+    private string FormatRange(DateOnly start, DateOnly? end) =>
+        $"{start:yyyy-MM} — {(end.HasValue ? end.Value.ToString("yyyy-MM") : "Present")}";
+
+    private void GoToWorksPage()
+    {
+        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl))
+            return;
+
+        _isBusy = true;
+        NavigationManager.NavigateTo(ViewAllUrl!);
+        _isBusy = false;
+    }
+
+    private async Task OpenUrlInNewTab(EnterpriseDto enterpriseDto)
+    {
+        if (string.IsNullOrWhiteSpace(enterpriseDto.Url ?? string.Empty))
+        {
+            return;
+        }
+
+        await JS.InvokeVoidAsync("window.open", enterpriseDto.Url, "_blank");
+    }
+
+    private async Task OpenWorkInNewTab(int workId)
+    {
+        NavigationManager.NavigateTo(ApplicationConstants.Routes.GetDetailRoute(Application.Enums.DetailsPageType.Work, workId));
+    }
+}

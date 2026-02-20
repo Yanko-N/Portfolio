@@ -1,0 +1,29 @@
+﻿
+.oval {
+   
+    border-radius: 5%;
+}
+
+.circle {
+   
+    border-radius: 50%;
+}
+.tv {
+    position: relative;
+   
+    margin: 20px 0;
+   
+    border-radius: 50% / 10%;
+}
+
+    .tv:before {
+        content: '';
+        top: 10%;
+        bottom: 10%;
+        right: -5%;
+        left: -5%;
+        background: inherit;
+        border-radius: 5% / 50%;
+    }
+
+

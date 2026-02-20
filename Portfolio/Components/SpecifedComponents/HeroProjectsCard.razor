@@ -1,0 +1,163 @@
+﻿@using Application.Classes
+@using MudBlazor
+@using Microsoft.JSInterop
+@using static Application.Contracts.DTOs.Response
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<MudPaper Class=" mb-4 p-3 p-md-4 card h-100 p-3 "
+          Elevation="1"
+          Outlined="true"
+          Square="false">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 d-flex justify-content-start">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold text-uppercase">Projects Portfolio</MudText>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                @if ((Projects?.Count() ?? 0) > MaxItemsToShow && !string.IsNullOrWhiteSpace(ViewAllUrl))
+                {
+                    <MudButton Variant="Variant.Text" Color="Color.Default" Class="px-1"
+                               EndIcon="@Icons.Material.Filled.ArrowForwardIos"
+                               OnClick="GoToProjectsPage">
+                        view all
+                    </MudButton>
+                }
+            </div>
+        </div>
+
+        <MudGrid Class="mt-2" GutterSize="GutterSize.Small">
+            @foreach (var p in Projects.Take(MaxItemsToShow))
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <MudCard Class="project-card mud-elevation-1 h-100 d-flex flex-column"
+                             @onclick="() => OpenProjectInNewTab(p.Id)">
+
+                        <div class="thumb-wrap">
+                            <MudImage Src="@GetCover(p)"
+                                      Alt="@GetAlt(p)"
+                                      LazyLoad="true"
+                                      ObjectFit="ObjectFit.Cover"
+                                      Style="width:100%;height:100%;" />
+                        </div>
+
+                        <MudCardContent Class="project-body d-flex flex-column flex-grow-1">
+                            <MudText Typo="Typo.h6" Class="mb-1">@p.Name</MudText>
+
+                            <MudText Typo="Typo.body2" Class="desc flex-grow-1"
+                                     Title="@p.Description">
+                                @Truncate(p.Description, 175)
+                            </MudText>
+
+                            <MudStack row="true" AlignItems="AlignItems.Center" Spacing="2" Class="mt-2 links">
+                                @if (!string.IsNullOrWhiteSpace(p.DemoUrl))
+                                {
+                                    <MudLink Href="@p.DemoUrl" Target="_blank" Rel="noopener"
+                                             Class="d-inline-flex align-items-center">
+                                        <MudIcon Icon="@Icons.Material.Filled.Public" Size="Size.Small" />
+                                        <span class="ms-1">demo</span>
+                                    </MudLink>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(p.SourceCodeUrl))
+                                {
+                                    <MudLink Href="@p.SourceCodeUrl" Target="_blank" Rel="noopener"
+                                             Class="d-inline-flex align-items-center">
+                                        <MudIcon Icon="@Icons.Custom.Brands.GitHub" Size="Size.Small" />
+                                        <span class="ms-1">github</span>
+                                    </MudLink>
+                                }
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    </div>
+</MudPaper>
+
+<style>
+    .project-card {
+        border-radius: 12px;
+        transition: transform .12s ease, box-shadow .12s ease;
+        cursor: pointer;
+    }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+        }
+
+   
+    .thumb-wrap {
+        width: 100%;
+        aspect-ratio: 16 / 9; 
+        background: #0f131a;
+        overflow: hidden;
+    }
+
+  
+    .project-body {
+        padding: 16px;
+    }
+
+    
+    .desc {
+        line-height: 1.35;
+        max-height: 3.9em;
+        overflow: hidden;
+    }
+
+</style>
+
+@code {
+    [Parameter, EditorRequired] public IEnumerable<ProjectDto> Projects { get; set; }
+    [Parameter] public int MaxItemsToShow { get; set; } = 4;
+    [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
+
+    private bool _isBusy;
+
+    private string BuildUrl(string? s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return string.Empty;
+
+        if (Uri.TryCreate(s, UriKind.Absolute, out var abs)) return abs.ToString();
+
+        var baseUri = NavigationManager.BaseUri.TrimEnd('/');
+        var rel = s.TrimStart('/');
+        return $"{baseUri}/{rel}";
+    }
+
+    private string Placeholder()
+        => $"{NavigationManager.BaseUri.TrimEnd('/')}/images/placeholders/project-thumb.svg";
+
+    private string GetCover(ProjectDto p)
+    {
+        var img = p.Images?.FirstOrDefault(i =>
+            !string.IsNullOrWhiteSpace(i.Url) || !string.IsNullOrWhiteSpace(i.Path));
+
+        var url = BuildUrl(img?.Url);
+        if (!string.IsNullOrWhiteSpace(url)) return url;
+
+        var path = BuildUrl(img?.Path);
+        return !string.IsNullOrWhiteSpace(path) ? path : Placeholder();
+    }
+
+    private static string Truncate(string? text, int max)
+        => string.IsNullOrEmpty(text) ? string.Empty
+           : (text.Length <= max ? text : text[..max].TrimEnd() + "…");
+
+    private string GetAlt(ProjectDto p) => p.Images?.FirstOrDefault()?.AltText ?? $"{p.Name} cover";
+
+    private void GoToProjectsPage()
+    {
+        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl)) return;
+        _isBusy = true;
+        NavigationManager.NavigateTo(ViewAllUrl);
+        _isBusy = false;
+    }
+
+    private void OpenProjectInNewTab(int projectId)
+        => NavigationManager.NavigateTo(
+            ApplicationConstants.Routes.GetDetailRoute(Application.Enums.DetailsPageType.Project, projectId)
+        );
+}
+

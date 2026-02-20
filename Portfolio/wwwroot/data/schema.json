@@ -1,0 +1,77 @@
+{
+  "schema": "portfolio-v2",
+  "version": "2025.08.12-01",
+  "generatedAt": "2025-08-12T10:00:00Z",
+  "files": {
+    "personalInfo": {
+      "path": "/data/PersonalInfos.json"
+    },
+
+    "personalInfoImages": {
+      "path": "/data/PersonalInfoImages.json"
+    },
+
+    "socialsLinks": {
+      "path": "/data/SocialLinks.json"
+    },
+    "languages": {
+      "path": "/data/Languages.json"
+    },
+
+    "skillCategories": {
+      "path": "/data/SkillCategories.json"
+    },
+    "skills": {
+      "path": "/data/Skills.json"
+    },
+
+    "images": {
+      "path": "/data/Images.json"
+    },
+
+    "projects": {
+      "path": "/data/Projects.json"
+    },
+    "projectSkills": {
+      "path": "/data/ProjectSkills.json"
+    },
+    "projectImages": {
+      "path": "/data/ProjectImages.json"
+    },
+
+    "projectsCategories": {
+      "path": "/data/ProjectCategories.json"
+    },
+
+    "schools": {
+      "path": "/data/Schools.json"
+    },
+    "courses": {
+      "path": "/data/Courses.json"
+    },
+    "educations": {
+      "path": "/data/Educations.json"
+    },
+    "educationSkills": {
+      "path": "/data/EducationSkills.json"
+    },
+
+    "enterprises": {
+      "path": "/data/Enterprises.json"
+    },
+    "works": {
+      "path": "/data/Works.json"
+    },
+    "workSkills": {
+      "path": "/data/WorkSkills.json"
+    },
+
+    "hobbies": {
+      "path": "/data/Hobbies.json"
+    },
+
+    "hobbiesImages": {
+      "path": "/data/HobbyImages.json"
+    }
+  }
+}

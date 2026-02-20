@@ -1,0 +1,197 @@
+﻿@using Application.Interfaces.Services
+@using static Application.Contracts.DTOs.Response
+@using Application.Classes
+@attribute [Route(ApplicationConstants.Routes.Index)]
+
+@inject IPersonalInfoService PersonalInfoService
+@inject ISnackbar Snackbar
+@inject ISocialsService SocialsService
+@inject IHobbiesService HobbiesService
+@inject ISkillsService SkillsService
+@inject IWorkService WorkService
+@inject IEducationService EducationService
+@inject IProjectService ProjectService
+
+<div class="container py-3">
+
+    <!-- Row 1 -->
+    <div class="row g-3">
+        <div class="col-12 col-lg-8">
+            <Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
+                                                        Socials="@Socials"
+                                                        Info="@Info"
+                                                        IsLoading="@_isBusyPersonalInfo"
+                                                        OnRetry="@LoadPersonalInfoAndSocialsAsync" />
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <Portfolio.Components.HobbyComponent Hobbies="@Hobbies"
+                                                    Error="@ErrorHobbies"
+                                                    IsLoading="@_isBusyHobbies"
+                                                    OnRetry="@LoadHobbiesAsync"
+                                                    ViewAllUrl="@ApplicationConstants.Routes.HobbiesPage" />
+        </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row g-3 mt-3">
+        <div class="col-12 col-lg-4">
+            <Portfolio.Components.SkillsComponent Skills="@Skills"
+                                                    Error="@ErrorSkills"
+                                                    IsLoading="@_isBusySkills"
+                                                    OnRetry="@LoadSkillsAsync"
+                                                    ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <Portfolio.Components.WorkExperience Works="@Works"
+                                                    Error="@ErrorWork"
+                                                    IsLoading="@_isBusyWork"
+                                                    OnRetry="@LoadWorkAsync"
+                                                    ViewAllUrl="@ApplicationConstants.Routes.WorkPage" />
+        </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row g-3 mt-3">
+        <div class="col-12 col-lg-4">
+                <Portfolio.Components.EducationExperienceComponent Educations="@Educations"
+                                                                   Error="@ErrorEducation"
+                                                                   IsLoading="@_isBusyEducation"
+                                                                   OnRetry="@LoadEducationAsync"
+                                                                   ViewAllUrl="@ApplicationConstants.Routes.EducationPage" />
+        </div>
+
+        <div class="col-12 col-lg-8">
+                <Portfolio.Components.ProjectsInfoComponent Projects="@ProjectsDto"
+                                                            Error="@ErrorProject"
+                                                            IsLoading="@_isBusyProject"
+                                                            OnRetry="@LoadProjectsAsync"
+                                                            ViewAllUrl="@ApplicationConstants.Routes.ProjectsPage" />
+        </div>
+    </div>
+
+</div>
+
+@code {
+    #region ##### UI State #####
+   
+    private bool _isBusyPersonalInfo, _isBusyHobbies, _isBusySkills, _isBusyWork, _isBusyEducation, _isBusyProject;
+    #endregion
+
+    #region ##### Error Messages #####
+    public string? ErrorPersonalInfo, ErrorHobbies, ErrorSkills, ErrorWork, ErrorEducation, ErrorProject;
+    #endregion
+
+    #region ##### Data Properties #####
+    private PersonalInfoDto? Info { get; set; }
+    private IEnumerable<SocialDto>? Socials { get; set; }
+    private IEnumerable<HobbyDto>? Hobbies { get; set; }
+    private IEnumerable<SkillDto>? Skills { get; set; }
+    private IEnumerable<WorkDto>? Works { get; set; }
+    private IEnumerable<EducationDto>? Educations { get; set; }
+    private IEnumerable<ProjectDto?> ProjectsDto { get; set; }
+    #endregion
+
+    protected override void OnInitialized()
+    {
+    
+        _ = LoadPersonalInfoAndSocialsAsync();
+        _ = LoadHobbiesAsync();
+        _ = LoadSkillsAsync();
+        _ = LoadWorkAsync();
+        _ = LoadEducationAsync();
+        _ = LoadProjectsAsync();
+    }
+
+  
+    private async Task ExecuteLoadAsync<T>(Func<Task<Result<T>>> serviceCall, Action<T> onSuccess, Action<string> onError, Action<bool> setBusy)
+    {
+        try
+        {
+            setBusy(true);
+            StateHasChanged();
+
+            var result = await serviceCall();
+
+            if (result == null)
+            {
+                onError("Service returned no response.");
+            }
+            else if (result.IsSuccess)
+            {
+                onSuccess(result.Value);
+            }
+            else
+            {
+                onError(result.ErrorMessage ?? "An unknown error occurred.");
+                Snackbar.Add(result.ErrorMessage ?? "Error loading data", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            onError(ex.Message);
+        }
+        finally
+        {
+            setBusy(false);
+            StateHasChanged();
+        }
+    }
+
+    protected Task LoadHobbiesAsync() =>
+        ExecuteLoadAsync(
+            () => HobbiesService.GetHobbiesAsync(), 
+            val => Hobbies = val,
+            err => ErrorHobbies = err,
+            b => _isBusyHobbies = b
+        );
+
+    protected Task LoadSkillsAsync() =>
+        ExecuteLoadAsync(
+            () => SkillsService.GetSkillsAsync(),
+            val => Skills = val,
+            err => ErrorSkills = err,
+            b => _isBusySkills = b
+        );
+
+    protected Task LoadWorkAsync() =>
+        ExecuteLoadAsync(
+            () => WorkService.GetWorksAsync(),
+            val => Works = val,
+            err => ErrorWork = err,
+            b => _isBusyWork = b
+        );
+
+    protected Task LoadEducationAsync() =>
+        ExecuteLoadAsync(
+            () => EducationService.GetEducationsAsync(),
+            val => Educations = val,
+            err => ErrorEducation = err,
+            b => _isBusyEducation = b
+        );
+
+    protected Task LoadProjectsAsync() =>
+        ExecuteLoadAsync(
+            () => ProjectService.GetProjectsAsync(),
+            val => ProjectsDto = val,
+            err => ErrorProject = err,
+            b => _isBusyProject = b
+        );
+
+    protected async Task LoadPersonalInfoAndSocialsAsync()
+    {
+        await ExecuteLoadAsync(
+            () => PersonalInfoService.GetPersonalInfoAsync(),
+            val => Info = val,
+            err => ErrorPersonalInfo = err,
+            b => _isBusyPersonalInfo = b
+        );
+
+        var resultSocials = await SocialsService.GetSocialsAsync();
+        if (resultSocials.IsSuccess)
+        {
+            Socials = resultSocials.Value;
+        }
+    }
+}

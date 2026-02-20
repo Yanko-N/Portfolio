@@ -1,0 +1,67 @@
+﻿@using MudBlazor
+@using static Application.Contracts.DTOs.Response
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<MudPaper Class="mb-4 p-3 p-md-4 card h-100 p-3 "
+          Elevation="1"
+          Outlined="true"
+          Square="false">
+
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-6 d-flex justify-content-start">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold text-uppercase">Hobbies</MudText>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                @if (Hobbies?.Count() > MaxItemsToShow && !string.IsNullOrWhiteSpace(ViewAllUrl))
+                {
+                    <MudButton Variant="Variant.Text"
+                               Color="Color.Default"
+                               Class="px-1"
+                               EndIcon="@Icons.Material.Filled.ArrowForwardIos"
+                               OnClick="GoToHobbiesPage">
+                        view all
+                    </MudButton>
+                }
+            </div>
+            </div>
+
+            <div class="row mt-2 gy-3">
+                @foreach (var hobby in Hobbies.Take(MaxItemsToShow))
+                {
+                    <div class="col-12">
+                        <div class="d-flex align-items-start gap-2">
+                            <MudIcon Icon="@hobby.Icon" Size="Size.Medium" />
+                            <div class="flex-grow-1">
+                                <MudText Typo="Typo.subtitle2" Class="fw-bold">@hobby.Name</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">@hobby.Description</MudText>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+</MudPaper>
+
+@code {
+
+    [Parameter, EditorRequired] public IEnumerable<HobbyDto> Hobbies { get; set; }
+    [Parameter] public int MaxItemsToShow { get; set; } = 4;
+    [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
+    private bool _isBusy = false;
+
+    private string GetHobbyImageSrc(HobbyDto dto) =>
+     dto?.Image?.Path ?? dto?.Image?.Url ?? string.Empty;
+
+    private void GoToHobbiesPage()
+    {
+        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl))
+        {
+            return;
+        }
+        _isBusy = true;
+        NavigationManager.NavigateTo(ViewAllUrl);
+        _isBusy = false;
+    }
+}

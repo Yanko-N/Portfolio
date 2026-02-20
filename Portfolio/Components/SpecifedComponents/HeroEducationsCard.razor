@@ -1,0 +1,98 @@
+﻿@using Application.Classes
+@using MudBlazor
+@using Microsoft.JSInterop
+@using static Application.Contracts.DTOs.Response
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<MudPaper Class="mb-4 p-3 p-md-4 card h-100 p-3 "
+          Elevation="1"
+          Outlined="true"
+          Square="false">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 d-flex justify-content-start">
+                <MudText Typo="Typo.subtitle1" Class="fw-bold text-uppercase">Education Experience</MudText>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                @if ((Educations?.Count() ?? 0) > MaxItemsToShow && !string.IsNullOrWhiteSpace(ViewAllUrl))
+                {
+                    <MudButton Variant="Variant.Text"
+                               Color="Color.Default"
+                               Class="px-1"
+                               EndIcon="@Icons.Material.Filled.ArrowForwardIos"
+                               OnClick="GoToEducationsPage">
+                        view all
+                    </MudButton>
+                }
+            </div>
+        </div>
+
+        <div class="row mt-2 gy-3">
+            @foreach (var education in Educations.Take(MaxItemsToShow))
+            {
+                <div class="col-12">
+                    <MudButton OnClick="() => OpenEducationInNewTab(education.Id)"
+                               Variant="Variant.Text"
+                               Color="Color.Default"
+                               Class="w-100 text-start py-3 px-2"
+                               Style="justify-content: flex-start;">
+                        <ChildContent>
+                            <div class="d-flex align-items-start gap-3 w-100">
+                                <div class="d-flex align-items-center justify-content-center"
+                                     style="width:40px;height:40px;border-radius:8px;flex-shrink:0;">
+                                    
+                                    <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Medium" Class="opacity-75" />
+                                </div>
+
+                                <div class="flex-grow-1">
+
+                                    <MudText Typo="Typo.subtitle2" Class="fw-bold">@education.Course.Name</MudText>
+
+                                    <MudButton Color="Color.Primary" Variant="Variant.Text"
+                                               Href="@education.Course.Url" Target="_blank" Rel="noopener">
+                                        <MudText Typo="Typo.caption">@education.School?.Name</MudText>
+                                    </MudButton>
+
+                                    @if (!string.IsNullOrWhiteSpace(FormatRange(education.StartDate, education.EndDate)))
+                                    {
+                                        <MudText Typo="Typo.body2" Class="mt-1">@FormatRange(education.StartDate, education.EndDate)</MudText>
+                                    }
+
+                                </div>
+                            </div>
+                        </ChildContent>
+                    </MudButton>
+                </div>
+            }
+        </div>
+
+    </div>
+</MudPaper>
+
+@code {
+    [Parameter, EditorRequired] public IEnumerable<EducationDto> Educations { get; set; }
+    [Parameter] public int MaxItemsToShow { get; set; } = 4;
+    [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
+
+    private bool _isBusy;
+
+    private string FormatRange(DateOnly start, DateOnly? end) =>
+        $"{start:yyyy-MM} — {(end.HasValue ? end.Value.ToString("yyyy-MM") : "Present")}";
+
+    private void GoToEducationsPage()
+    {
+        if (_isBusy || string.IsNullOrWhiteSpace(ViewAllUrl))
+            return;
+
+        _isBusy = true;
+        NavigationManager.NavigateTo(ViewAllUrl!);
+        _isBusy = false;
+    }
+
+    private async Task OpenEducationInNewTab(int educationId)
+    {
+        NavigationManager.NavigateTo(ApplicationConstants.Routes.GetDetailRoute(Application.Enums.DetailsPageType.Education, educationId));
+    }
+}

@@ -1,0 +1,123 @@
+﻿@using MudBlazor
+@using static Application.Contracts.DTOs.Response
+
+<MudPaper Class="hero-card card h-100 p-3 p-md-4 mb-4"
+          Elevation="1" Outlined="true" Square="false">
+
+    <div class="hero-content p-4 p-md-5">
+        <MudGrid >
+            <MudItem xs="12" md="4" Class="d-flex justify-center justify-md-start mb-3 mb-md-0">
+                @if (!string.IsNullOrWhiteSpace(ProfileImageSrc))
+                {
+                    <img src="@ProfileImageSrc"
+                         alt="@Info?.ProfileImage?.AltText"
+                         class="rounded-circle border avatar"
+                         style="object-fit: cover;" />
+                }
+                else
+                {
+                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border avatar">
+                        <span class="text-white fw-bold fs-4">@Initials</span>
+                    </div>
+                }
+            </MudItem>
+
+            <MudItem xs="12" md="8" Class="ps-md-4">
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.h4" Class="text-capitalize text-center text-md-start name">
+                        @Info?.Name
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2" Color="Color.Secondary"
+                             Class="text-center text-md-start">
+                        @Info?.WorkTitle
+                    </MudText>
+
+                    <div class="d-flex flex-wrap align-items-center gap-2 mt-2
+                                justify-content-center justify-content-md-start">
+                        @if (Socials is not null)
+                        {
+                            @foreach (var s in Socials)
+                            {
+                                <MudIconButton Icon="@s.Icon"
+                                               Href="@s.Url" Target="_blank" Rel="noopener"
+                                               Color="Color.Default" Size="Size.Medium"
+                                               Class="hero-social" />
+                            }
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Info?.EndPointCV))
+                        {
+                            <MudButton StartIcon="@Icons.Material.Filled.Description"
+                                       Color="Color.Primary" Variant="Variant.Filled"
+                                       Href="@Info!.EndPointCV" Target="_blank" Rel="noopener">
+                                download my resume
+                            </MudButton>
+                        }
+                    </div>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </div>
+</MudPaper>
+
+<style>
+    .hero-card {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            color: var(--bs-body-color);
+            background-image: radial-gradient(currentColor 2px, transparent 1px);
+            background-size: 14px 14px;
+            opacity: .25;
+            mask-image: linear-gradient(90deg, transparent 0, rgba(0,0,0,.6) 15%, rgba(0,0,0,.6) 70%, transparent 100%);
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .avatar {
+        width: 150px;
+        height: 150px;
+    }
+    @@media (max-width: 575.98px) {
+        .avatar
+
+    {
+        width: 132px;
+        height: 132px;
+    }
+
+    }
+
+    .name {
+        word-break: break-word;
+    }
+
+    .hero-social {
+        border-radius: 10px;
+    }
+</style>
+
+@code {
+    [Parameter] public PersonalInfoDto? Info { get; set; }
+    [Parameter] public IEnumerable<SocialDto>? Socials { get; set; }
+
+    private string ProfileImageSrc =>
+        Info?.ProfileImage?.Path ?? Info?.ProfileImage?.Url ?? string.Empty;
+
+    private string Initials =>
+        string.Join("", (Info?.Name ?? "")
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Take(2)
+            .Select(p => char.ToUpperInvariant(p[0])));
+}

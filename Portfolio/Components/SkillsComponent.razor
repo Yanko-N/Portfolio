@@ -1,0 +1,39 @@
+﻿@using static Application.Contracts.DTOs.Response
+
+@inherits LayoutComponentBase
+
+
+@if (IsLoading)
+{
+    <div class="text-center mt-5">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <p class="mt-2 mb-0">Loading hobbies information…</p>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(Error))
+{
+    <ErrorComponent ErrorTitle="Failed to load hobbies info"
+                    ErrorMessage="@Error"
+                    OnRetry="OnRetry" />
+}
+else if (Skills != null)
+{
+    <Portfolio.Components.SpecifedComponents.HeroSkillsCard SkillDtos="@Skills" ViewAllUrl="@ViewAllUrl"/>
+}
+else
+{
+    <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-4">
+        No hobbies information available.
+    </MudAlert>
+}
+@code {
+
+    [Parameter, EditorRequired] public IEnumerable<SkillDto>? Skills { get; set; }
+
+    [Parameter, EditorRequired] public bool IsLoading { get; set; } = true;
+    [Parameter, EditorRequired] public string? Error { get; set; }
+    [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
+    [Parameter, EditorRequired] public EventCallback OnRetry { get; set; }
+
+}
+

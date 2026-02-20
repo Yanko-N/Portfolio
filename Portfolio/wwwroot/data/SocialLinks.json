@@ -1,0 +1,21 @@
+[
+  {
+    "Id": 1,
+    "Name": "LinkedIn",
+    "Url": "https://www.linkedin.com/in/vitornovo02",
+    "Icon": "linkedin"
+  },
+  {
+    "Id": 2,
+    "Name": "GitHub",
+    "Url": "https://github.com/Yanko-N",
+    "Icon": "github"
+  },
+  {
+    "Id": 3,
+    "Name": "Itch.io",
+    "Url": "https://vitornovo.itch.io/",
+    "Icon": "videogame"
+  }
+]
+

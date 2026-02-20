@@ -1,0 +1,83 @@
+[
+  {
+    "Id": 1,
+    "Icon": "",
+    "Description": ".NET (WPF, WinForms, MAUI), REST APIs, ML.Net.",
+    "Name": "C#",
+    "Motivation": "Primary programming language, multi-plataform with great ecosystem, so it's a awesome overall language for all purposes",
+    "CategoryId": 1
+  },
+  {
+    "Id": 2,
+    "Icon": "",
+    "Description": "3D rendering and basic game dev.",
+    "Name": "C++",
+    "Motivation": "School related projects and individual 3D rendering curiosity",
+    "CategoryId": 1
+  },
+  {
+    "Id": 3,
+    "Icon": "",
+    "Description": "Data structures and algorithms.",
+    "Name": "C",
+    "Motivation": "Schools related projects and little program for CASIO.",
+    "CategoryId": 1
+  },
+  {
+    "Id": 4,
+    "Icon": "",
+    "Description": "Small projects; file‑based auth.",
+    "Name": "Java",
+    "Motivation": "For fun basically, and to help some colleagues at their school work",
+    "CategoryId": 1
+  },
+  {
+    "Id": 5,
+    "Icon": "",
+    "Description": "Apps and data science.",
+    "Name": "Python",
+    "Motivation": "Schools related projects",
+    "CategoryId": 1
+  },
+  {
+    "Id": 6,
+    "Icon": "",
+    "Description": "Three.js game; web interactivity.",
+    "Name": "JavaScript",
+    "Motivation": "Schools related projects and for website interactivity and responsive behaviors",
+    "CategoryId": 1
+  },
+  {
+    "Id": 7,
+    "Icon": "",
+    "Description": "DB design & implementation.",
+    "Name": "SQL",
+    "Motivation": "Basically we all need somewhere to save some data :p",
+    "CategoryId": 1
+  },
+  {
+    "Id": 8,
+    "Icon": "unity",
+    "Description": "Game development projects.",
+    "Name": "Unity",
+    "Motivation": "I was found of the world of games, so as little as 16 I tried to develop games, later found out I prefer developing software/web solutions",
+    "CategoryId": 2
+  },
+  {
+    "Id": 9,
+    "Icon": "github",
+    "Description": "Version control & merging.",
+    "Name": "Git",
+    "Motivation": "It's a tool very important for organizing and developing software in group, or even alone. Allows for Continous Intregation ",
+    "CategoryId": 3
+  },
+  {
+    "Id": 10,
+    "Icon": "bootstrap",
+    "Description": "CSS framework for responsive web design",
+    "Name": "BootStrap",
+    "Motivation": "It's a tool very important for creating and customizing views on web enviroment's or even mobile nowadays' ",
+    "CategoryId": 1
+  }
+]
+

@@ -1,0 +1,38 @@
+﻿@using static Application.Contracts.DTOs.Response
+
+@inherits LayoutComponentBase
+
+
+@if (IsLoading)
+{
+    <div class="text-center mt-5">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <p class="mt-2 mb-0">Loading education information…</p>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(Error))
+{
+    <ErrorComponent ErrorTitle="Failed to load education info"
+                    ErrorMessage="@Error"
+                    OnRetry="OnRetry" />
+}
+else if (Educations != null)
+{
+    <Portfolio.Components.SpecifedComponents.HeroEducationsCard Educations="@Educations" ViewAllUrl="@ViewAllUrl" />
+}
+else
+{
+    <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-4">
+        No education information available.
+    </MudAlert>
+}
+@code {
+
+    [Parameter, EditorRequired] public IEnumerable<EducationDto>? Educations { get; set; }
+    [Parameter, EditorRequired] public bool IsLoading { get; set; } = true;
+    [Parameter, EditorRequired] public string? Error { get; set; }
+    [Parameter, EditorRequired] public string? ViewAllUrl { get; set; }
+    [Parameter, EditorRequired] public EventCallback OnRetry { get; set; }
+
+}
+

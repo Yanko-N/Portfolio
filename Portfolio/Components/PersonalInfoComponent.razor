@@ -1,0 +1,42 @@
+﻿@using Portfolio.Components.SpecifedComponents
+@using static Application.Contracts.DTOs.Response
+
+@inherits LayoutComponentBase
+
+
+
+@if (IsLoading)
+{
+    <div class="text-center mt-5">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <p class="mt-2 mb-0">Loading personal information…</p>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(Error))
+{
+    <ErrorComponent ErrorTitle="Failed to load personal info"
+                    ErrorMessage="@Error"
+                    OnRetry="OnRetry" />
+}
+else if (Info != null)
+{
+    <HeroProfileCard Info="Info" Socials="Socials"/> 
+}
+else
+{
+    <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-4">
+        No personal information available.
+    </MudAlert>
+}
+@code {
+
+    [Parameter,EditorRequired] public PersonalInfoDto? Info { get; set; }
+    [Parameter,EditorRequired] public IEnumerable<SocialDto>? Socials { get; set; }
+
+    [Parameter,EditorRequired] public bool IsLoading { get; set; } = true;
+    [Parameter,EditorRequired] public string? Error { get; set; }
+
+    [Parameter,EditorRequired] public EventCallback OnRetry { get; set; }
+
+    public string profileImagePath => Info?.ProfileImage?.Path ?? Info?.ProfileImage.Url ?? string.Empty;
+}

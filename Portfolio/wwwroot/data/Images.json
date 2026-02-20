@@ -1,0 +1,86 @@
+[
+  {
+    "Id": 1,
+    "Url": null,
+    "Path": "Imagens/aquariumPhoto.png",
+    "AltText": "Aquarium Simulator"
+  },
+  {
+    "Id": 2,
+    "Url": null,
+    "Path": "Imagens/GeoCachingUtad.jpg",
+    "AltText": "GeoCaching Utad"
+  },
+  {
+    "Id": 3,
+    "Url": null,
+    "Path": "Imagens/golfGame.PNG",
+    "AltText": "Golf-Simulator"
+  },
+  {
+    "Id": 4,
+    "Url": null,
+    "Path": "Imagens/olc3DEngine.PNG",
+    "AltText": "3D Engine"
+  },
+  {
+    "Id": 5,
+    "Url": null,
+    "Path": "Imagens/jogoDasMinasFoto.PNG",
+    "AltText": "Minesweeper"
+  },
+  {
+    "Id": 6,
+    "Url": null,
+    "Path": "Imagens/fitWhereYouAreConfortable.png",
+    "AltText": "Fit where you are confortable"
+  },
+  {
+    "Id": 7,
+    "Url": null,
+    "Path": "Imagens/ListaCompras.PNG",
+    "AltText": "Buying List App"
+  },
+  {
+    "Id": 8,
+    "Url": null,
+    "Path": "Imagens/Speak2GPT.PNG",
+    "AltText": "Speak2GPT"
+  },
+  {
+    "Id": 9,
+    "Url": null,
+    "Path": "Imagens/rocketImg.PNG",
+    "AltText": "Rocket Travel"
+  },
+  {
+    "Id": 10,
+    "Url": null,
+    "Path": "Imagens/WholesalersImg.PNG",
+    "AltText": "Wholesalers"
+  },
+  {
+    "Id": 11,
+    "Url": null,
+    "Path": "Imagens/shoraWebsiteFoto.PNG",
+    "AltText": "Shora Crew Website"
+  },
+  {
+    "Id": 12,
+    "Url": null,
+    "Path": "Imagens/FotoCV.jpg",
+    "AltText": "foto de perfil"
+  },
+  {
+    "Id": 13,
+    "Url": "https://www.urbinfor.pt/images/logo_mobile.png",
+    "Path": null,
+    "AltText": "logo da marca urbinfor"
+  },
+  {
+    "Id": 14,
+    "Url": "https://scontent.fopo3-1.fna.fbcdn.net/v/t39.30808-6/411498603_854107106721170_7639832942369604505_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=eLrDxxEeHjsQ7kNvwFeHAdj&_nc_oc=AdmI2R_qgb2m1Gxt1f3tRc8riiXDQHq-ywkDH3uoRpRbY_ivA8PH4dNA13sD2eiKnxNeFvqVZFNxvjjQq8HAgQT8&_nc_zt=23&_nc_ht=scontent.fopo3-1.fna&_nc_gid=JW5iosTlulpZqlUzl7yXOA&oh=00_AfXGRPbr43CTN5oipFYIepY5JIU6_FK8EDFdQ4AD4Zt9_Q&oe=68A27DEB",
+    "Path": null,
+    "AltText": "logo da marca Restaurante Porão Limiano"
+  }
+]

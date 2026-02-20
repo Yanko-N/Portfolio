@@ -1,0 +1,297 @@
+﻿@using Application.Classes
+@using Application.Interfaces.Services
+@using static Application.Contracts.DTOs.Response
+
+@attribute [Route(ApplicationConstants.Routes.ProjectsDetail)]
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IProjectService ProjectService
+@inject IJSRuntime JS
+
+@if (IsLoading)
+{
+    <div class="d-flex align-items-center Justify-content-center min-vh-100">
+        <div class="text-center">
+            <div class="spinner-border mb-3" role="status" aria-hidden="true"></div>
+            <p class="mb-0 text-muted">Loading project information…</p>
+        </div>
+    </div>
+}
+else if (dto != null)
+{
+    <div class="container-md my-4">
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="row g-4">
+                    <!-- Sidebar -->
+                    <div class="col-12 col-lg-4">
+                        <div class="sticky-top" style="top:1rem;">
+                            <MudPaper Elevation="2" Class="p-4 rounded-4">
+                                <div class="text-center mb-4">
+                                    @if (dto.Images?.Count > 0 && !string.IsNullOrWhiteSpace(dto.Images[0].Url))
+                                    {
+                                        <img src="@dto.Images[0].Url"
+                                             alt="@dto.Images[0].AltText"
+                                             class="img-fluid rounded-3 shadow-sm project-cover"
+                                             style="max-width: 220px; height: auto;" />
+                                    }
+                                    else
+                                    {
+                                        <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
+                                            @(dto.Name?[0])
+                                        </MudAvatar>
+                                    }
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 class="mb-1 fw-bold">@dto.Name</h5>
+                                    <div class="text-muted small">
+                                        @if (!string.IsNullOrWhiteSpace(dto.Category))
+                                        {
+                                            <div class="mb-1"><MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string">@dto.Category</MudChip></div>
+                                        }
+                                        @if (dto.Images?.Count > 0)
+                                        {
+                                            <div><MudChip Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small" T="string">@($"{dto.Images.Count} image{(dto.Images.Count == 1 ? "" : "s")}")</MudChip></div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <MudDivider Class="my-3" />
+
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    @if (!string.IsNullOrWhiteSpace(dto.DemoUrl))
+                                    {
+                                        <MudButton Color="Color.Primary" Variant="Variant.Filled"
+                                                   StartIcon="@Icons.Material.Filled.PlayCircle"
+                                                   OnClick="@(()=>OpenExternal(dto.DemoUrl!))">
+                                            Live demo
+                                        </MudButton>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(dto.SourceCodeUrl))
+                                    {
+                                        <MudButton Color="Color.Dark" Variant="Variant.Outlined"
+                                                   StartIcon="@Icons.Material.Filled.Code"
+                                                   OnClick="@(()=>OpenExternal(dto.SourceCodeUrl!))">
+                                            Source code
+                                        </MudButton>
+                                    }
+                                </div>
+
+                                <MudDivider Class="my-3" />
+
+                                <MudButton Variant="Variant.Outlined"
+                                           StartIcon="@Icons.Material.Filled.ArrowBack"
+                                           OnClick="()=>GoBack()"
+                                           FullWidth="true">
+                                    Return
+                                </MudButton>
+                            </MudPaper>
+                        </div>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="col-12 col-lg-8">
+                        <MudPaper Elevation="2" Class="p-4 rounded-4">
+                            <div class="mb-3">
+                                <h3 class="mb-2 fw-bold">@dto.Name</h3>
+                            </div>
+
+                            <MudDivider Class="mb-3" />
+
+                            <div class="description-text mb-4 lh-lg">
+                                @(!string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : "No description available.")
+                            </div>
+
+                            @if (dto.Skills?.Count > 0)
+                            {
+                                <MudDivider Class="mb-4" />
+                                <h6 class="text-uppercase text-muted mb-3 fw-semibold">Skills & Technologies</h6>
+
+                                @foreach (var group in GroupedSkills())
+                                {
+                                    <div class="mb-3">
+                                        <div class="fw-semibold mb-2 text-secondary">@group.Key</div>
+
+                                        <div class="d-flex flex-wrap gap-2">
+                                            @foreach (var skill in group)
+                                            {
+                                                <MudTooltip Placement="Placement.Top" Style="max-width:none" Class="skill-tooltip">
+                                                    <ChildContent>
+                                                        <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
+                                                            @if (!string.IsNullOrWhiteSpace(skill.Icon))
+                                                            {
+                                                                <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
+                                                                    @skill.Name
+                                                                </MudText>
+                                                            }
+                                                        </div>
+                                                    </ChildContent>
+                                                    <TooltipContent>
+                                                        <div class="skill-tooltip-body">
+                                                            <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
+                                                            <MudText Typo="Typo.caption">@skill.Description</MudText>
+                                                        </div>
+                                                    </TooltipContent>
+                                                </MudTooltip>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                            @if (dto.Images?.Count > 0)
+                            {
+                                <MudDivider Class="my-4" />
+                                <h6 class="text-uppercase text-muted mb-2">Gallery</h6>
+                                <div class="row g-2">
+                                    @foreach (var img in dto.Images)
+                                    {
+                                        <div class="col-6 col-md-4">
+                                            @if (!string.IsNullOrWhiteSpace(img.Url))
+                                            {
+                                                <a href="@img.Url" target="_blank" rel="noopener">
+                                                    <img src="@img.Url" alt="@img.AltText" class="gallery-img rounded-3 shadow-sm w-100" />
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <div class="ratio ratio-16x9 rounded-3 bg-light d-flex align-items-center justify-content-center border">
+                                                    <span class="text-muted small px-2 text-center">@img.AltText</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </MudPaper>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-md my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <MudAlert Severity="Severity.Warning" Dense="true">
+                    @Error
+                </MudAlert>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int? Id { get; set; }
+
+    public bool IsLoading { get; set; } = true;
+    public ProjectDto? dto { get; set; }
+    public string? Error { get; set; }
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+    protected async Task LoadAsync()
+    {
+        try
+        {
+            IsLoading = true;
+
+            if (Id == null || Id <= 0)
+            {
+                Error = "Invalid project ID.";
+                return;
+            }
+
+            var result = await ProjectService.GetProjectAsync((int)Id);
+
+            if (result.IsSuccess)
+            {
+                dto = result.Value;
+                return;
+            }
+
+            Error = result.ErrorMessage ?? "Failed to load project details.";
+            Snackbar.Add(Error, Severity.Error, cfg =>
+            {
+                cfg.RequireInteraction = false;
+                cfg.ShowCloseIcon = true;
+            });
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+            Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error, cfg =>
+            {
+                cfg.RequireInteraction = false;
+                cfg.ShowCloseIcon = true;
+            });
+        }
+        finally
+        {
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task GoBack()
+    {
+        try
+        {
+            var canGoBack = await JS.InvokeAsync<bool>("appNav.canGoBack");
+            if (canGoBack)
+            {
+                await JS.InvokeVoidAsync("appNav.goBack");
+                return;
+            }
+        }
+        catch
+        {
+        }
+
+        NavigationManager.NavigateTo(ApplicationConstants.Routes.Index);
+    }
+
+    private void OpenExternal(string url)
+        => NavigationManager.NavigateTo(url, forceLoad: true);
+
+    private IEnumerable<IGrouping<string, SkillDto>> GroupedSkills()
+        => (dto?.Skills ?? Array.Empty<SkillDto>())
+            .GroupBy(s => string.IsNullOrWhiteSpace(s.Category) ? "Others" : s.Category)
+            .OrderBy(g => g.Key);
+}
+
+<style>
+    .project-cover {
+        max-height: 180px;
+        object-fit: contain;
+        background: var(--mud-palette-surface);
+        padding: .5rem;
+    }
+
+    .description-text {
+        white-space: pre-line;
+        line-height: 1.6;
+    }
+
+    .gallery-img {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+    }
+    @@media (max-width: 991.98px) {
+        .sticky-top
+
+        {
+            position: static !important;
+            top: auto !important;
+        }
+
+    }
+</style>
