@@ -10,11 +10,11 @@ namespace Application.Classes
             public const string SkillsPage = "/Skills";
             public const string HobbiesPage = "/Hobbies";
             public const string WorkPage = "/Works";
-            public const string EducationPage = "/Education";
+            public const string EducationPage = "/Educations";
             public const string ProjectsPage = "/Projects";
 
             public const string WorkDetail = "/Works/{id:int}";
-            public const string EducationDetail = "/Education/{id:int}";
+            public const string EducationDetail = "/Educations/{id:int}";
             public const string ProjectsDetail = "/Projects/{id:int}";
             
 

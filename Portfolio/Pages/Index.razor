@@ -20,14 +20,14 @@
             <Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
                                                         Socials="@Socials"
                                                         Info="@Info"
-                                                        IsLoading="@IsLoading"
+                                                        IsLoading="@_isBusyPersonalInfo"
                                                         OnRetry="@LoadPersonalInfoAndSocialsAsync" />
         </div>
 
         <div class="col-12 col-lg-4">
             <Portfolio.Components.HobbyComponent Hobbies="@Hobbies"
                                                     Error="@ErrorHobbies"
-                                                    IsLoading="@IsLoading"
+                                                    IsLoading="@_isBusyHobbies"
                                                     OnRetry="@LoadHobbiesAsync"
                                                     ViewAllUrl="@ApplicationConstants.Routes.HobbiesPage" />
         </div>
@@ -38,7 +38,7 @@
         <div class="col-12 col-lg-4">
             <Portfolio.Components.SkillsComponent Skills="@Skills"
                                                     Error="@ErrorSkills"
-                                                    IsLoading="@IsLoading"
+                                                    IsLoading="@_isBusySkills"
                                                     OnRetry="@LoadSkillsAsync"
                                                     ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
         </div>
@@ -46,7 +46,7 @@
         <div class="col-12 col-lg-8">
             <Portfolio.Components.WorkExperience Works="@Works"
                                                     Error="@ErrorWork"
-                                                    IsLoading="@IsLoading"
+                                                    IsLoading="@_isBusyWork"
                                                     OnRetry="@LoadWorkAsync"
                                                     ViewAllUrl="@ApplicationConstants.Routes.WorkPage" />
         </div>
@@ -57,7 +57,7 @@
         <div class="col-12 col-lg-4">
                 <Portfolio.Components.EducationExperienceComponent Educations="@Educations"
                                                                    Error="@ErrorEducation"
-                                                                   IsLoading="@IsLoading"
+                                                                   IsLoading="@_isBusyEducation"
                                                                    OnRetry="@LoadEducationAsync"
                                                                    ViewAllUrl="@ApplicationConstants.Routes.EducationPage" />
         </div>
@@ -65,7 +65,7 @@
         <div class="col-12 col-lg-8">
                 <Portfolio.Components.ProjectsInfoComponent Projects="@ProjectsDto"
                                                             Error="@ErrorProject"
-                                                            IsLoading="@IsLoading"
+                                                            IsLoading="@_isBusyProject"
                                                             OnRetry="@LoadProjectsAsync"
                                                             ViewAllUrl="@ApplicationConstants.Routes.ProjectsPage" />
         </div>
@@ -73,33 +73,17 @@
 
 </div>
 
-@code
-{
-
-    public bool IsLoading { get; set; } = true;
+@code {
+    #region ##### UI State #####
+   
+    private bool _isBusyPersonalInfo, _isBusyHobbies, _isBusySkills, _isBusyWork, _isBusyEducation, _isBusyProject;
+    #endregion
 
     #region ##### Error Messages #####
-
-    public string? ErrorPersonalInfo { get; set; }
-    public string? ErrorHobbies { get; set; }
-    public string? ErrorSkills { get; set; }
-    public string? ErrorWork { get; set; }
-    public string? ErrorEducation { get; set; }
-    public string? ErrorProject { get; set; }
-
+    public string? ErrorPersonalInfo, ErrorHobbies, ErrorSkills, ErrorWork, ErrorEducation, ErrorProject;
     #endregion
 
-    #region ##### Busy Booleans #####
-
-    private bool _isBusyPersonalInfo = false;
-    private bool _isBusyHobbies = false;
-    private bool _isBusySkills = false;
-    private bool _isBusyWork = false;
-    private bool _isBusyEducation = false;
-    private bool _isBusyProject = false;
-
-    #endregion
-
+    #region ##### Data Properties #####
     private PersonalInfoDto? Info { get; set; }
     private IEnumerable<SocialDto>? Socials { get; set; }
     private IEnumerable<HobbyDto>? Hobbies { get; set; }
@@ -107,228 +91,107 @@
     private IEnumerable<WorkDto>? Works { get; set; }
     private IEnumerable<EducationDto>? Educations { get; set; }
     private IEnumerable<ProjectDto?> ProjectsDto { get; set; }
+    #endregion
 
-    protected override Task OnInitializedAsync() => LoadAsync();
+    protected override void OnInitialized()
+    {
+    
+        _ = LoadPersonalInfoAndSocialsAsync();
+        _ = LoadHobbiesAsync();
+        _ = LoadSkillsAsync();
+        _ = LoadWorkAsync();
+        _ = LoadEducationAsync();
+        _ = LoadProjectsAsync();
+    }
 
-    protected async Task LoadAsync()
+  
+    private async Task ExecuteLoadAsync<T>(Func<Task<Result<T>>> serviceCall, Action<T> onSuccess, Action<string> onError, Action<bool> setBusy)
     {
         try
         {
-            IsLoading = true;
+            setBusy(true);
+            StateHasChanged();
 
-            List<Task> tasks = new List<Task>();
+            var result = await serviceCall();
 
-            tasks.Add(LoadPersonalInfoAndSocialsAsync());
-            tasks.Add(LoadHobbiesAsync());
-            tasks.Add(LoadSkillsAsync());
-            tasks.Add(LoadWorkAsync());
-            tasks.Add(LoadEducationAsync());
-            tasks.Add(LoadProjectsAsync());
-
-            await Task.WhenAll(tasks);
+            if (result == null)
+            {
+                onError("Service returned no response.");
+            }
+            else if (result.IsSuccess)
+            {
+                onSuccess(result.Value);
+            }
+            else
+            {
+                onError(result.ErrorMessage ?? "An unknown error occurred.");
+                Snackbar.Add(result.ErrorMessage ?? "Error loading data", Severity.Error);
+            }
         }
         catch (Exception ex)
         {
-            ErrorPersonalInfo = ex.Message;
-            Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error, cfg =>
-            {
-                cfg.RequireInteraction = false;
-                cfg.ShowCloseIcon = true;
-            });
+            onError(ex.Message);
         }
         finally
         {
-            IsLoading = false;
+            setBusy(false);
             StateHasChanged();
         }
     }
 
+    protected Task LoadHobbiesAsync() =>
+        ExecuteLoadAsync(
+            () => HobbiesService.GetHobbiesAsync(), 
+            val => Hobbies = val,
+            err => ErrorHobbies = err,
+            b => _isBusyHobbies = b
+        );
+
+    protected Task LoadSkillsAsync() =>
+        ExecuteLoadAsync(
+            () => SkillsService.GetSkillsAsync(),
+            val => Skills = val,
+            err => ErrorSkills = err,
+            b => _isBusySkills = b
+        );
+
+    protected Task LoadWorkAsync() =>
+        ExecuteLoadAsync(
+            () => WorkService.GetWorksAsync(),
+            val => Works = val,
+            err => ErrorWork = err,
+            b => _isBusyWork = b
+        );
+
+    protected Task LoadEducationAsync() =>
+        ExecuteLoadAsync(
+            () => EducationService.GetEducationsAsync(),
+            val => Educations = val,
+            err => ErrorEducation = err,
+            b => _isBusyEducation = b
+        );
+
+    protected Task LoadProjectsAsync() =>
+        ExecuteLoadAsync(
+            () => ProjectService.GetProjectsAsync(),
+            val => ProjectsDto = val,
+            err => ErrorProject = err,
+            b => _isBusyProject = b
+        );
+
     protected async Task LoadPersonalInfoAndSocialsAsync()
     {
-        if (_isBusyPersonalInfo)
-        {
-            return;
-        }
-
-        _isBusyPersonalInfo = true;
-        var resultPersonalInfo = await PersonalInfoService.GetPersonalInfoAsync();
-
-        if (resultPersonalInfo == null)
-        {
-            ErrorPersonalInfo = "Personal Info Service returned no result.";
-            return;
-        }
-
-        if (resultPersonalInfo.IsSuccess)
-        {
-            Info = resultPersonalInfo.Value;
-        }
-        else
-        {
-            ErrorPersonalInfo = string.IsNullOrWhiteSpace(resultPersonalInfo.ErrorMessage) ? "Failed to load personal info." : resultPersonalInfo.ErrorMessage;
-            Snackbar.Add(ErrorPersonalInfo, Severity.Error, cfg => cfg.RequireInteraction = false);
-        }
+        await ExecuteLoadAsync(
+            () => PersonalInfoService.GetPersonalInfoAsync(),
+            val => Info = val,
+            err => ErrorPersonalInfo = err,
+            b => _isBusyPersonalInfo = b
+        );
 
         var resultSocials = await SocialsService.GetSocialsAsync();
-
         if (resultSocials.IsSuccess)
         {
             Socials = resultSocials.Value;
         }
-        else
-        {
-            ErrorPersonalInfo = string.IsNullOrWhiteSpace(resultSocials.ErrorMessage) ? "Failed to load socials." : resultSocials.ErrorMessage;
-        }
-
-        _isBusyPersonalInfo = false;
-        StateHasChanged();
-    }
-
-    protected async Task LoadHobbiesAsync()
-    {
-        if (_isBusyHobbies)
-        {
-            return;
-        }
-
-        _isBusyHobbies = true;
-        var resultHobbiesService = await HobbiesService.GetHobbiesAsync();
-
-        if (resultHobbiesService == null)
-        {
-            ErrorHobbies = "Hobbies Service returned no result.";
-            return;
-        }
-
-        if (resultHobbiesService.IsSuccess)
-        {
-            Hobbies = resultHobbiesService.Value;
-        }
-        else
-        {
-            ErrorHobbies = string.IsNullOrWhiteSpace(resultHobbiesService.ErrorMessage) ? "Failed to load hobbies info." : resultHobbiesService.ErrorMessage;
-            Snackbar.Add(ErrorHobbies, Severity.Error, cfg => cfg.RequireInteraction = false);
-        }
-        _isBusyHobbies = false;
-        StateHasChanged();
-    }
-
-    protected async Task LoadSkillsAsync()
-    {
-        if (_isBusySkills)
-        {
-            return;
-        }
-
-        _isBusySkills = true;
-        var resultSkills = await SkillsService.GetSkillsAsync();
-
-        if (resultSkills == null)
-        {
-            ErrorSkills = "Skills Service returned no result.";
-            return;
-        }
-
-        if (resultSkills.IsSuccess)
-        {
-            Skills = resultSkills.Value;
-        }
-        else
-        {
-            ErrorSkills = string.IsNullOrWhiteSpace(resultSkills.ErrorMessage) ? "Failed to load skills info." : resultSkills.ErrorMessage;
-            Snackbar.Add(ErrorSkills, Severity.Error, cfg => cfg.RequireInteraction = false);
-        }
-        _isBusySkills = false;
-        StateHasChanged();
-    }
-
-    protected async Task LoadWorkAsync()
-    {
-        if (_isBusyWork)
-        {
-            return;
-        }
-
-        _isBusyWork = true;
-        var resultWorks = await WorkService.GetWorksAsync();
-
-        if (resultWorks == null)
-        {
-            ErrorWork = "Work Service returned no result.";
-            return;
-        }
-
-        if (resultWorks.IsSuccess)
-        {
-            Works = resultWorks.Value;
-        }
-        else
-        {
-            ErrorWork = string.IsNullOrWhiteSpace(resultWorks.ErrorMessage) ? "Failed to load work info." : resultWorks.ErrorMessage;
-            Snackbar.Add(ErrorWork, Severity.Error, cfg => cfg.RequireInteraction = false);
-        }
-        _isBusyWork = false;
-        StateHasChanged();
-
-    }
-
-    protected async Task LoadEducationAsync()
-    {
-        if (_isBusyEducation)
-        {
-            return;
-        }
-
-        _isBusyEducation = true;
-        var resultEducation = await EducationService.GetEducationsAsync();
-
-        if (resultEducation == null)
-        {
-            ErrorEducation = "Education Service returned no result.";
-            return;
-        }
-
-        if (resultEducation.IsSuccess)
-        {
-            Educations = resultEducation.Value;
-        }
-        else
-        {
-            ErrorEducation = string.IsNullOrWhiteSpace(resultEducation.ErrorMessage) ? "Failed to load education info." : resultEducation.ErrorMessage;
-            Snackbar.Add(ErrorEducation, Severity.Error, cfg => cfg.RequireInteraction = false);
-        }
-        _isBusyEducation = false;
-        StateHasChanged();
-
-    }
-
-    protected async Task LoadProjectsAsync()
-    {
-        if (_isBusyProject)
-        {
-            return;
-        }
-
-        _isBusyProject = true;
-        var resultProjects = await ProjectService.GetProjectsAsync();
-
-        if (resultProjects == null)
-        {
-            ErrorProject = "Project Service returned no result.";
-            return;
-        }
-
-        if (resultProjects.IsSuccess)
-        {
-            ProjectsDto = resultProjects.Value;
-        }
-        else
-        {
-            ErrorProject = string.IsNullOrWhiteSpace(resultProjects.ErrorMessage) ? "Failed to load project info." : resultProjects.ErrorMessage;
-            Snackbar.Add(ErrorProject, Severity.Error, cfg => cfg.RequireInteraction = false);
-        }
-        _isBusyProject = false;
-        StateHasChanged();
-
     }
 }

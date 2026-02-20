@@ -11,124 +11,145 @@
 
 @if (IsLoading)
 {
-    <div class="text-center mt-5">
-        <div class="spinner-border" role="status" aria-hidden="true"></div>
-        <p class="mt-2 mb-0">Loading education information…</p>
+    <div class="d-flex align-items-center justify-content-center min-vh-100">
+        <div class="text-center">
+            <div class="spinner-border mb-3" role="status" aria-hidden="true"></div>
+            <p class="mb-0 text-muted">Loading educations information…</p>
+        </div>
     </div>
 }
 else if (dto != null)
 {
-    <MudPaper Elevation="1" Class="container my-4 p-0">
-        <div class="row g-0">
-            <div class="col-12 col-lg-4 border-end">
-                <div class="p-4 sticky-sidebar">
-                    <div class="text-center mb-3">
-                        <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
-                            @(((dto.School?.Name ?? dto.Course?.Name ?? "E")[0]))
-                        </MudAvatar>
-                    </div>
+    <div class="container-md my-4">
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="row g-4">
+                    <!-- Sidebar -->
+                    <div class="col-12 col-lg-4">
+                        <div class="sticky-top" style="top: 1rem;">
+                            <MudPaper Elevation="2" Class="p-4 rounded-4">
+                                <div class="text-center mb-4">
+                                    <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
+                                        @(((dto.School?.Name ?? dto.Course?.Name ?? "E")[0]))
+                                    </MudAvatar>
+                                </div>
 
-                    <h5 class="mb-1">@dto.Course?.Name</h5>
-                    <div class="text-muted">
-                        <span>@dto.School?.Name</span>
-                        @if (!string.IsNullOrWhiteSpace(dto.School?.Location))
-                        {
-                            <span> · @dto.School!.Location</span>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(dto.Course?.Url))
-                        {
-                            <span> · <a href="@dto.Course!.Url" target="_blank" rel="noopener">Course page</a></span>
-                        }
-                    </div>
+                                <div class="text-center">
+                                    <h5 class="mb-1 fw-bold">@dto.Course?.Name</h5>
+                                    <div class="text-muted small">
+                                        <div>@dto.School?.Name @if (!string.IsNullOrWhiteSpace(dto.School?.Location)) {
+                                        <span>· @dto.School!.Location</span>
+                                    }
+</div>
+                                    @if (!string.IsNullOrWhiteSpace(dto.Course?.Url))
+                                    {
+                                        <a href="@dto.Course!.Url" target="_blank" rel="noopener" class="text-primary text-decoration-none">
+                                            Course page
+                                        </a>
+                                    }
+                                </div>
+                            </div>
 
-                    <div class="mt-2">
-                        <MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string">
-                            @FormatPeriod(dto.StartDate, dto.EndDate)
-                        </MudChip>
-                        @if (dto.EndDate == null)
-                        {
-                            <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small" Class="ms-1" T="string">
-                                Current
-                            </MudChip>
-                        }
-                    </div>
+                            <MudDivider Class="my-3" />
 
-                    <MudDivider Class="my-3" />
-
-                    <MudButton Variant="Variant.Outlined"
-                               StartIcon="@Icons.Material.Filled.ArrowBack"
-                               OnClick="()=>GoBack()">
-                        Return
-                    </MudButton>
-                </div>
-            </div>
-
-            <div class="col-12 col-lg-8">
-                <div class="p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <h3 class="m-0">@dto.Course?.Name</h3>
-                    </div>
-
-                    <div class="text-muted mb-3">
-                        @FormatDates(dto.StartDate, dto.EndDate)
-                    </div>
-
-                    <MudDivider Class="mb-3" />
-
-                    <div class="description-text">
-                        @(!string.IsNullOrWhiteSpace(dto.Course?.Description)
-                            ? dto.Course!.Description
-                            : "No description available.")
-                    </div>
-
-                    @if (dto.Skills?.Count > 0)
-                    {
-                        <MudDivider Class="my-4" />
-                        <h6 class="text-uppercase text-muted mb-2">Skills</h6>
-
-                        @foreach (var group in GroupedSkills())
-                        {
-                            <div class="mb-2">
-                                <div class="fw-semibold mb-1">@group.Key</div>
-
-                                @foreach (var skill in group)
+                            <div class="d-flex flex-column gap-2 align-items-center">
+                                <MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string">
+                                    @FormatPeriod(dto.StartDate, dto.EndDate)
+                                </MudChip>
+                                @if (dto.EndDate == null)
                                 {
-                                    <MudTooltip Placement="Placement.Top" Style="max-width:none" Class="skill-tooltip">
-                                        <ChildContent>
-                                            <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
-                                                @if (!string.IsNullOrWhiteSpace(skill.Icon))
-                                                {
-                                                    <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
-                                                }
-                                                else
-                                                {
-                                                    <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
-                                                        @skill.Name
-                                                    </MudText>
-                                                }
-                                            </div>
-                                        </ChildContent>
-                                        <TooltipContent>
-                                            <div class="skill-tooltip-body">
-                                                <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
-                                                <MudText Typo="Typo.caption">@skill.Description</MudText>
-                                            </div>
-                                        </TooltipContent>
-                                    </MudTooltip>
+                                    <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small" Class="ms-1" T="string">
+                                        Current
+                                    </MudChip>
                                 }
                             </div>
+
+                            <MudDivider Class="my-3" />
+
+                            <MudButton Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                                       OnClick="()=>GoBack()"
+                                       FullWidth="true">
+                                Return
+                            </MudButton>
+                        </MudPaper>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-12 col-lg-8">
+                    <MudPaper Elevation="2" Class="p-4 rounded-4">
+                        <div class="mb-3">
+                            <h3 class="mb-1 fw-bold">@dto.Course?.Name</h3>
+                            <p class="text-muted mb-0">@FormatDates(dto.StartDate, dto.EndDate)</p>
+                        </div>
+
+                        <MudDivider Class="mb-4" />
+
+                        <div class="description-text mb-4 lh-lg">
+                            @(!string.IsNullOrWhiteSpace(dto.Course?.Description)
+                                                        ? dto.Course!.Description
+                                                        : "No description available.")
+                        </div>
+
+                        @if (dto.Skills?.Count > 0)
+                        {
+                            <MudDivider Class="mb-4" />
+                            <h6 class="text-uppercase text-muted mb-3 fw-semibold">Skills & Technologies</h6>
+
+                            @foreach (var group in GroupedSkills())
+                            {
+                                <div class="mb-4">
+                                    <div class="fw-semibold mb-3 text-secondary">@group.Key</div>
+
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @foreach (var skill in group)
+                                        {
+                                            <MudTooltip Placement="Placement.Top" Style="max-width:none" Class="skill-tooltip">
+                                                <ChildContent>
+                                                    <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
+                                                        @if (!string.IsNullOrWhiteSpace(skill.Icon))
+                                                        {
+                                                            <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
+                                                                @skill.Name
+                                                            </MudText>
+                                                        }
+                                                    </div>
+                                                </ChildContent>
+                                                <TooltipContent>
+                                                    <div class="skill-tooltip-body">
+                                                        <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
+                                                        <MudText Typo="Typo.caption">@skill.Description</MudText>
+                                                    </div>
+                                                </TooltipContent>
+                                            </MudTooltip>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         }
-                    }
+                    </MudPaper>
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </div>
+</div>
 }
 else
 {
-    <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-4">
-        @Error
-    </MudAlert>
+    <div class="container-md my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <MudAlert Severity="Severity.Warning" Dense="true">
+                    @Error
+                </MudAlert>
+            </div>
+        </div>
+    </div>
 }
 
 @code {
