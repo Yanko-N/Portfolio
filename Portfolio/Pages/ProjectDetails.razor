@@ -30,10 +30,11 @@ else if (dto != null)
                                 <div class="text-center mb-4">
                                     @if (dto.Images?.Count > 0 && !string.IsNullOrWhiteSpace(dto.Images[0].Url))
                                     {
-                                        <img src="@dto.Images[0].Url"
-                                             alt="@dto.Images[0].AltText"
-                                             class="img-fluid rounded-3 shadow-sm project-cover"
-                                             style="max-width: 220px; height: auto;" />
+                                        <MudImage Src="@GetCover(dto)"
+                                                  Alt="@GetAlt(dto)"
+                                                  LazyLoad="true"
+                                                  ObjectFit="ObjectFit.Cover"
+                                                  Style="width:100%;height:100%;" />
                                     }
                                     else
                                     {
@@ -239,6 +240,36 @@ else
             StateHasChanged();
         }
     }
+
+    private string BuildUrl(string? s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return string.Empty;
+
+        if (Uri.TryCreate(s, UriKind.Absolute, out var abs)) return abs.ToString();
+
+        var baseUri = NavigationManager.BaseUri.TrimEnd('/');
+        var rel = s.TrimStart('/');
+        return $"{baseUri}/{rel}";
+    }
+
+    private string GetAlt(ProjectDto p) => p.Images?.FirstOrDefault()?.AltText ?? $"{p.Name} cover";
+
+
+    private string Placeholder()
+        => $"{NavigationManager.BaseUri.TrimEnd('/')}/images/placeholders/project-thumb.svg";
+
+    private string GetCover(ProjectDto p)
+    {
+        var img = p.Images?.FirstOrDefault(i =>
+            !string.IsNullOrWhiteSpace(i.Url) || !string.IsNullOrWhiteSpace(i.Path));
+
+        var url = BuildUrl(img?.Url);
+        if (!string.IsNullOrWhiteSpace(url)) return url;
+
+        var path = BuildUrl(img?.Path);
+        return !string.IsNullOrWhiteSpace(path) ? path : Placeholder();
+    }
+
 
     private async Task GoBack()
     {
