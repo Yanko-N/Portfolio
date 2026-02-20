@@ -1,6 +1,5 @@
 name: Deploy to GitHub Pages
 
-# Run workflow on every push to the master branch
 on:
   push:
     branches: [ master ]
@@ -26,7 +25,7 @@ jobs:
         run: dotnet restore
 
       - name: Publish .NET Project
-        run: dotnet publish Portfolio.csproj -c Release -o release --nologo
+        run: dotnet publish ./Portfolio/Portfolio.csproj -c Release -o release --nologo
 
       - name: Set repository name env
         run: echo "REPO=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
@@ -35,7 +34,6 @@ jobs:
         run: |
           INDEX=release/wwwroot/index.html
           if [ -f "$INDEX" ]; then
-            # Replace <base href="/" /> with <base href="/{repo}/" /> where {repo} is the repository name
             sed -i "s#<base href=\"/\" />#<base href=\"/${REPO}/\" />#g" "$INDEX"
           else
             echo "$INDEX not found"
