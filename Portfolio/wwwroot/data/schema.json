@@ -4,74 +4,74 @@
   "generatedAt": "2025-08-12T10:00:00Z",
   "files": {
     "personalInfo": {
-      "path": "/data/PersonalInfos.json"
+      "path": "/Portfolio/data/PersonalInfos.json"
     },
 
     "personalInfoImages": {
-      "path": "/data/PersonalInfoImages.json"
+      "path": "/Portfolio/data/PersonalInfoImages.json"
     },
 
     "socialsLinks": {
-      "path": "/data/SocialLinks.json"
+      "path": "/Portfolio/data/SocialLinks.json"
     },
     "languages": {
-      "path": "/data/Languages.json"
+      "path": "/Portfolio/data/Languages.json"
     },
 
     "skillCategories": {
-      "path": "/data/SkillCategories.json"
+      "path": "/Portfolio/data/SkillCategories.json"
     },
     "skills": {
-      "path": "/data/Skills.json"
+      "path": "/Portfolio/data/Skills.json"
     },
 
     "images": {
-      "path": "/data/Images.json"
+      "path": "/Portfolio/data/Images.json"
     },
 
     "projects": {
-      "path": "/data/Projects.json"
+      "path": "/Portfolio/data/Projects.json"
     },
     "projectSkills": {
-      "path": "/data/ProjectSkills.json"
+      "path": "/Portfolio/data/ProjectSkills.json"
     },
     "projectImages": {
-      "path": "/data/ProjectImages.json"
+      "path": "/Portfolio/data/ProjectImages.json"
     },
 
     "projectsCategories": {
-      "path": "/data/ProjectCategories.json"
+      "path": "/Portfolio/data/ProjectCategories.json"
     },
 
     "schools": {
-      "path": "/data/Schools.json"
+      "path": "/Portfolio/data/Schools.json"
     },
     "courses": {
-      "path": "/data/Courses.json"
+      "path": "/Portfolio/data/Courses.json"
     },
     "educations": {
-      "path": "/data/Educations.json"
+      "path": "/Portfolio/data/Educations.json"
     },
     "educationSkills": {
-      "path": "/data/EducationSkills.json"
+      "path": "/Portfolio/data/EducationSkills.json"
     },
 
     "enterprises": {
-      "path": "/data/Enterprises.json"
+      "path": "/Portfolio/data/Enterprises.json"
     },
     "works": {
-      "path": "/data/Works.json"
+      "path": "/Portfolio/data/Works.json"
     },
     "workSkills": {
-      "path": "/data/WorkSkills.json"
+      "path": "/Portfolio/data/WorkSkills.json"
     },
 
     "hobbies": {
-      "path": "/data/Hobbies.json"
+      "path": "/Portfolio/data/Hobbies.json"
     },
 
     "hobbiesImages": {
-      "path": "/data/HobbyImages.json"
+      "path": "/Portfolio/data/HobbyImages.json"
     }
   }
 }
