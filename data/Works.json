@@ -1,0 +1,19 @@
+[
+  {
+    "Id": 1,
+    "EnterpriseId": 1,
+    "StartDate": "2018-01-01",
+    "EndDate": "2023-01-01",
+    "Title": "Waiter",
+    "Description": "Seasonal waiter; gained multitasking and communication skills."
+  },
+  {
+    "Id": 2,
+    "EnterpriseId": 2,
+    "StartDate": "2024-01-01",
+    "EndDate": null,
+    "Title": "Software Programmer - Full Stack Developer",
+    "Description": "Developed .NET MAUI apps, REST APIs, backend services; fixed legacy bugs; applied CQRS/DDD/Mediator/DI; integrated ML.NET."
+  }
+]
+

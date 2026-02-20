@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "Name": "Skateboarding",
+    "Description": "My safe space in life is skateboarding, focusing on having fun and enjoying life at high speeds and bowl skating",
+    "ImageId": null,
+    "Image": null,
+    "Icon": "skateboarding"
+  },
+  {
+    "Id": 2,
+    "Name": "Gaming",
+    "Description": "Passionate about gaming. Favorite games : Elden Ring & Dark Souls franchise.",
+    "ImageId": null,
+    "Image": null,
+    "Icon": "videogame"
+  },
+  {
+    "Id": 3,
+    "Name": "Hiking",
+    "Description": "I'm more fan of the sightseeing than the walking :D.",
+    "ImageId": null,
+    "Image": null,
+    "Icon": "hiking"
+  }
+]

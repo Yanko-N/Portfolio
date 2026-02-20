@@ -1,0 +1,14 @@
+[
+    {
+      "Id": 1,
+      "Name": "English",
+      "Icon": "",
+      "SkillLevel": "B2"
+    },
+    {
+      "Id": 2,
+      "Name": "Portuguese",
+      "Icon": "",
+      "SkillLevel": "Native"
+    }
+  ]
