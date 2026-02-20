@@ -229,10 +229,19 @@
 
     private string GetCover(ProjectDto p)
     {
-        var img = p.Images?.FirstOrDefault();
-        if (img == null) return "images/placeholders/project-thumb.svg";
-        return !string.IsNullOrWhiteSpace(img.Url) ? img.Url : img.Path ?? "images/placeholders/project-thumb.svg";
+        var img = p.Images?.FirstOrDefault(i =>
+            !string.IsNullOrWhiteSpace(i.Url) || !string.IsNullOrWhiteSpace(i.Path));
+
+        var url = BuildUrl(img?.Url);
+        if (!string.IsNullOrWhiteSpace(url)) return url;
+
+        var path = BuildUrl(img?.Path);
+        return !string.IsNullOrWhiteSpace(path) ? path : Placeholder();
     }
+
+    private string Placeholder()
+      => $"{NavigationManager.BaseUri.TrimEnd('/')}/images/placeholders/project-thumb.svg";
+
 
     private string GetAlt(ProjectDto p) => p.Images?.FirstOrDefault()?.AltText ?? p.Name;
 
