@@ -28,20 +28,11 @@ else if (dto != null)
                         <div class="sticky-top" style="top:1rem;">
                             <MudPaper Elevation="2" Class="p-4 rounded-4">
                                 <div class="text-center mb-4">
-                                    @if (dto.Images?.Count > 0 && !string.IsNullOrWhiteSpace(dto.Images[0].Url))
-                                    {
-                                        <MudImage Src="@GetCover(dto)"
-                                                  Alt="@GetAlt(dto)"
-                                                  LazyLoad="true"
-                                                  ObjectFit="ObjectFit.Cover"
-                                                  Style="width:100%;height:100%;" />
-                                    }
-                                    else
-                                    {
-                                        <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
-                                            @(dto.Name?[0])
-                                        </MudAvatar>
-                                    }
+                                    <MudImage Src="@GetCover(dto)"
+                                              Alt="@GetAlt(dto)"
+                                              LazyLoad="true"
+                                              ObjectFit="ObjectFit.Cover"
+                                              Style="width:100%;height:100%;" />
                                 </div>
 
                                 <div class="text-center">
@@ -153,18 +144,10 @@ else if (dto != null)
                                     @foreach (var img in dto.Images)
                                     {
                                         <div class="col-6 col-md-4">
-                                            @if (!string.IsNullOrWhiteSpace(img.Url))
-                                            {
-                                                <a href="@img.Url" target="_blank" rel="noopener">
-                                                    <img src="@img.Url" alt="@img.AltText" class="gallery-img rounded-3 shadow-sm w-100" />
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <div class="ratio ratio-16x9 rounded-3 bg-light d-flex align-items-center justify-content-center border">
-                                                    <span class="text-muted small px-2 text-center">@img.AltText</span>
-                                                </div>
-                                            }
+                                          <MudImage Src="@GetImage(img)"
+                                              Alt="@GetAlt(dto)"
+                                              ObjectFit="ObjectFit.Cover"
+                                              Style="width:100%;height:100%" />
                                         </div>
                                     }
                                 </div>
@@ -270,6 +253,14 @@ else
         return !string.IsNullOrWhiteSpace(path) ? path : Placeholder();
     }
 
+    private string GetImage(ImageDto img)
+    {
+        var url = BuildUrl(img?.Url);
+        if (!string.IsNullOrWhiteSpace(url)) return url;
+
+        var path = BuildUrl(img?.Path);
+        return !string.IsNullOrWhiteSpace(path) ? path : Placeholder();
+    }
 
     private async Task GoBack()
     {

@@ -66,7 +66,7 @@ namespace Application.Services.JsonBased
 
                     Project projectDomain = null;
 
-                    IEnumerable<Image> imageList = new List<Image>();
+                    List<Image> imageList = new List<Image>();
 
                     var currentConnectedImages = persistenceProjectImagesList.Where(x => x.ProjectId == persistenceProject.Id);
 
@@ -88,7 +88,7 @@ namespace Application.Services.JsonBased
                             }
                         }
 
-                        imageList.Append(validatedImage);
+                        imageList.Add(validatedImage);
                     }
 
                     var category = persistenceProjectCategoriesList.FirstOrDefault(x => x.Id == persistenceProject.ProjectCategoryId);
