@@ -160,3 +160,37 @@ main[b-57rfh191dz] {
         overflow-y: auto;
     }
 }
+/* /Pages/Index.razor.rz.scp.css */
+.home-card-slot[b-1jma93o9eg] {
+    min-height: 18rem;
+}
+
+.home-card-slot-profile[b-1jma93o9eg] {
+    min-height: 20rem;
+}
+
+.home-card-slot-hobbies[b-1jma93o9eg] {
+    min-height: 26rem;
+}
+
+.home-card-slot-work[b-1jma93o9eg] {
+    min-height: 30rem;
+}
+
+.home-card-slot-education[b-1jma93o9eg],
+.home-card-slot-projects[b-1jma93o9eg] {
+    min-height: 28rem;
+}
+
+@media (max-width: 991.98px) {
+    .home-card-slot-profile[b-1jma93o9eg] {
+        min-height: 20rem;
+    }
+
+    .home-card-slot-hobbies[b-1jma93o9eg],
+    .home-card-slot-work[b-1jma93o9eg],
+    .home-card-slot-education[b-1jma93o9eg],
+    .home-card-slot-projects[b-1jma93o9eg] {
+        min-height: 24rem;
+    }
+}

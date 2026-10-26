@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "Name": "Local Restaurant (Seasonal)",
+    "Name": "Restaurante Porão Limiano",
     "Url": "https://www.facebook.com/p/O-Porão-Limiano-Restaurante-100063656646281",
     "ImageId": 14
   },
@@ -10,5 +10,11 @@
     "Name": "Urbinfor LDA",
     "Url": "https://www.urbinfor.pt",
     "ImageId": 13
+  },
+  {
+    "Id": 3,
+    "Name": "Deloitte",
+    "Url": "https://www.deloitte.com",
+    "ImageId": 23
   }
-  ]
+]
