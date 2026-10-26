@@ -1,5 +1,6 @@
 ﻿@using MudBlazor
 @using static Application.Contracts.DTOs.Response
+@inject NavigationManager NavigationManager
 
 <MudPaper Class="hero-card card h-100 p-3 p-md-4 mb-4"
           Elevation="1" Outlined="true" Square="false">
@@ -53,7 +54,7 @@
                         {
                             <MudButton StartIcon="@Icons.Material.Filled.Description"
                                        Color="Color.Primary" Variant="Variant.Filled"
-                                       Href="@Info!.EndPointCV" Target="_blank" Rel="noopener">
+                                       Href="@ResumeUrl" Target="_blank" Rel="noopener">
                                 download my resume
                             </MudButton>
                         }
@@ -115,6 +116,25 @@
 @code {
     [Parameter] public PersonalInfoDto? Info { get; set; }
     [Parameter] public IEnumerable<SocialDto>? Socials { get; set; }
+
+    private string? ResumeUrl
+    {
+        get
+        {
+            var endpoint = Info?.EndPointCV;
+            if (string.IsNullOrWhiteSpace(endpoint))
+            {
+                return null;
+            }
+
+            if (Uri.TryCreate(endpoint, UriKind.Absolute, out var absoluteUri))
+            {
+                return absoluteUri.ToString();
+            }
+
+            return new Uri(new Uri(NavigationManager.BaseUri), endpoint.TrimStart('/')).ToString();
+        }
+    }
 
     private string ProfileImageSrc =>
         Info?.ProfileImage?.Path ?? Info?.ProfileImage?.Url ?? string.Empty;
