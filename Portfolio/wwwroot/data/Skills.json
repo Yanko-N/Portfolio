@@ -78,6 +78,173 @@
     "Name": "BootStrap",
     "Motivation": "It's a tool very important for creating and customizing views on web enviroment's or even mobile nowadays' ",
     "CategoryId": 1
+  },
+  {
+    "Id": 11,
+    "Icon": "",
+    "Description": "Typed programming language used to build NestJS applications.",
+    "Name": "TypeScript",
+    "CategoryId": 1
+  },
+  {
+    "Id": 12,
+    "Icon": "",
+    "Description": "Node.js framework used to implement banking orchestration services.",
+    "Name": "NestJS",
+    "CategoryId": 4
+  },
+  {
+    "Id": 13,
+    "Icon": "",
+    "Description": "Core banking platform integrated with the banking system.",
+    "Name": "Mambu",
+    "CategoryId": 4
+  },
+  {
+    "Id": 14,
+    "Icon": "",
+    "Description": "Payments platform integrated with the banking system.",
+    "Name": "Mambu Payments",
+    "CategoryId": 4
+  },
+  {
+    "Id": 15,
+    "Icon": "",
+    "Description": "Google framework used to develop agentic AI solutions.",
+    "Name": "Google ADK",
+    "CategoryId": 5
+  },
+  {
+    "Id": 16,
+    "Icon": "",
+    "Description": "Google's large language model used in an insurance claims solution.",
+    "Name": "Gemini 2.5 Pro",
+    "CategoryId": 5
+  },
+  {
+    "Id": 17,
+    "Icon": "",
+    "Description": "Service management platform integrated for automated claim creation.",
+    "Name": "ServiceNow",
+    "CategoryId": 4
+  },
+  {
+    "Id": 18,
+    "Icon": "",
+    "Description": "Insurance platform integrated with an automated claims solution.",
+    "Name": "Guidewire",
+    "CategoryId": 4
+  },
+  {
+    "Id": 19,
+    "Icon": "",
+    "Description": "OCR pipeline for extracting and validating information from claim emails.",
+    "Name": "OCR Pipelines",
+    "CategoryId": 5
+  },
+  {
+    "Id": 20,
+    "Icon": "",
+    "Description": "Event-streaming platform used for consumer and publisher topics.",
+    "Name": "Apache Kafka",
+    "CategoryId": 5
+  },
+  {
+    "Id": 21,
+    "Icon": "",
+    "Description": "Designing and refining prompts for AI systems.",
+    "Name": "Prompt Engineering",
+    "CategoryId": 6
+  },
+  {
+    "Id": 22,
+    "Icon": "",
+    "Description": "Model Context Protocol tools and integrations.",
+    "Name": "Model Context Protocol (MCP)",
+    "CategoryId": 5
+  },
+  {
+    "Id": 23,
+    "Icon": "",
+    "Description": "AWS cloud services used to run the agentic code framework.",
+    "Name": "AWS",
+    "CategoryId": 5
+  },
+  {
+    "Id": 24,
+    "Icon": "",
+    "Description": "AWS virtual machines used to run Claude SDK agents.",
+    "Name": "Amazon EC2",
+    "CategoryId": 5
+  },
+  {
+    "Id": 25,
+    "Icon": "",
+    "Description": "Claude SDK used by agents to develop and test generated features.",
+    "Name": "Claude SDK",
+    "CategoryId": 5
+  },
+  {
+    "Id": 26,
+    "Icon": "",
+    "Description": "JavaScript library used to build the agentic framework's user interface.",
+    "Name": "React",
+    "CategoryId": 4
+  },
+  {
+    "Id": 27,
+    "Icon": "",
+    "Description": ".NET framework for building cross-platform applications.",
+    "Name": ".NET MAUI",
+    "CategoryId": 4
+  },
+  {
+    "Id": 28,
+    "Icon": "",
+    "Description": "Framework used to build REST APIs and backend services.",
+    "Name": "ASP.NET Core",
+    "CategoryId": 4
+  },
+  {
+    "Id": 29,
+    "Icon": "",
+    "Description": "HTTP APIs designed and built for backend services.",
+    "Name": "REST APIs",
+    "CategoryId": 4
+  },
+  {
+    "Id": 30,
+    "Icon": "",
+    "Description": "Architectural pattern separating command operations from queries.",
+    "Name": "CQRS",
+    "CategoryId": 6
+  },
+  {
+    "Id": 31,
+    "Icon": "",
+    "Description": "Software design approach centered on a domain model.",
+    "Name": "Domain-Driven Design (DDD)",
+    "CategoryId": 6
+  },
+  {
+    "Id": 32,
+    "Icon": "",
+    "Description": "Pattern for routing requests through dedicated handlers.",
+    "Name": "Mediator Pattern",
+    "CategoryId": 6
+  },
+  {
+    "Id": 33,
+    "Icon": "",
+    "Description": "Pattern for supplying dependencies to application components.",
+    "Name": "Dependency Injection",
+    "CategoryId": 6
+  },
+  {
+    "Id": 34,
+    "Icon": "",
+    "Description": ".NET machine-learning framework used for classification and predictive analytics.",
+    "Name": "ML.NET",
+    "CategoryId": 4
   }
 ]
-

@@ -19,16 +19,21 @@ namespace Application.Services.JsonBased
         {
             try
             {
-                IEnumerable<Persistence.Models.Hobby> hobbiesList = await _manifestClient.GetAsync<Persistence.Models.Hobby>( cancellationToken);
+                var hobbiesTask = _manifestClient.GetAsync<Persistence.Models.Hobby>(cancellationToken);
+                var hobbyImagesTask = _manifestClient.GetAsync<Persistence.Models.HobbyImages>(cancellationToken);
+                var imagesTask = _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                await Task.WhenAll(hobbiesTask, hobbyImagesTask, imagesTask);
+
+                IEnumerable<Persistence.Models.Hobby> hobbiesList = await hobbiesTask;
 
                 if (hobbiesList == null || !hobbiesList.Any())
                 {
                     return Result<IEnumerable<Response.HobbyDto>>.Failure("No hobbies information found.");
                 }
 
-                IEnumerable<Persistence.Models.HobbyImages> hobbyImagesList = await _manifestClient.GetAsync<Persistence.Models.HobbyImages>( cancellationToken);
+                IEnumerable<Persistence.Models.HobbyImages> hobbyImagesList = await hobbyImagesTask;
 
-                IEnumerable<Persistence.Models.Image> imagesList = await _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                IEnumerable<Persistence.Models.Image> imagesList = await imagesTask;
 
                 List<Response.HobbyDto> toBeReturn = new List<Response.HobbyDto>();
                 foreach (var hobbyPersistence in hobbiesList)

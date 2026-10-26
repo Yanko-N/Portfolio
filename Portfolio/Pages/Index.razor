@@ -16,7 +16,7 @@
 
     <!-- Row 1 -->
     <div class="row g-3">
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-8 home-card-slot home-card-slot-profile">
             <Portfolio.Components.PersonalInfoComponent Error="@ErrorPersonalInfo"
                                                         Socials="@Socials"
                                                         Info="@Info"
@@ -24,7 +24,7 @@
                                                         OnRetry="@LoadPersonalInfoAndSocialsAsync" />
         </div>
 
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 home-card-slot home-card-slot-hobbies">
             <Portfolio.Components.HobbyComponent Hobbies="@Hobbies"
                                                     Error="@ErrorHobbies"
                                                     IsLoading="@_isBusyHobbies"
@@ -35,7 +35,7 @@
 
     <!-- Row 2 -->
     <div class="row g-3 mt-3">
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 home-card-slot home-card-slot-skills">
             <Portfolio.Components.SkillsComponent Skills="@Skills"
                                                     Error="@ErrorSkills"
                                                     IsLoading="@_isBusySkills"
@@ -43,7 +43,7 @@
                                                     ViewAllUrl="@ApplicationConstants.Routes.SkillsPage" />
         </div>
 
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-8 home-card-slot home-card-slot-work">
             <Portfolio.Components.WorkExperience Works="@Works"
                                                     Error="@ErrorWork"
                                                     IsLoading="@_isBusyWork"
@@ -54,7 +54,7 @@
 
     <!-- Row 3 -->
     <div class="row g-3 mt-3">
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 home-card-slot home-card-slot-education">
                 <Portfolio.Components.EducationExperienceComponent Educations="@Educations"
                                                                    Error="@ErrorEducation"
                                                                    IsLoading="@_isBusyEducation"
@@ -62,7 +62,7 @@
                                                                    ViewAllUrl="@ApplicationConstants.Routes.EducationPage" />
         </div>
 
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-8 home-card-slot home-card-slot-projects">
                 <Portfolio.Components.ProjectsInfoComponent Projects="@ProjectsDto"
                                                             Error="@ErrorProject"
                                                             IsLoading="@_isBusyProject"
@@ -93,16 +93,14 @@
     private IEnumerable<ProjectDto?> ProjectsDto { get; set; }
     #endregion
 
-    protected override void OnInitialized()
-    {
-    
-        _ = LoadPersonalInfoAndSocialsAsync();
-        _ = LoadHobbiesAsync();
-        _ = LoadSkillsAsync();
-        _ = LoadWorkAsync();
-        _ = LoadEducationAsync();
-        _ = LoadProjectsAsync();
-    }
+    protected override Task OnInitializedAsync() =>
+        Task.WhenAll(
+            LoadPersonalInfoAndSocialsAsync(),
+            LoadHobbiesAsync(),
+            LoadSkillsAsync(),
+            LoadWorkAsync(),
+            LoadEducationAsync(),
+            LoadProjectsAsync());
 
   
     private async Task ExecuteLoadAsync<T>(Func<Task<Result<T>>> serviceCall, Action<T> onSuccess, Action<string> onError, Action<bool> setBusy)
@@ -181,14 +179,17 @@
 
     protected async Task LoadPersonalInfoAndSocialsAsync()
     {
-        await ExecuteLoadAsync(
+        var personalInfoTask = ExecuteLoadAsync(
             () => PersonalInfoService.GetPersonalInfoAsync(),
             val => Info = val,
             err => ErrorPersonalInfo = err,
             b => _isBusyPersonalInfo = b
         );
 
-        var resultSocials = await SocialsService.GetSocialsAsync();
+        var socialsTask = SocialsService.GetSocialsAsync();
+        await Task.WhenAll(personalInfoTask, socialsTask);
+
+        var resultSocials = await socialsTask;
         if (resultSocials.IsSuccess)
         {
             Socials = resultSocials.Value;

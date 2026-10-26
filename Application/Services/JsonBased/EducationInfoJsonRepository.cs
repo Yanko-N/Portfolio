@@ -21,28 +21,36 @@ namespace Application.Services.JsonBased
             {
                 List<Response.EducationDto> toBeReturned = new List<Response.EducationDto> ();
 
-                IEnumerable<Persistence.Models.Education> educationsList = await _manifestClient.GetAsync<Persistence.Models.Education>(cancellationToken);
+                var educationsTask = _manifestClient.GetAsync<Persistence.Models.Education>(cancellationToken);
+                var schoolsTask = _manifestClient.GetAsync<Persistence.Models.School>(cancellationToken);
+                var coursesTask = _manifestClient.GetAsync<Persistence.Models.Course>(cancellationToken);
+                var skillsTask = _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                var skillCategoriesTask = _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
+                var educationSkillsTask = _manifestClient.GetAsync<Persistence.Models.EducationSkills>(cancellationToken);
+                await Task.WhenAll(educationsTask, schoolsTask, coursesTask, skillsTask, skillCategoriesTask, educationSkillsTask);
+
+                IEnumerable<Persistence.Models.Education> educationsList = await educationsTask;
 
                 if (educationsList == null || !educationsList.Any())
                 {
                     return Result<IEnumerable<Response.EducationDto>>.Failure("No Education information found");
                 }
 
-                IEnumerable<Persistence.Models.School> schoolsList = await _manifestClient.GetAsync<Persistence.Models.School>(cancellationToken);
+                IEnumerable<Persistence.Models.School> schoolsList = await schoolsTask;
 
                 if (schoolsList == null || !schoolsList.Any())
                 {
                     return Result<IEnumerable<Response.EducationDto>>.Failure("No schools information found");
                 }
 
-                IEnumerable<Persistence.Models.Course> cousesList = await _manifestClient.GetAsync<Persistence.Models.Course>(cancellationToken);
+                IEnumerable<Persistence.Models.Course> cousesList = await coursesTask;
 
                 if (cousesList == null || !cousesList.Any())
                 {
                     return Result<IEnumerable<Response.EducationDto>>.Failure("No courses information found");
                 }
 
-                IEnumerable<Persistence.Models.Skill> skillsList = await _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                IEnumerable<Persistence.Models.Skill> skillsList = await skillsTask;
 
                 if (skillsList == null || !skillsList.Any())
                 {
@@ -50,8 +58,8 @@ namespace Application.Services.JsonBased
                 }
 
                 //not enforced
-                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
-                IEnumerable<Persistence.Models.EducationSkills> educationSkills = await _manifestClient.GetAsync<Persistence.Models.EducationSkills>(cancellationToken);
+                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await skillCategoriesTask;
+                IEnumerable<Persistence.Models.EducationSkills> educationSkills = await educationSkillsTask;
 
                 foreach (var education in educationsList)
                 {

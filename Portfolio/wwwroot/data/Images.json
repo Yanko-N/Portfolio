@@ -68,7 +68,7 @@
   {
     "Id": 12,
     "Url": null,
-    "Path": "Imagens/FotoCV.jpg",
+    "Path": "Imagens/FotoCV.jpeg",
     "AltText": "foto de perfil"
   },
   {
@@ -79,8 +79,62 @@
   },
   {
     "Id": 14,
-    "Url": "https://scontent.fopo3-1.fna.fbcdn.net/v/t39.30808-6/411498603_854107106721170_7639832942369604505_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=eLrDxxEeHjsQ7kNvwFeHAdj&_nc_oc=AdmI2R_qgb2m1Gxt1f3tRc8riiXDQHq-ywkDH3uoRpRbY_ivA8PH4dNA13sD2eiKnxNeFvqVZFNxvjjQq8HAgQT8&_nc_zt=23&_nc_ht=scontent.fopo3-1.fna&_nc_gid=JW5iosTlulpZqlUzl7yXOA&oh=00_AfXGRPbr43CTN5oipFYIepY5JIU6_FK8EDFdQ4AD4Zt9_Q&oe=68A27DEB",
-    "Path": null,
+    "Url": null,
+    "Path": "Imagens/porao_limiano_logo.jpg",
     "AltText": "logo da marca Restaurante Porão Limiano"
+  },
+  {
+    "Id": 15,
+    "Url": null,
+    "Path": "Imagens/businessInteligence_1.png",
+    "AltText": "Business Intelligence - Exploratory Analysis"
+  },
+  {
+    "Id": 16,
+    "Url": null,
+    "Path": "Imagens/businessInteligence_2.png",
+    "AltText": "Business Intelligence - Linear Regression"
+  },
+  {
+    "Id": 17,
+    "Url": null,
+    "Path": "Imagens/businessInteligence_3.png",
+    "AltText": "Business Intelligence - Data Mining"
+  },
+  {
+    "Id": 18,
+    "Url": null,
+    "Path": "Imagens/app_dynamics_1.png",
+    "AltText": "AppLogger - Webhooks"
+  },
+  {
+    "Id": 19,
+    "Url": null,
+    "Path": "Imagens/app_dynamics_2.png",
+    "AltText": "AppLogger - Health Rules"
+  },
+  {
+    "Id": 20,
+    "Url": null,
+    "Path": "Imagens/app_dynamics_3.png",
+    "AltText": "AppLogger - Log Explorer"
+  },
+  {
+    "Id": 21,
+    "Url": null,
+    "Path": "Imagens/app_dynamics_4_login.png",
+    "AltText": "AppLogger - Login"
+  },
+  {
+    "Id": 22,
+    "Url": null,
+    "Path": "Imagens/rabbit_mq_server_no_sql.png",
+    "AltText": "RabbitMQ Server No SQL"
+  },
+  {
+    "Id": 23,
+    "Url": null,
+    "Path": "Imagens/deloitte_logo.png",
+    "AltText": "Deloitte logo"
   }
 ]

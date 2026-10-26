@@ -20,124 +20,99 @@
 }
 else if (dto != null)
 {
-    <div class="container-md my-4">
-        <div class="row g-4 justify-content-center">
-            <div class="col-12 col-lg-10">
-                <div class="row g-4">
-                    <!-- Sidebar -->
-                    <div class="col-12 col-lg-4">
-                        <div class="sticky-top" style="top: 1rem;">
-                            <MudPaper Elevation="2" Class="p-4 rounded-4">
-                                <div class="text-center mb-4">
-                                    <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
-                                        @(((dto.School?.Name ?? dto.Course?.Name ?? "E")[0]))
-                                    </MudAvatar>
-                                </div>
-
-                                <div class="text-center">
-                                    <h5 class="mb-1 fw-bold">@dto.Course?.Name</h5>
-                                    <div class="text-muted small">
-                                        <div>@dto.School?.Name @if (!string.IsNullOrWhiteSpace(dto.School?.Location)) {
-                                        <span>· @dto.School!.Location</span>
-                                    }
-</div>
-                                    @if (!string.IsNullOrWhiteSpace(dto.Course?.Url))
-                                    {
-                                        <a href="@dto.Course!.Url" target="_blank" rel="noopener" class="text-primary text-decoration-none">
-                                            Course page
-                                        </a>
-                                    }
-                                </div>
-                            </div>
-
-                            <MudDivider Class="my-3" />
-
-                            <div class="d-flex flex-column gap-2 align-items-center">
-                                <MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string">
-                                    @FormatPeriod(dto.StartDate, dto.EndDate)
-                                </MudChip>
-                                @if (dto.EndDate == null)
-                                {
-                                    <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small" Class="ms-1" T="string">
-                                        Current
-                                    </MudChip>
-                                }
-                            </div>
-
-                            <MudDivider Class="my-3" />
-
-                            <MudButton Variant="Variant.Outlined"
-                                       StartIcon="@Icons.Material.Filled.ArrowBack"
-                                       OnClick="()=>GoBack()"
-                                       FullWidth="true">
-                                Return
-                            </MudButton>
-                        </MudPaper>
+    <div class="container-xl my-4 education-details">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <MudButton Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       OnClick="GoBack">
+                Back to education
+            </MudButton>
+        </div>
+        <section class="education-hero mb-4">
+            <div class="education-hero-mark"><MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Large" /></div>
+            <div class="education-hero-copy">
+                <span class="education-eyebrow">Education</span>
+                <h1>@dto.Course?.Name</h1>
+                <p>@dto.School?.Name @if (!string.IsNullOrWhiteSpace(dto.School?.Location)) { <span aria-hidden="true">·</span> @dto.School.Location }</p>
+                <span class="education-period">@FormatPeriod(dto.StartDate, dto.EndDate)</span>
+            </div>
+            @if (dto.EndDate == null)
+            {
+                <MudChip Color="Color.Success" Variant="Variant.Filled" T="string" Class="education-current">In progress</MudChip>
+            }
+            @if (!string.IsNullOrWhiteSpace(dto.Course?.Url))
+            {
+                <MudButton Class="education-course-link"
+                           Variant="Variant.Outlined"
+                           Color="Color.Inherit"
+                           Href="@dto.Course.Url"
+                           Target="_blank"
+                           Rel="noopener"
+                           EndIcon="@Icons.Material.Filled.OpenInNew">
+                    Course page
+                </MudButton>
+            }
+        </section>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <MudPaper Elevation="2" Class="p-4 p-md-5 rounded-4">
+                    <div class="mb-3">
+                        <h2 class="mb-1 fw-bold">Program overview</h2>
+                        <p class="text-muted mb-0">@FormatDates(dto.StartDate, dto.EndDate)</p>
                     </div>
-                </div>
 
-                <!-- Main Content -->
-                <div class="col-12 col-lg-8">
-                    <MudPaper Elevation="2" Class="p-4 rounded-4">
-                        <div class="mb-3">
-                            <h3 class="mb-1 fw-bold">@dto.Course?.Name</h3>
-                            <p class="text-muted mb-0">@FormatDates(dto.StartDate, dto.EndDate)</p>
-                        </div>
+                    <MudDivider Class="my-4" />
 
-                        <MudDivider Class="mb-4" />
+                    <div class="description-text mb-4 lh-lg">
+                        @(!string.IsNullOrWhiteSpace(dto.Course?.Description)
+                            ? dto.Course.Description
+                            : "No description available.")
+                    </div>
 
-                        <div class="description-text mb-4 lh-lg">
-                            @(!string.IsNullOrWhiteSpace(dto.Course?.Description)
-                                                        ? dto.Course!.Description
-                                                        : "No description available.")
-                        </div>
+                    @if (dto.Skills?.Count > 0)
+                    {
+                        <MudDivider Class="my-4" />
+                        <h3 class="text-uppercase text-muted mb-3 fw-semibold">Skills & Technologies</h3>
 
-                        @if (dto.Skills?.Count > 0)
+                        @foreach (var group in GroupedSkills())
                         {
-                            <MudDivider Class="mb-4" />
-                            <h6 class="text-uppercase text-muted mb-3 fw-semibold">Skills & Technologies</h6>
+                            <div class="mb-4">
+                                <div class="fw-semibold mb-3 text-secondary">@group.Key</div>
 
-                            @foreach (var group in GroupedSkills())
-                            {
-                                <div class="mb-4">
-                                    <div class="fw-semibold mb-3 text-secondary">@group.Key</div>
-
-                                    <div class="d-flex flex-wrap gap-2">
-                                        @foreach (var skill in group)
-                                        {
-                                            <MudTooltip Placement="Placement.Top" Style="max-width:none" Class="skill-tooltip">
-                                                <ChildContent>
-                                                    <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
-                                                        @if (!string.IsNullOrWhiteSpace(skill.Icon))
-                                                        {
-                                                            <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
-                                                                @skill.Name
-                                                            </MudText>
-                                                        }
-                                                    </div>
-                                                </ChildContent>
-                                                <TooltipContent>
-                                                    <div class="skill-tooltip-body">
-                                                        <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
-                                                        <MudText Typo="Typo.caption">@skill.Description</MudText>
-                                                    </div>
-                                                </TooltipContent>
-                                            </MudTooltip>
-                                        }
-                                    </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var skill in group)
+                                    {
+                                        <MudTooltip Placement="Placement.Top" Style="max-width:none" Class="skill-tooltip">
+                                            <ChildContent>
+                                                <div class="skill-chip" tabindex="0" role="img" aria-label="@skill.Name">
+                                                    @if (!string.IsNullOrWhiteSpace(skill.Icon))
+                                                    {
+                                                        <MudIcon Icon="@skill.Icon" Size="Size.Medium" Color="Color.Inherit" Class="opacity-75" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudText Typo="Typo.caption" Class="opacity-75 fw-bold text-uppercase">
+                                                            @skill.Name
+                                                        </MudText>
+                                                    }
+                                                </div>
+                                            </ChildContent>
+                                            <TooltipContent>
+                                                <div class="skill-tooltip-body">
+                                                    <MudText Typo="Typo.subtitle2" Class="fw-bold">@skill.Name</MudText>
+                                                    <MudText Typo="Typo.caption">@skill.Description</MudText>
+                                                </div>
+                                            </TooltipContent>
+                                        </MudTooltip>
+                                    }
                                 </div>
-                            }
+                            </div>
                         }
-                    </MudPaper>
-                </div>
+                    }
+                </MudPaper>
             </div>
         </div>
     </div>
-</div>
 }
 else
 {
@@ -254,3 +229,90 @@ else
             .GroupBy(s => string.IsNullOrWhiteSpace(s.Category) ? "Others" : s.Category)
             .OrderBy(g => g.Key);
 }
+
+<style>
+    .education-details {
+        max-width: 1240px;
+    }
+
+    .education-hero {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        border-radius: 24px;
+        color: white;
+        background: radial-gradient(circle at 85% 15%, rgba(34, 211, 238, .35), transparent 28%), linear-gradient(120deg, #102a43, #0f766e 68%, #2563eb);
+        box-shadow: 0 16px 38px rgba(15, 118, 110, .18);
+    }
+
+    .education-hero-mark {
+        display: grid;
+        flex: 0 0 auto;
+        width: 72px;
+        height: 72px;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, .4);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, .14);
+        color: white;
+        backdrop-filter: blur(8px);
+    }
+
+    .education-hero-copy {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .education-eyebrow {
+        color: rgba(255, 255, 255, .75);
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .education-hero h1 {
+        margin: .35rem 0;
+        font-size: clamp(1.6rem, 4vw, 2.5rem);
+        font-weight: 800;
+    }
+
+    .education-hero p {
+        margin: 0 0 .5rem;
+        color: rgba(255, 255, 255, .85);
+    }
+
+    .education-period {
+        color: rgba(255, 255, 255, .72);
+        font-size: .9rem;
+    }
+
+    .education-course-link {
+        border-color: rgba(255, 255, 255, .55);
+        color: white;
+    }
+
+    .description-text {
+        white-space: pre-line;
+        line-height: 1.75;
+    }
+
+    @@media (max-width: 640px) {
+        .education-hero {
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .education-hero-mark {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+        }
+
+        .education-current,
+        .education-course-link {
+            margin-left: 4.3rem;
+        }
+    }
+</style>

@@ -66,7 +66,7 @@ namespace Application.Services.JsonBased
 
                     Project projectDomain = null;
 
-                    IEnumerable<Image> imageList = new List<Image>();
+                    var imageList = new List<Image>();
 
                     var currentConnectedImages = persistenceProjectImagesList.Where(x => x.ProjectId == persistenceProject.Id);
 
@@ -88,7 +88,10 @@ namespace Application.Services.JsonBased
                             }
                         }
 
-                        imageList.Append(validatedImage);
+                        if (validatedImage != null)
+                        {
+                            imageList.Add(validatedImage);
+                        }
                     }
 
                     var category = persistenceProjectCategoriesList.FirstOrDefault(x => x.Id == persistenceProject.ProjectCategoryId);
@@ -115,7 +118,7 @@ namespace Application.Services.JsonBased
 
                     IEnumerable<Persistence.Models.ProjectSkills> projectSkills = persistenceProjectSkills.Where(x => x.ProjectId == persistenceProject.Id);
 
-                    IEnumerable<Skill> projectSkillsInDomain = new List<Skill>();
+                    var projectSkillsInDomain = new List<Skill>();
                     foreach (var projectSkill in projectSkills)
                     {
                         var thisProjectSkill = persistenceSkillsList.FirstOrDefault(x => x.Id == projectSkill.SkillId);
@@ -125,7 +128,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        var skillCategory = skillCategoryList.Where(x => x.Id == projectSkill.SkillId).FirstOrDefault();
+                        var skillCategory = skillCategoryList.FirstOrDefault(x => x.Id == thisProjectSkill.CategoryId);
 
                         SkillCategory validatedSkillCategory = null;
                         if (skillCategory != null)
@@ -151,7 +154,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        projectSkillsInDomain.Append(skillInDomainObject);
+                        projectSkillsInDomain.Add(skillInDomainObject);
                     }
 
                     try
@@ -189,28 +192,37 @@ namespace Application.Services.JsonBased
             {
                 List<Response.ProjectDto> toBeReturned = new List<Response.ProjectDto>();
 
-                IEnumerable<Persistence.Models.Project> persistenceProjectsList = await _manifestClient.GetAsync<Persistence.Models.Project>(cancellationToken);
+                var projectsTask = _manifestClient.GetAsync<Persistence.Models.Project>(cancellationToken);
+                var skillsTask = _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                var projectCategoriesTask = _manifestClient.GetAsync<Persistence.Models.ProjectCategory>(cancellationToken);
+                var projectImagesTask = _manifestClient.GetAsync<Persistence.Models.ProjectImages>(cancellationToken);
+                var projectSkillsTask = _manifestClient.GetAsync<Persistence.Models.ProjectSkills>(cancellationToken);
+                var skillCategoriesTask = _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
+                var imagesTask = _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                await Task.WhenAll(projectsTask, skillsTask, projectCategoriesTask, projectImagesTask, projectSkillsTask, skillCategoriesTask, imagesTask);
+
+                IEnumerable<Persistence.Models.Project> persistenceProjectsList = await projectsTask;
 
                 if (persistenceProjectsList == null || !persistenceProjectsList.Any())
                 {
                     return Result<IEnumerable<Response.ProjectDto>>.Failure("No projects found");
                 }
 
-                IEnumerable<Persistence.Models.Skill> persistenceSkillsList = await _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                IEnumerable<Persistence.Models.Skill> persistenceSkillsList = await skillsTask;
 
                 if (persistenceSkillsList == null || !persistenceSkillsList.Any())
                 {
                     return Result<IEnumerable<Response.ProjectDto>>.Failure("No skills information found.");
                 }
 
-                IEnumerable<Persistence.Models.ProjectCategory> persistenceProjectCategoriesList = await _manifestClient.GetAsync<Persistence.Models.ProjectCategory>(cancellationToken);
+                IEnumerable<Persistence.Models.ProjectCategory> persistenceProjectCategoriesList = await projectCategoriesTask;
 
                 if (persistenceProjectCategoriesList == null || !persistenceProjectCategoriesList.Any())
                 {
                     return Result<IEnumerable<Response.ProjectDto>>.Failure("No project categories information found.");
                 }
 
-                IEnumerable<Persistence.Models.ProjectImages> persistenceProjectImagesList = await _manifestClient.GetAsync<Persistence.Models.ProjectImages>(cancellationToken);
+                IEnumerable<Persistence.Models.ProjectImages> persistenceProjectImagesList = await projectImagesTask;
 
                 if (persistenceProjectImagesList == null || !persistenceProjectImagesList.Any())
                 {
@@ -218,9 +230,9 @@ namespace Application.Services.JsonBased
                 }
 
                 //Can be null not enforced
-                IEnumerable<Persistence.Models.ProjectSkills> persistenceProjectSkills = await _manifestClient.GetAsync<Persistence.Models.ProjectSkills>(cancellationToken);
-                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
-                IEnumerable<Persistence.Models.Image> imagesList = await _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                IEnumerable<Persistence.Models.ProjectSkills> persistenceProjectSkills = await projectSkillsTask;
+                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await skillCategoriesTask;
+                IEnumerable<Persistence.Models.Image> imagesList = await imagesTask;
 
                 foreach(var persistenceProject in persistenceProjectsList)
                 {
@@ -275,7 +287,7 @@ namespace Application.Services.JsonBased
 
                     IEnumerable<Persistence.Models.ProjectSkills> projectSkills = persistenceProjectSkills.Where(x => x.ProjectId == persistenceProject.Id);
 
-                    IEnumerable<Skill> projectSkillsInDomain = new List<Skill>();
+                    var projectSkillsInDomain = new List<Skill>();
                     foreach (var projectSkill in projectSkills)
                     {
                         var thisProjectSkill = persistenceSkillsList.FirstOrDefault(x => x.Id == projectSkill.SkillId);
@@ -285,7 +297,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        var skillCategory = skillCategoryList.Where(x => x.Id == projectSkill.SkillId).FirstOrDefault();
+                        var skillCategory = skillCategoryList.FirstOrDefault(x => x.Id == thisProjectSkill.CategoryId);
 
                         SkillCategory validatedSkillCategory = null;
                         if (skillCategory != null)
@@ -311,7 +323,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        projectSkillsInDomain.Append(skillInDomainObject);
+                        projectSkillsInDomain.Add(skillInDomainObject);
                     }
 
                     try

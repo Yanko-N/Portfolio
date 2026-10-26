@@ -19,7 +19,12 @@ namespace Application.Services.JsonBased
         {
             try
             {
-                IEnumerable<Persistence.Models.PersonalInfo> personalInfoList = await _manifestClient.GetAsync<Persistence.Models.PersonalInfo>(cancellationToken);
+                var personalInfoTask = _manifestClient.GetAsync<Persistence.Models.PersonalInfo>(cancellationToken);
+                var personalInfoImagesTask = _manifestClient.GetAsync<Persistence.Models.PersonalInfoImages>(cancellationToken);
+                var imagesTask = _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                await Task.WhenAll(personalInfoTask, personalInfoImagesTask, imagesTask);
+
+                IEnumerable<Persistence.Models.PersonalInfo> personalInfoList = await personalInfoTask;
 
                 if (personalInfoList == null || !personalInfoList.Any())
                 {
@@ -28,7 +33,7 @@ namespace Application.Services.JsonBased
 
                 var personalInfo = personalInfoList.FirstOrDefault();
 
-                IEnumerable<Persistence.Models.PersonalInfoImages> personalInfoImagesList = await _manifestClient.GetAsync<Persistence.Models.PersonalInfoImages>(cancellationToken);
+                IEnumerable<Persistence.Models.PersonalInfoImages> personalInfoImagesList = await personalInfoImagesTask;
 
                 if (personalInfoImagesList == null || !personalInfoImagesList.Any())
                 {
@@ -42,7 +47,7 @@ namespace Application.Services.JsonBased
                 }
 
                 //get the profile image
-                IEnumerable<Persistence.Models.Image> imagesList = await _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                IEnumerable<Persistence.Models.Image> imagesList = await imagesTask;
 
                 if (imagesList == null || !imagesList.Any())
                 {

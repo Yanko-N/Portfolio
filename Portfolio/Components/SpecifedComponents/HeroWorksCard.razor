@@ -31,7 +31,9 @@
         </div>
 
         <div class="row mt-2 gy-3">
-            @foreach (var work in Works)
+            @foreach (var work in Works
+                .OrderByDescending(work => work.EndDate ?? DateOnly.MaxValue)
+                .ThenByDescending(work => work.StartDate))
             {
                 <div class="col-12">
                     <MudButton OnClick="() => OpenWorkInNewTab(work.Id)"

@@ -1,2 +1,106 @@
- []
-
+[
+  {
+    "WorkId": 2,
+    "SkillId": 1
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 27
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 28
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 29
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 30
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 31
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 32
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 33
+  },
+  {
+    "WorkId": 2,
+    "SkillId": 34
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 5
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 11
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 12
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 13
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 14
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 15
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 16
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 17
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 18
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 19
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 20
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 21
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 22
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 23
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 24
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 25
+  },
+  {
+    "WorkId": 3,
+    "SkillId": 26
+  }
+]

@@ -3,6 +3,9 @@
 ###############################################################################
 * text=auto
 
+# Preserve Blazor WebAssembly JavaScript integrity hashes during Pages deployment.
+*.js binary
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #

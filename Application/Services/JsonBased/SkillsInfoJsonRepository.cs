@@ -21,14 +21,18 @@ namespace Application.Services.JsonBased
         {
             try
             {
-                IEnumerable<Persistence.Models.Skill> skillsList = await _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                var skillsTask = _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                var skillCategoriesTask = _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
+                await Task.WhenAll(skillsTask, skillCategoriesTask);
+
+                IEnumerable<Persistence.Models.Skill> skillsList = await skillsTask;
 
                 if (skillsList == null || !skillsList.Any())
                 {
                     return Result<IEnumerable<Response.SkillDto>>.Failure("No skills information found.");
                 }
 
-                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
+                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await skillCategoriesTask;
 
                 List<Response.SkillDto> toBeReturn = new List<Response.SkillDto>();
                 foreach (var skill in skillsList)

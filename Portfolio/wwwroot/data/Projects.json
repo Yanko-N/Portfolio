@@ -10,7 +10,7 @@
   {
     "Id": 2,
     "Name": "GeoCaching Utad",
-    "Description": "Location-based Unity game for geocache clues.",
+    "Description": "A location-based game developed in Unity and C#. Players explore real-world locations and complete a mini-game to uncover clues connected to geocaches.\n\nThe project combines mobile gameplay, location-aware exploration, and clue discovery in one experience.",
     "DemoUrl": "",
     "SourceCodeUrl": "https://github.com/Yanko-N/GeoCachingUtad",
     "ProjectCategoryId": 4
@@ -26,7 +26,7 @@
   {
     "Id": 4,
     "Name": "3D Engine",
-    "Description": "3D renderer with OLC library.",
+    "Description": "A C++ 3D graphics project built with the OLC library. It loads and processes 3D objects, then renders them on screen.\n\nThe work explored the fundamentals of a rendering pipeline and low-level graphics programming.",
     "DemoUrl": "",
     "SourceCodeUrl": "https://github.com/Yanko-N/3DEngine",
     "ProjectCategoryId": 4
@@ -74,7 +74,7 @@
   {
     "Id": 10,
     "Name": "Wholesalers",
-    "Description": "C# console app (gRPC/Sockets/RabbitMQ).",
+    "Description": "A C# client-server console application for organizing and processing requests related to broadband location ownership.\n\nIt uses gRPC, sockets, and RabbitMQ to coordinate requests and responses between the system components.",
     "DemoUrl": "",
     "SourceCodeUrl": "https://github.com/Yanko-N/Wholesalers",
     "ProjectCategoryId": 4
@@ -86,6 +86,29 @@
     "DemoUrl": "",
     "SourceCodeUrl": "https://github.com/Yanko-N/ShoraWebsite",
     "ProjectCategoryId": 4
+  },
+  {
+    "Id": 12,
+    "Name": "Business Intelligence & Data Mining",
+    "Description": "A business intelligence tool built around bakery sales data from CSV files to support decisions about sales and production.\n\nIt combines exploratory visualizations with linear regression, multiclass classification, and temporal forecasting workflows.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "",
+    "ProjectCategoryId": 5
+  },
+  {
+    "Id": 13,
+    "Name": "AppLogger",
+    "Description": "A .NET observability system with an API for client applications to register and send their logs, plus a web dashboard for searching and monitoring those events.\n\nUsers can define alert rules and thresholds. When an alert is triggered, the system sends a notification to its configured webhook. The interface includes log exploration, health rules, alert status, and webhook management.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "",
+    "ProjectCategoryId": 1
+  },
+  {
+    "Id": 14,
+    "Name": "RabbitMQ Server No SQL",
+    "Description": "A C# client-server integration project that uses RabbitMQ publish/subscribe messaging to exchange JSON data and connect with NoSQL databases.\n\nA Swagger interface exposes the API endpoints for exploring and testing the service.",
+    "DemoUrl": "",
+    "SourceCodeUrl": "",
+    "ProjectCategoryId": 1
   }
 ]
-

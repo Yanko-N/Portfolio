@@ -179,7 +179,8 @@
     private int TotalPages => _works == null ? 0 : (int)Math.Ceiling(_works.Count() / (double)_pageSize);
 
     private IEnumerable<WorkDto> PagedWorks =>
-        _works?.OrderByDescending(w => w.StartDate)
+        _works?.OrderByDescending(w => w.EndDate ?? DateOnly.MaxValue)
+               .ThenByDescending(w => w.StartDate)
                .Skip((_selectedPage - 1) * _pageSize)
                .Take(_pageSize) ?? Enumerable.Empty<WorkDto>();
 

@@ -1,5 +1,6 @@
 ﻿@using Application.Classes
 @using Application.Interfaces.Services
+@using Portfolio.Components
 @using static Application.Contracts.DTOs.Response
 
 @attribute [Route(ApplicationConstants.Routes.ProjectsDetail)]
@@ -7,6 +8,7 @@
 @inject ISnackbar Snackbar
 @inject IProjectService ProjectService
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 
 @if (IsLoading)
 {
@@ -19,89 +21,67 @@
 }
 else if (dto != null)
 {
-    <div class="container-md my-4">
-        <div class="row g-4 justify-content-center">
-            <div class="col-12 col-lg-10">
-                <div class="row g-4">
-                    <!-- Sidebar -->
-                    <div class="col-12 col-lg-4">
-                        <div class="sticky-top" style="top:1rem;">
-                            <MudPaper Elevation="2" Class="p-4 rounded-4">
-                                <div class="text-center mb-4">
-                                    @if (dto.Images?.Count > 0 && !string.IsNullOrWhiteSpace(dto.Images[0].Url))
-                                    {
-                                        <img src="@dto.Images[0].Url"
-                                             alt="@dto.Images[0].AltText"
-                                             class="img-fluid rounded-3 shadow-sm project-cover"
-                                             style="max-width: 220px; height: auto;" />
-                                    }
-                                    else
-                                    {
-                                        <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
-                                            @(dto.Name?[0])
-                                        </MudAvatar>
-                                    }
-                                </div>
-
-                                <div class="text-center">
-                                    <h5 class="mb-1 fw-bold">@dto.Name</h5>
-                                    <div class="text-muted small">
-                                        @if (!string.IsNullOrWhiteSpace(dto.Category))
-                                        {
-                                            <div class="mb-1"><MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string">@dto.Category</MudChip></div>
-                                        }
-                                        @if (dto.Images?.Count > 0)
-                                        {
-                                            <div><MudChip Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small" T="string">@($"{dto.Images.Count} image{(dto.Images.Count == 1 ? "" : "s")}")</MudChip></div>
-                                        }
-                                    </div>
-                                </div>
-
-                                <MudDivider Class="my-3" />
-
-                                <div class="d-flex flex-wrap gap-2 mb-2">
-                                    @if (!string.IsNullOrWhiteSpace(dto.DemoUrl))
-                                    {
-                                        <MudButton Color="Color.Primary" Variant="Variant.Filled"
-                                                   StartIcon="@Icons.Material.Filled.PlayCircle"
-                                                   OnClick="@(()=>OpenExternal(dto.DemoUrl!))">
-                                            Live demo
-                                        </MudButton>
-                                    }
-                                    @if (!string.IsNullOrWhiteSpace(dto.SourceCodeUrl))
-                                    {
-                                        <MudButton Color="Color.Dark" Variant="Variant.Outlined"
-                                                   StartIcon="@Icons.Material.Filled.Code"
-                                                   OnClick="@(()=>OpenExternal(dto.SourceCodeUrl!))">
-                                            Source code
-                                        </MudButton>
-                                    }
-                                </div>
-
-                                <MudDivider Class="my-3" />
-
-                                <MudButton Variant="Variant.Outlined"
-                                           StartIcon="@Icons.Material.Filled.ArrowBack"
-                                           OnClick="()=>GoBack()"
-                                           FullWidth="true">
-                                    Return
-                                </MudButton>
-                            </MudPaper>
-                        </div>
+    <div class="container-xl my-4 project-details">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <MudButton Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       OnClick="GoBack">
+                Back to projects
+            </MudButton>
+        </div>
+        <section class="project-hero mb-4">
+            @if (GetImageSource(dto.Images?.FirstOrDefault()) is { } coverSource)
+            {
+                <button type="button"
+                        class="project-hero-image-button"
+                        aria-label="View project cover image"
+                        @onclick="() => OpenImagePreviewAsync(coverSource, dto.Images?.FirstOrDefault()?.AltText)">
+                    <img src="@coverSource" alt="@dto.Images?.FirstOrDefault()?.AltText" class="project-hero-image" />
+                </button>
+            }
+            <div class="project-hero-shade"></div>
+            <div class="project-hero-content">
+                @if (!string.IsNullOrWhiteSpace(dto.Category))
+                {
+                    <MudChip Color="Color.Primary" Variant="Variant.Filled" Size="Size.Small" T="string">@dto.Category</MudChip>
+                }
+                <h1>@dto.Name</h1>
+                <p>@(dto.Images?.Count ?? 0) project screenshot@((dto.Images?.Count ?? 0) == 1 ? "" : "s")</p>
+                @if (!string.IsNullOrWhiteSpace(dto.DemoUrl) || !string.IsNullOrWhiteSpace(dto.SourceCodeUrl))
+                {
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        @if (!string.IsNullOrWhiteSpace(dto.DemoUrl))
+                        {
+                            <MudButton Color="Color.Primary" Variant="Variant.Filled"
+                                       StartIcon="@Icons.Material.Filled.PlayCircle"
+                                       OnClick="@(()=>OpenExternal(dto.DemoUrl!))">
+                                Live demo
+                            </MudButton>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(dto.SourceCodeUrl))
+                        {
+                            <MudButton Color="Color.Inherit" Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Material.Filled.Code"
+                                       OnClick="@(()=>OpenExternal(dto.SourceCodeUrl!))">
+                                Source code
+                            </MudButton>
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <MudPaper Elevation="2" Class="p-4 p-md-5 rounded-4">
+                    <div class="mb-3">
+                        <h2 class="mb-2 fw-bold">About this project</h2>
                     </div>
 
-                    <!-- Main Content -->
-                    <div class="col-12 col-lg-8">
-                        <MudPaper Elevation="2" Class="p-4 rounded-4">
-                            <div class="mb-3">
-                                <h3 class="mb-2 fw-bold">@dto.Name</h3>
-                            </div>
+                    <MudDivider Class="mb-3" />
 
-                            <MudDivider Class="mb-3" />
-
-                            <div class="description-text mb-4 lh-lg">
-                                @(!string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : "No description available.")
-                            </div>
+                    <div class="description-text mb-4 lh-lg">
+                        @(!string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : "No description available.")
+                    </div>
 
                             @if (dto.Skills?.Count > 0)
                             {
@@ -147,16 +127,26 @@ else if (dto != null)
                             @if (dto.Images?.Count > 0)
                             {
                                 <MudDivider Class="my-4" />
-                                <h6 class="text-uppercase text-muted mb-2">Gallery</h6>
-                                <div class="row g-2">
+                                <div class="d-flex align-items-end justify-content-between mb-3">
+                                    <div>
+                                        <h4 class="fw-bold mb-1">Project gallery</h4>
+                                        <p class="text-muted mb-0">Screenshots and visuals from the project.</p>
+                                    </div>
+                                    <span class="text-muted small">@dto.Images.Count image@(dto.Images.Count == 1 ? "" : "s")</span>
+                                </div>
+                                <div class="row g-3">
                                     @foreach (var img in dto.Images)
                                     {
-                                        <div class="col-6 col-md-4">
-                                            @if (!string.IsNullOrWhiteSpace(img.Url))
+                                        <div class="col-12 @(dto.Images.Count > 1 ? "col-md-6" : "col-md-8")">
+                                            @if (GetImageSource(img) is { } imageSource)
                                             {
-                                                <a href="@img.Url" target="_blank" rel="noopener">
-                                                    <img src="@img.Url" alt="@img.AltText" class="gallery-img rounded-3 shadow-sm w-100" />
-                                                </a>
+                                                <button type="button"
+                                                        class="gallery-link"
+                                                        aria-label="View image: @img.AltText"
+                                                        @onclick="() => OpenImagePreviewAsync(imageSource, img.AltText)">
+                                                    <img src="@imageSource" alt="@img.AltText" class="gallery-img rounded-3 shadow-sm w-100" />
+                                                    <span class="gallery-caption">@img.AltText</span>
+                                                </button>
                                             }
                                             else
                                             {
@@ -168,9 +158,7 @@ else if (dto != null)
                                     }
                                 </div>
                             }
-                        </MudPaper>
-                    </div>
-                </div>
+                </MudPaper>
             </div>
         </div>
     </div>
@@ -261,6 +249,47 @@ else
     private void OpenExternal(string url)
         => NavigationManager.NavigateTo(url, forceLoad: true);
 
+    private async Task OpenImagePreviewAsync(string imageSource, string? altText)
+    {
+        var parameters = new DialogParameters<ImagePreviewDialog>
+        {
+            { dialog => dialog.ImageSource, imageSource },
+            { dialog => dialog.AltText, altText ?? "Project image" }
+        };
+
+        await DialogService.ShowAsync<ImagePreviewDialog>(
+            altText ?? "Project image",
+            parameters,
+            new DialogOptions
+            {
+                MaxWidth = MaxWidth.ExtraLarge,
+                FullWidth = true,
+                CloseButton = true,
+                CloseOnEscapeKey = true
+            });
+    }
+
+    private string? GetImageSource(ImageDto? image)
+    {
+        if (image == null)
+        {
+            return null;
+        }
+
+        var source = !string.IsNullOrWhiteSpace(image.Url) ? image.Url : image.Path;
+        if (string.IsNullOrWhiteSpace(source))
+        {
+            return null;
+        }
+
+        if (Uri.TryCreate(source, UriKind.Absolute, out var absoluteUri))
+        {
+            return absoluteUri.ToString();
+        }
+
+        return $"{NavigationManager.BaseUri.TrimEnd('/')}/{source.TrimStart('/')}";
+    }
+
     private IEnumerable<IGrouping<string, SkillDto>> GroupedSkills()
         => (dto?.Skills ?? Array.Empty<SkillDto>())
             .GroupBy(s => string.IsNullOrWhiteSpace(s.Category) ? "Others" : s.Category)
@@ -268,11 +297,68 @@ else
 }
 
 <style>
-    .project-cover {
-        max-height: 180px;
-        object-fit: contain;
-        background: var(--mud-palette-surface);
-        padding: .5rem;
+    .project-details {
+        max-width: 1240px;
+    }
+
+    .project-hero {
+        position: relative;
+        min-height: 300px;
+        overflow: hidden;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #111827, #334155);
+        box-shadow: 0 16px 38px rgba(15, 23, 42, .18);
+    }
+
+    .project-hero-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+    }
+
+    .project-hero-image-button {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: zoom-in;
+    }
+
+    .project-hero-shade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(15, 23, 42, .92), rgba(15, 23, 42, .52) 54%, rgba(15, 23, 42, .12));
+        pointer-events: none;
+    }
+
+    .project-hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        min-height: 300px;
+        max-width: 720px;
+        padding: clamp(1.5rem, 5vw, 3.5rem);
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        color: #fff;
+    }
+
+    .project-hero-content h1 {
+        margin: 1rem 0 .5rem;
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        font-weight: 800;
+        line-height: 1.05;
+    }
+
+    .project-hero-content p {
+        margin: 0;
+        color: rgba(255, 255, 255, .8);
     }
 
     .description-text {
@@ -280,18 +366,41 @@ else
         line-height: 1.6;
     }
 
-    .gallery-img {
-        aspect-ratio: 16/9;
-        object-fit: cover;
+    .gallery-link {
+        position: relative;
         display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        border-radius: 14px;
+        background: #f1f5f9;
+        text-align: left;
+        cursor: zoom-in;
     }
+
+    .gallery-img {
+        aspect-ratio: 16 / 9;
+        object-fit: contain;
+        display: block;
+        transition: transform .35s ease;
+    }
+
+    .gallery-link:hover .gallery-img {
+        transform: scale(1.025);
+    }
+
+    .gallery-caption {
+        display: block;
+        padding: .65rem .8rem;
+        color: var(--mud-palette-text-secondary);
+        font-size: .85rem;
+    }
+
     @@media (max-width: 991.98px) {
-        .sticky-top
-
-        {
-            position: static !important;
-            top: auto !important;
+        .project-hero,
+        .project-hero-content {
+            min-height: 230px;
         }
-
     }
 </style>

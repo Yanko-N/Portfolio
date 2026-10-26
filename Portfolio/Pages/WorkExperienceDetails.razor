@@ -8,6 +8,7 @@
 @inject ISnackbar Snackbar
 @inject IWorkService WorkService
 @inject IJSRuntime JS
+@inject IDialogService DialogService
 
 
 @if (IsLoading)
@@ -15,89 +16,76 @@
     <div class="d-flex align-items-center justify-content-center min-vh-100">
         <div class="text-center">
             <div class="spinner-border mb-3" role="status" aria-hidden="true"></div>
-            <p class="mb-0 text-muted">Loading projects information…</p>
+            <p class="mb-0 text-muted">Loading work experience information…</p>
         </div>
     </div>
 }
 else if (dto != null)
 {
-    <div class="container-md my-4">
-        <div class="row g-4 justify-content-center">
-            <div class="col-12 col-lg-10">
-                <div class="row g-4">
-                    <!-- Sidebar -->
-                    <div class="col-12 col-lg-4">
-                        <div class="sticky-top" style="top: 1rem;">
-                            <MudPaper Elevation="2" Class="p-4 rounded-4">
-                                <div class="text-center mb-4">
-                                    @if (!(dto.Enterprise?.Image?.Url == null))
-                                    {
-                                        <img src="@dto.Enterprise.Image.Url"
-                                             alt="@dto.Enterprise.Image.AltText"
-                                             class="img-fluid rounded-3 shadow-sm enterprise-img"
-                                             style="max-width: 200px; height: auto;" />
-                                    }
-                                    else
-                                    {
-                                        <MudAvatar Class="mx-auto" Size="Size.Large" Color="Color.Primary">
-                                            @((dto.Enterprise?.Name ?? dto.Title)[0])
-                                        </MudAvatar>
-                                    }
-                                </div>
-
-                                <div class="text-center">
-                                    <h5 class="mb-1 fw-bold">@dto.Title</h5>
-                                    <div class="text-muted small">
-                                        <div>@dto.Enterprise?.Name</div>
-                                        @if (!string.IsNullOrWhiteSpace(dto.Enterprise?.Url))
-                                        {
-                                            <a href="@dto.Enterprise!.Url" target="_blank" rel="noopener" class="text-primary text-decoration-none">
-                                                Visit Website
-                                            </a>
-                                        }
-                                    </div>
-                                </div>
-
-                                <MudDivider Class="my-3" />
-
-                                <div class="d-flex flex-column gap-2">
-                                    <MudChip Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" T="string" Class="mx-auto">
-                                        @FormatPeriod(dto.StartDate, dto.EndDate)
-                                    </MudChip>
-                                    @if (dto.EndDate == null)
-                                    {
-                                        <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small" Class="mx-auto" T="string">
-                                            Current
-                                        </MudChip>
-                                    }
-                                </div>
-
-                                <MudDivider Class="my-3" />
-
-                                <MudButton Variant="Variant.Outlined"
-                                           StartIcon="@Icons.Material.Filled.ArrowBack"
-                                           OnClick="()=>GoBack()"
-                                           FullWidth="true">
-                                    Return
-                                </MudButton>
-                            </MudPaper>
-                        </div>
-                    </div>
-
-                    <!-- Main Content -->
-                    <div class="col-12 col-lg-8">
-                        <MudPaper Elevation="2" Class="p-4 rounded-4">
+    <div class="container-xl my-4 work-details">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <MudButton Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       OnClick="GoBack">
+                Back to experience
+            </MudButton>
+        </div>
+        <section class="work-hero mb-4">
+            @if (GetImageSource(dto.Enterprise?.Image) is { } companyImage)
+            {
+                <button type="button"
+                        class="work-hero-logo work-hero-logo-button"
+                        aria-label="View @dto.Enterprise?.Name image"
+                        @onclick="() => OpenImagePreviewAsync(companyImage, dto.Enterprise?.Image?.AltText)">
+                    <img src="@companyImage" alt="@dto.Enterprise?.Image?.AltText" />
+                </button>
+            }
+            else
+            {
+                <div class="work-hero-mark">@GetCompanyMark()</div>
+            }
+            <div class="work-hero-copy">
+                <span class="work-eyebrow">Career experience</span>
+                <h1>@dto.Title</h1>
+                <p>@dto.Enterprise?.Name <span aria-hidden="true">·</span> @FormatDates(dto.StartDate, dto.EndDate)</p>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(dto.Enterprise?.Url))
+            {
+                <MudButton Class="work-company-link"
+                           Variant="Variant.Outlined"
+                           Color="Color.Inherit"
+                           Href="@dto.Enterprise.Url"
+                           Target="_blank"
+                           Rel="noopener"
+                           EndIcon="@Icons.Material.Filled.OpenInNew">
+                    Company
+                </MudButton>
+            }
+            @if (dto.EndDate == null)
+            {
+                <MudChip Color="Color.Success" Variant="Variant.Filled" T="string" Class="work-current">Current role</MudChip>
+            }
+        </section>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <MudPaper Elevation="2" Class="p-4 p-md-5 rounded-4">
                             <div class="mb-4">
-                                <h3 class="mb-2 fw-bold">@dto.Title</h3>
+                                <h2 class="mb-2 fw-bold">Role overview</h2>
                                 <p class="text-muted mb-0">
-                                    @FormatDates(dto.StartDate, dto.EndDate)
+                                    @FormatPeriod(dto.StartDate, dto.EndDate)
                                 </p>
                             </div>
 
                             <MudDivider Class="mb-4" />
 
-                            <div class="description-text mb-4 lh-lg">
-                                @(!string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : "No Description Available.")
+                            <div class="work-highlights">
+                                @foreach (var highlight in GetHighlights())
+                                {
+                            <article class="work-highlight">
+                                <span class="work-highlight-icon"><MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" /></span>
+                                <p>@highlight</p>
+                            </article>
+                                }
                             </div>
 
                             @if (dto.Skills?.Count > 0)
@@ -145,9 +133,7 @@ else if (dto != null)
                                     </div>
                                 }
                             }
-                        </MudPaper>
-                    </div>
-                </div>
+                </MudPaper>
             </div>
         </div>
     </div>
@@ -273,4 +259,195 @@ else
             .GroupBy(s => string.IsNullOrWhiteSpace(s.Category) ? "Others" : s.Category)
             .OrderBy(g => g.Key);
 
+    private IEnumerable<string> GetHighlights()
+    {
+        if (string.IsNullOrWhiteSpace(dto?.Description))
+        {
+            return new[] { "No description available." };
+        }
+
+        var highlights = dto.Description
+            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        return highlights.Length > 1 ? highlights : new[] { dto.Description };
+    }
+
+    private string GetCompanyMark()
+        => string.IsNullOrWhiteSpace(dto?.Enterprise?.Name)
+            ? "•"
+            : dto.Enterprise.Name[..Math.Min(1, dto.Enterprise.Name.Length)].ToUpperInvariant();
+
+    private string? GetImageSource(ImageDto? image)
+    {
+        if (image == null)
+        {
+            return null;
+        }
+
+        var source = !string.IsNullOrWhiteSpace(image.Url) ? image.Url : image.Path;
+        if (string.IsNullOrWhiteSpace(source))
+        {
+            return null;
+        }
+
+        if (Uri.TryCreate(source, UriKind.Absolute, out var absoluteUri))
+        {
+            return absoluteUri.ToString();
+        }
+
+        return $"{NavigationManager.BaseUri.TrimEnd('/')}/{source.TrimStart('/')}";
+    }
+
+    private async Task OpenImagePreviewAsync(string imageSource, string? altText)
+    {
+        var parameters = new DialogParameters<ImagePreviewDialog>
+        {
+            { dialog => dialog.ImageSource, imageSource },
+            { dialog => dialog.AltText, altText ?? "Company image" }
+        };
+
+        await DialogService.ShowAsync<ImagePreviewDialog>(
+            altText ?? "Company image",
+            parameters,
+            new DialogOptions
+            {
+                MaxWidth = MaxWidth.ExtraLarge,
+                FullWidth = true,
+                CloseButton = true,
+                CloseOnEscapeKey = true
+            });
+    }
+
 }
+
+<style>
+    .work-details {
+        max-width: 1240px;
+    }
+
+    .work-hero {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        border-radius: 24px;
+        color: white;
+        background: radial-gradient(circle at 85% 15%, rgba(96, 165, 250, .48), transparent 28%), linear-gradient(120deg, #101b35, #1d4ed8 68%, #6d28d9);
+        box-shadow: 0 16px 38px rgba(30, 64, 175, .18);
+    }
+
+    .work-hero-mark,
+    .work-hero-logo {
+        display: grid;
+        flex: 0 0 auto;
+        width: 72px;
+        height: 72px;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, .4);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, .14);
+        color: white;
+        font-size: 2rem;
+        font-weight: 800;
+        backdrop-filter: blur(8px);
+    }
+
+    .work-hero-logo-button {
+        padding: 0;
+        cursor: zoom-in;
+    }
+
+    .work-hero-logo {
+        padding: .65rem;
+        border: 0;
+        border-radius: 18px;
+        background: white;
+    }
+
+    .work-hero-logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .work-hero-copy {
+        flex: 1;
+    }
+
+    .work-eyebrow {
+        color: rgba(255, 255, 255, .75);
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .work-hero h1 {
+        margin: .35rem 0;
+        font-size: clamp(1.6rem, 4vw, 2.5rem);
+        font-weight: 800;
+    }
+
+    .work-hero p {
+        margin: 0;
+        color: rgba(255, 255, 255, .82);
+    }
+
+    .work-company-link {
+        border-color: rgba(255, 255, 255, .55);
+        color: white;
+    }
+
+    .work-highlight {
+        display: flex;
+        gap: .85rem;
+        align-items: flex-start;
+        padding: 1rem;
+        border: 1px solid rgba(100, 116, 139, .16);
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(248, 250, 252, .9), rgba(239, 246, 255, .78));
+    }
+
+    .work-highlight + .work-highlight {
+        margin-top: .8rem;
+    }
+
+    .work-highlight-icon {
+        display: grid;
+        flex: 0 0 auto;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 9px;
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .work-highlight p {
+        margin: .1rem 0 0;
+        line-height: 1.7;
+    }
+
+    @@media (max-width: 640px) {
+        .work-hero {
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .work-hero-logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+        }
+
+        .work-hero-mark {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+        }
+
+        .work-current {
+            margin-left: 4.3rem;
+        }
+    }
+</style>
