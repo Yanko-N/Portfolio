@@ -7,15 +7,15 @@ namespace Application.Classes
         public static class Routes
         {
             public const string Index = "/";
-            public const string SkillsPage = "/Skills";
-            public const string HobbiesPage = "/Hobbies";
-            public const string WorkPage = "/Works";
-            public const string EducationPage = "/Educations";
-            public const string ProjectsPage = "/Projects";
+            public const string SkillsPage = "Skills";
+            public const string HobbiesPage = "Hobbies";
+            public const string WorkPage = "Works";
+            public const string EducationPage = "Educations";
+            public const string ProjectsPage = "Projects";
 
-            public const string WorkDetail = "/Works/{id:int}";
-            public const string EducationDetail = "/Educations/{id:int}";
-            public const string ProjectsDetail = "/Projects/{id:int}";
+            public const string WorkDetail = "Works/{id:int}";
+            public const string EducationDetail = "Educations/{id:int}";
+            public const string ProjectsDetail = "Projects/{id:int}";
             
 
             public static string GetDetailRoute(DetailsPageType type, int id)
