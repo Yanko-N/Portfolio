@@ -10,5 +10,17 @@
   {
     "Id": 3,
     "Name": "Tools"
+  },
+  {
+    "Id": 4,
+    "Name": "Frameworks & Platforms"
+  },
+  {
+    "Id": 5,
+    "Name": "Cloud, AI & Integration"
+  },
+  {
+    "Id": 6,
+    "Name": "Architecture & Practices"
   }
 ]

@@ -172,7 +172,9 @@
             () => EducationService.GetEducationsAsync(),
             val =>
             {
-                _educations = val.OrderByDescending(x => x.StartDate);
+                _educations = val
+                    .OrderByDescending(x => x.EndDate ?? DateOnly.MaxValue)
+                    .ThenByDescending(x => x.StartDate);
                 _selectedPage = 1;
             },
             err => _errorMessage = err,

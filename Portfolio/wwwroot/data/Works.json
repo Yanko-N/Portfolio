@@ -2,18 +2,25 @@
   {
     "Id": 1,
     "EnterpriseId": 1,
-    "StartDate": "2018-01-01",
+    "StartDate": "2019-01-01",
     "EndDate": "2023-01-01",
     "Title": "Waiter",
-    "Description": "Seasonal waiter; gained multitasking and communication skills."
+    "Description": "Seasonal work (summers, holidays, weekends). Improved communication skills, gained responsibility as a young student, and worked in a dynamic and fast-paced environment. Though not engineering-related, it sharpened multitasking and communication under pressure."
   },
   {
     "Id": 2,
     "EnterpriseId": 2,
     "StartDate": "2024-01-01",
+    "EndDate": "2025-01-01",
+    "Title": "Software Programmer | Full-Stack Developer",
+    "Description": "Worked autonomously on the entire software development cycle on several projects. Developed cross-platform applications using .NET MAUI, designed and built REST APIs with ASP.NET Core, created and maintained backend services, diagnosed and resolved complex bugs and legacy issues, and applied architectural patterns like CQRS, DDD, Mediator, and Dependency Injection. Integrated ML.NET models for product classification and predictive analytics."
+  },
+  {
+    "Id": 3,
+    "EnterpriseId": 3,
+    "StartDate": "2025-01-01",
     "EndDate": null,
-    "Title": "Software Programmer - Full Stack Developer",
-    "Description": "Developed .NET MAUI apps, REST APIs, backend services; fixed legacy bugs; applied CQRS/DDD/Mediator/DI; integrated ML.NET."
+    "Title": "Tech Consultant | Developer (OIDS)",
+    "Description": "Contributed to a banking core system in NestJS, integrating Mambu and Mambu Payments (formerly Numeral) SaaS and implementing orchestration logic for banking requirements.\n\nDeveloped an agentic AI solution for a major Canadian insurance company using Python, Google ADK, and Gemini 2.5 Pro to automate claim creation in ServiceNow and integration with Guidewire.\n\nImplemented an agentic OCR pipeline for claim emails so the AI could identify data discrepancies before case registration.\n\nOwned Kafka consumer and publisher topics, dead-letter queue management, prompt engineering, and MCP toolbox creation.\n\nDesigned an AWS-based agentic code framework that launches EC2 instances running the Claude SDK to read requirements, generate tasks, develop code, commit, and test features. Managed the state-controlled lifecycle through an AWS-hosted React UI and Python backend."
   }
 ]
-

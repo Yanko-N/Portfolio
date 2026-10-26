@@ -107,9 +107,6 @@
     <Content Update="wwwroot\Imagens\fitWhereYouAreConfortable.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\Imagens\FotoCV.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\Imagens\GeoCachingUtad.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

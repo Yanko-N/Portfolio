@@ -1,0 +1,33 @@
+.home-card-slot {
+    min-height: 18rem;
+}
+
+.home-card-slot-profile {
+    min-height: 20rem;
+}
+
+.home-card-slot-hobbies {
+    min-height: 26rem;
+}
+
+.home-card-slot-work {
+    min-height: 30rem;
+}
+
+.home-card-slot-education,
+.home-card-slot-projects {
+    min-height: 28rem;
+}
+
+@media (max-width: 991.98px) {
+    .home-card-slot-profile {
+        min-height: 20rem;
+    }
+
+    .home-card-slot-hobbies,
+    .home-card-slot-work,
+    .home-card-slot-education,
+    .home-card-slot-projects {
+        min-height: 24rem;
+    }
+}

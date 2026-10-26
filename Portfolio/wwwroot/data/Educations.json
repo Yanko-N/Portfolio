@@ -12,6 +12,12 @@
       "CourseId": 2,
       "StartDate": "2017-01-01",
       "EndDate": "2020-01-01"
+    },
+    {
+      "Id": 3,
+      "SchoolId": 3,
+      "CourseId": 3,
+      "StartDate": "2025-01-01",
+      "EndDate": null
     }
   ]
-

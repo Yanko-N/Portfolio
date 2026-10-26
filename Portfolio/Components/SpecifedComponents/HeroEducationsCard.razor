@@ -30,7 +30,10 @@
         </div>
 
         <div class="row mt-2 gy-3">
-            @foreach (var education in Educations.Take(MaxItemsToShow))
+            @foreach (var education in Educations
+                .OrderByDescending(education => education.EndDate ?? DateOnly.MaxValue)
+                .ThenByDescending(education => education.StartDate)
+                .Take(MaxItemsToShow))
             {
                 <div class="col-12">
                     <MudButton OnClick="() => OpenEducationInNewTab(education.Id)"

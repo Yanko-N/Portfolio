@@ -22,14 +22,22 @@ namespace Application.Services.JsonBased
             {
                 List<Response.WorkDto> toBeReturn = new List<Response.WorkDto>();
 
-                IEnumerable<Persistence.Models.Work> workList = await _manifestClient.GetAsync<Persistence.Models.Work>(cancellationToken);
+                var workTask = _manifestClient.GetAsync<Persistence.Models.Work>(cancellationToken);
+                var skillsTask = _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                var enterprisesTask = _manifestClient.GetAsync<Persistence.Models.Enterprise>(cancellationToken);
+                var workSkillsTask = _manifestClient.GetAsync<Persistence.Models.WorkSkills>(cancellationToken);
+                var skillCategoriesTask = _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
+                var imagesTask = _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                await Task.WhenAll(workTask, skillsTask, enterprisesTask, workSkillsTask, skillCategoriesTask, imagesTask);
+
+                IEnumerable<Persistence.Models.Work> workList = await workTask;
 
                 if (workList == null || !workList.Any())
                 {
                     return Result<IEnumerable<Response.WorkDto>>.Failure("No work information found");
                 }
 
-                IEnumerable<Persistence.Models.Skill> skillsList = await _manifestClient.GetAsync<Persistence.Models.Skill>(cancellationToken);
+                IEnumerable<Persistence.Models.Skill> skillsList = await skillsTask;
 
                 if (skillsList == null || !skillsList.Any())
                 {
@@ -37,7 +45,7 @@ namespace Application.Services.JsonBased
                 }
 
 
-                IEnumerable<Persistence.Models.Enterprise> enterprisesList = await _manifestClient.GetAsync<Persistence.Models.Enterprise>(cancellationToken);
+                IEnumerable<Persistence.Models.Enterprise> enterprisesList = await enterprisesTask;
 
                 if (enterprisesList == null || !enterprisesList.Any())
                 {
@@ -45,9 +53,9 @@ namespace Application.Services.JsonBased
                 }
 
                 //Can be null not enforced
-                IEnumerable<Persistence.Models.WorkSkills> workSkillsList = await _manifestClient.GetAsync<Persistence.Models.WorkSkills>(cancellationToken);
-                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await _manifestClient.GetAsync<Persistence.Models.SkillCategory>(cancellationToken);
-                IEnumerable<Persistence.Models.Image> imagesList = await _manifestClient.GetAsync<Persistence.Models.Image>(cancellationToken);
+                IEnumerable<Persistence.Models.WorkSkills> workSkillsList = await workSkillsTask;
+                IEnumerable<Persistence.Models.SkillCategory> skillCategoryList = await skillCategoriesTask;
+                IEnumerable<Persistence.Models.Image> imagesList = await imagesTask;
 
                 foreach (var work in workList)
                 {
@@ -93,7 +101,7 @@ namespace Application.Services.JsonBased
 
                     IEnumerable<Persistence.Models.WorkSkills> workSkills = workSkillsList.Where(x => x.WorkId == work.Id);
 
-                    IEnumerable<Domain.Classes.Entities.Skill> workSkillsInDomain = new List<Domain.Classes.Entities.Skill>();
+                    var workSkillsInDomain = new List<Domain.Classes.Entities.Skill>();
                     foreach (var workSkill in workSkills)
                     {
                         var thisWorkSkill = skillsList.FirstOrDefault(x => x.Id == workSkill.SkillId);
@@ -103,7 +111,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        var category = skillCategoryList.Where(x => x.Id == workSkill.SkillId).FirstOrDefault();
+                        var category = skillCategoryList.FirstOrDefault(x => x.Id == thisWorkSkill.CategoryId);
 
                         Domain.Classes.Entities.SkillCategory validatedSkillCategory = null;
                         if (category != null)
@@ -129,7 +137,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        workSkillsInDomain.Append(skillInDomainObject);
+                        workSkillsInDomain.Add(skillInDomainObject);
                     }
 
                     Work workInDomain = null;
@@ -242,7 +250,7 @@ namespace Application.Services.JsonBased
 
                     IEnumerable<Persistence.Models.WorkSkills> workSkills = workSkillsList.Where(x => x.WorkId == work.Id);
 
-                    IEnumerable<Domain.Classes.Entities.Skill> workSkillsInDomain = new List<Domain.Classes.Entities.Skill>();
+                    var workSkillsInDomain = new List<Domain.Classes.Entities.Skill>();
                     foreach (var workSkill in workSkills)
                     {
                         var thisWorkSkill = skillsList.FirstOrDefault(x => x.Id == workSkill.SkillId);
@@ -252,7 +260,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        var category = skillCategoryList.Where(x => x.Id == workSkill.SkillId).FirstOrDefault();
+                        var category = skillCategoryList.FirstOrDefault(x => x.Id == thisWorkSkill.CategoryId);
 
                         Domain.Classes.Entities.SkillCategory validatedSkillCategory = null;
                         if (category != null)
@@ -278,7 +286,7 @@ namespace Application.Services.JsonBased
                             continue;
                         }
 
-                        workSkillsInDomain.Append(skillInDomainObject);
+                        workSkillsInDomain.Add(skillInDomainObject);
                     }
 
                     Work workInDomain = null;
